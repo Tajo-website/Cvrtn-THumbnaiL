@@ -897,31 +897,58 @@ body{background-color:#0B0C10; color:#F3F4F6}
       <div id="checkoutStep2" class="hidden space-y-4">
         <div class="bg-[#191B26] border-2 border-[#00F562]/40 rounded-2xl p-4">
           <div class="flex items-center gap-2 text-[#00F562] font-black text-sm mb-1">
-            <i class="fa-solid fa-shield-halved"></i> STEP 2: VERIFICATION &amp; PRODUCT DELIVERY GATE
+            <i class="fa-solid fa-shield-halved"></i> STEP 2: PAYMENT PROOF &amp; DELIVERY DETAILS
           </div>
-          <p class="text-xs text-zinc-400">
-            Enter your email and transaction reference ID (UTR) to instantly unlock your product download and activate your order ticket.
+          <p class="text-xs text-zinc-300">
+            Upload your payment screenshot from Google Pay / PhonePe / Paytm to verify your transaction and dispatch your order.
           </p>
         </div>
 
         <form id="verifyPaymentForm" onsubmit="handleSecurityVerification(event)" class="space-y-3.5">
+          
+          <!-- Email Input -->
           <div>
             <label class="block text-xs font-black mb-1 text-zinc-300">Your Email Address (For Delivery &amp; Invoice) <span class="text-[#FF2A2A]">*</span></label>
             <input type="email" id="buyerEmail" required placeholder="yourname@gmail.com" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white focus:border-[#00F562] outline-none">
           </div>
 
+          <!-- Screenshot Upload Dropzone -->
           <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">12-Digit UPI Ref / Transaction UTR ID <span class="text-[#FF2A2A]">*</span></label>
-            <div class="relative">
-              <input type="text" id="buyerUtr" required placeholder="e.g. 426189304128" maxlength="16" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold bg-zinc-900 text-[#FFD600] focus:border-[#00F562] outline-none pl-9">
-              <i class="fa-solid fa-receipt absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-xs"></i>
+            <label class="block text-xs font-black mb-1 text-zinc-300">Upload Payment Screenshot Proof <span class="text-[#FF2A2A]">*</span></label>
+            <div id="screenshotDropzone" onclick="document.getElementById('screenshotFileInput').click()" class="border-2 border-dashed border-white/30 hover:border-[#00F562] bg-zinc-900/80 rounded-2xl p-4 text-center cursor-pointer transition group">
+              <input type="file" id="screenshotFileInput" accept="image/*" class="hidden" onchange="handleScreenshotUpload(event)">
+              
+              <div id="uploadPrompt" class="space-y-1.5">
+                <div class="w-10 h-10 bg-zinc-800 text-[#00F562] rounded-full grid place-items-center mx-auto text-lg group-hover:scale-110 transition border border-white/10">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <div class="text-xs font-bold text-white">Click or Drag &amp; Drop Payment Screenshot</div>
+                <div class="text-[10px] text-zinc-400">Google Pay &bull; PhonePe &bull; Paytm &bull; Bank Receipt (PNG/JPG)</div>
+              </div>
+
+              <!-- Live Image Preview Area -->
+              <div id="screenshotPreviewContainer" class="hidden space-y-2">
+                <img id="screenshotPreviewImg" src="" class="max-h-36 mx-auto rounded-lg border-2 border-[#00F562] shadow-lg object-contain">
+                <div class="inline-flex items-center gap-1.5 bg-[#00F562]/20 text-[#00F562] text-[11px] font-black px-3 py-1 rounded-full border border-[#00F562]/40">
+                  <i class="fa-solid fa-circle-check"></i> Screenshot Attached &bull; Click to Change
+                </div>
+              </div>
             </div>
-            <span class="text-[10px] text-zinc-500 mt-1 block">Found in Google Pay / PhonePe / Paytm payment receipt under "UPI Ref No" or "UTR"</span>
           </div>
 
+          <!-- 12-Digit UTR Input -->
           <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Order Notes / Requirements (Optional)</label>
-            <textarea id="buyerNotes" rows="2" placeholder="e.g. YouTube video topic: 'How I Made 10K', style preference, colors..." class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-medium bg-zinc-900 text-white focus:border-[#00F562] outline-none"></textarea>
+            <label class="block text-xs font-black mb-1 text-zinc-300">12-Digit UPI Ref / UTR Number (Optional)</label>
+            <div class="relative">
+              <input type="text" id="buyerUtr" placeholder="e.g. 426189304128" maxlength="16" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold bg-zinc-900 text-[#FFD600] focus:border-[#00F562] outline-none pl-9">
+              <i class="fa-solid fa-receipt absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- Requirements / Order Notes -->
+          <div>
+            <label class="block text-xs font-black mb-1 text-zinc-300">Thumbnail Requirements / Notes (For Custom Orders)</label>
+            <textarea id="buyerNotes" rows="2" placeholder="e.g. Video Topic: 'How I Made 10K', style: Cyberpunk gaming, colors: Red &amp; Yellow..." class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-medium bg-zinc-900 text-white focus:border-[#00F562] outline-none"></textarea>
           </div>
 
           <div class="flex gap-2 pt-2">
@@ -929,7 +956,7 @@ body{background-color:#0B0C10; color:#F3F4F6}
               &larr; BACK
             </button>
             <button type="submit" id="verifySubmitBtn" class="w-2/3 bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-3.5 font-black text-sm comic-shadow-sm flex items-center justify-center gap-2">
-              <i class="fa-solid fa-lock"></i> VERIFY &amp; UNLOCK PRODUCT
+              <i class="fa-solid fa-circle-check"></i> SUBMIT PROOF &amp; UNLOCK
             </button>
           </div>
         </form>
@@ -1415,8 +1442,25 @@ function updateUpiDetails(amount){
 }
 
 
-// Security Gate & Instant Delivery Logic
+// Security Gate, Screenshot Upload & Instant Delivery Logic
 let selectedPaymentMethod = 'UPI';
+let uploadedScreenshotData = null;
+
+function handleScreenshotUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(event){
+    uploadedScreenshotData = event.target.result;
+    document.getElementById('uploadPrompt').classList.add('hidden');
+    const previewImg = document.getElementById('screenshotPreviewImg');
+    previewImg.src = uploadedScreenshotData;
+    document.getElementById('screenshotPreviewContainer').classList.remove('hidden');
+    showToast('Screenshot uploaded successfully ✓');
+  };
+  reader.readAsDataURL(file);
+}
 
 function goToVerificationStep(method){
   selectedPaymentMethod = method;
@@ -1432,21 +1476,21 @@ function backToStep1(){
 function handleSecurityVerification(e){
   e.preventDefault();
   const email = document.getElementById('buyerEmail').value.trim();
-  const utr = document.getElementById('buyerUtr').value.trim();
+  const utr = document.getElementById('buyerUtr').value.trim() || 'UPI-APP-TRANSFER';
   const notes = document.getElementById('buyerNotes').value.trim();
   
-  if(!email || !utr){
-    alert('Please provide both your Email Address and 12-Digit Transaction UTR.');
+  if(!email){
+    alert('Please enter your email address for delivery.');
     return;
   }
   
   const submitBtn = document.getElementById('verifySubmitBtn');
   submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> VERIFYING WITH BANK & UNLOCKING...';
+  submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> VERIFYING PAYMENT PROOF...';
   
   setTimeout(()=>{
     submitBtn.disabled = false;
-    submitBtn.innerHTML = '<i class="fa-solid fa-lock"></i> VERIFY & UNLOCK PRODUCT';
+    submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> SUBMIT PROOF & UNLOCK';
     
     closePaymentModal();
     const orderId = '#THUMB-' + Math.floor(100000 + Math.random()*900000);
@@ -1456,30 +1500,50 @@ function handleSecurityVerification(e){
     document.getElementById('orderUtrText').textContent = utr;
     
     const deliveryAction = document.getElementById('productDeliveryAction');
-    
-    // Check if customer ordered the elements pack or custom thumbnail
     const isPack = currentPaymentItem.toLowerCase().includes('pack') || currentPaymentItem.toLowerCase().includes('starter') || currentPaymentAmount === 200 || currentPaymentAmount === 99;
     
+    const waText = encodeURIComponent(`*NEW ORDER FROM CVRTN'S THumbnaiL*
+
+` +
+      `📦 *Item:* ${currentPaymentItem}
+` +
+      `💰 *Amount:* ₹${currentPaymentAmount}
+` +
+      `🧾 *Order ID:* ${orderId}
+` +
+      `📧 *Email:* ${email}
+` +
+      `📱 *UTR/Ref:* ${utr}
+` +
+      (notes ? `📝 *Notes:* ${notes}
+` : '') +
+      `✅ *Payment Sent to:* nayeetanish@oksbi
+
+` +
+      `_I have attached my payment screenshot on the website._`);
+
     if(isPack){
       deliveryAction.innerHTML = `
         <div class="bg-[#00F562]/10 border border-[#00F562]/30 rounded-xl p-3 text-left">
           <div class="text-[11px] font-black text-[#00F562] uppercase flex items-center gap-1.5"><i class="fa-solid fa-unlock"></i> 500+ ASSETS PACK UNLOCKED</div>
-          <div class="text-[12px] text-zinc-300 mt-1">Your 4K transparent PNG zip archive is ready for instant download.</div>
+          <div class="text-[12px] text-zinc-300 mt-1">Your 4K PNG zip archive is ready for instant download.</div>
         </div>
         <a href="CVRTNS_THumbnaiL.zip" download="CVRTNS_THumbnaiL_500_Pack.zip" class="block w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition">
           <i class="fa-solid fa-cloud-arrow-down"></i> DOWNLOAD 500+ PACK NOW (.ZIP)
         </a>
+        <a href="https://wa.me/?text=${waText}" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-bold text-xs border border-white/10 transition">
+          <i class="fa-brands fa-whatsapp text-[#25D366]"></i> Send Receipt Confirmation on WhatsApp
+        </a>
       `;
-      // Trigger automatic instant download simulation
       showToast('Download unlocked & starting!');
     } else {
       deliveryAction.innerHTML = `
         <div class="bg-[#FFD600]/10 border border-[#FFD600]/30 rounded-xl p-3 text-left">
           <div class="text-[11px] font-black text-[#FFD600] uppercase flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> 24H CUSTOM "THUMBNAIL" IN PRODUCTION</div>
-          <div class="text-[12px] text-zinc-300 mt-1">Your custom order is logged. Delivery will be dispatched to <b>${email}</b> within 24 hours.</div>
+          <div class="text-[12px] text-zinc-300 mt-1">Your order is registered! Delivery will be dispatched to <b>${email}</b> within 24 hours.</div>
         </div>
-        <a href="https://wa.me/?text=Hi%20Tanish,%20I%20have%20paid%20₹${currentPaymentAmount}%20for%20Custom%20THumbnaiL.%20Order%20ID:%20${orderId}%20UTR:%20${utr}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-3 font-black text-xs transition">
-          <i class="fa-brands fa-whatsapp text-sm"></i> Send Order Details on WhatsApp
+        <a href="https://wa.me/?text=${waText}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-3.5 font-black text-xs transition flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-base"></i> Send Order Details &amp; Proof to Tanish on WhatsApp
         </a>
       `;
     }
@@ -1488,7 +1552,7 @@ function handleSecurityVerification(e){
     backToStep1();
     cart = [];
     updateCartUI();
-  }, 1200);
+  }, 1000);
 }
 
 // Init
