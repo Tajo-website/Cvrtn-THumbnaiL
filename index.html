@@ -82,7 +82,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
 
 .tab-active { background: #FF2A2A !important; color: #fff !important; border-color: #000 !important; }
 .glass-card { background: rgba(20, 21, 28, 0.88); backdrop-filter: blur(16px); border: 2px solid rgba(255, 255, 255, 0.1); }
-.glass-card-hover:hover { border-color: rgba(255, 214, 0, 0.6); box-shadow: 0 10px 30px -10px rgba(255, 214, 0, 0.25); }
+@keyframes popIn { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
 /* Canvas Container Styling */
 #canvasWrapper {
@@ -1513,142 +1513,99 @@ body { background-color: #0B0C10; color: #F3F4F6; }
 </div>
 
 <!-- ========================================== -->
-<!-- MODAL: PAYMENT CHECKOUT GATEWAY (₹)        -->
 <!-- ========================================== -->
-<div id="paymentModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 overflow-y-auto">
-  <div class="bg-[#14151F] border-2 border-white/20 rounded-[28px] comic-shadow-lg max-w-2xl w-full overflow-hidden my-auto relative text-white">
+<!-- MODAL: UPI PAYMENT POPUP (₹)              -->
+<!-- ========================================== -->
+<div id="paymentModal" class="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 hidden flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this)closePaymentModal()">
+  <div class="bg-[#12131A] border-2 border-white/15 rounded-[24px] max-w-md w-full overflow-hidden my-auto relative text-white shadow-2xl" style="animation: popIn .3s cubic-bezier(.34,1.56,.64,1)">
     
-    <!-- Modal Header -->
-    <div class="bg-[#1C1E2A] px-6 py-4 flex items-center justify-between border-b border-white/10">
-      <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-[#00F562] animate-pulse"></span>
-        <span class="font-display text-[17px] md:text-[18px]">SECURE PAYMENT &amp; INSTANT DELIVERY GATE</span>
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-[#1A1C28] to-[#14151F] px-5 py-4 flex items-center justify-between border-b border-white/10">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 bg-[#00F562] text-black rounded-full grid place-items-center text-sm font-black border-2 border-black">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+        </div>
+        <div>
+          <div class="font-display text-[15px] tracking-wide">PAY VIA UPI</div>
+          <div class="text-[10px] text-zinc-400 font-bold">Scan QR or Copy UPI ID</div>
+        </div>
       </div>
-      <button onclick="closePaymentModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+      <button onclick="closePaymentModal()" class="w-8 h-8 rounded-full bg-zinc-800 hover:bg-red-600 text-white grid place-items-center transition"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
-    <div class="p-5 md:p-6">
-      
-      <!-- Order Summary Card -->
-      <div class="bg-zinc-900/90 border border-white/15 rounded-2xl p-4 mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <div>
-          <span class="text-[10px] font-black tracking-widest text-[#FFD600] uppercase">PRODUCT / SERVICE</span>
-          <div class="font-display text-[19px] text-white" id="payItemName">AI 4K Visual Thumbnail Unlock</div>
-          <div class="text-zinc-400 text-xs font-semibold" id="payItemSubtitle">Instant clean 4K file unlock after payment verification</div>
+    <div class="p-5 space-y-4">
+
+      <!-- What you're buying -->
+      <div class="bg-zinc-900/80 border border-white/10 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+        <div class="flex-1 min-w-0">
+          <div class="text-[9px] font-black tracking-[0.15em] text-[#FFD600] uppercase">YOU'RE BUYING</div>
+          <div class="font-display text-[16px] text-white truncate mt-0.5" id="payItemName">AI 4K Visual Thumbnail Unlock</div>
         </div>
-        <div class="text-right">
-          <span class="text-xs font-bold text-zinc-400">TOTAL AMOUNT</span>
-          <div class="font-display text-[28px] text-[#00F562]" id="payItemPrice">₹49</div>
+        <div class="text-right shrink-0">
+          <div class="font-display text-[32px] text-[#00F562] leading-none" id="payItemPrice">₹49</div>
+          <div class="text-[9px] text-zinc-500 font-bold mt-0.5">ONE-TIME</div>
         </div>
       </div>
 
-      <!-- STEP 1: PAYMENT VIEW -->
+      <!-- STEP 1: QR + UPI -->
       <div id="checkoutStep1" class="space-y-4">
-        <div>
-          <label class="block text-xs font-black tracking-wider uppercase text-zinc-400 mb-2">Step 1: Choose Payment Method</label>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <button type="button" onclick="switchPayMethod('upi')" id="payTab-upi" class="pay-tab tab-active border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1">
-              <i class="fa-solid fa-qrcode text-base text-[#00F562]"></i> UPI / QR
-            </button>
-            <button type="button" onclick="switchPayMethod('card')" id="payTab-card" class="pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800">
-              <i class="fa-solid fa-credit-card text-base"></i> Cards (RuPay/Visa)
-            </button>
-            <button type="button" onclick="switchPayMethod('paypal')" id="payTab-paypal" class="pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800">
-              <i class="fa-brands fa-paypal text-base text-[#38BDF8]"></i> PayPal
-            </button>
-            <button type="button" onclick="switchPayMethod('crypto')" id="payTab-crypto" class="pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800">
-              <i class="fa-brands fa-bitcoin text-base text-[#FFD600]"></i> Crypto (USDT)
-            </button>
+
+        <!-- QR Code -->
+        <div class="text-center">
+          <div class="inline-flex items-center gap-1.5 bg-[#FFD600]/10 text-[#FFD600] text-[10px] font-black px-3 py-1 rounded-full border border-[#FFD600]/30 mb-3">
+            <i class="fa-solid fa-mobile-screen-button"></i> SCAN WITH ANY UPI APP
+          </div>
+          <div class="w-48 h-48 bg-white rounded-2xl mx-auto flex items-center justify-center p-2.5 shadow-[0_8px_30px_rgba(0,245,98,0.15)] border-4 border-black">
+            <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=49%26cu=INR" class="w-full h-full object-contain rounded-lg" alt="UPI QR Code">
           </div>
         </div>
 
-        <!-- UPI QR Code View (Default) -->
-        <div id="payView-upi" class="text-center py-2 space-y-4">
-          <div class="bg-zinc-900/90 border border-white/20 rounded-2xl p-4 max-w-sm mx-auto">
-            <div class="font-black text-xs tracking-wider text-[#FFD600] mb-2.5 flex items-center justify-center gap-2">
-              <i class="fa-solid fa-mobile-screen"></i> SCAN TO PAY &amp; UNLOCK
-            </div>
-            
-            <div class="w-44 h-44 bg-white rounded-2xl mx-auto flex items-center justify-center p-2 shadow-2xl border-4 border-black">
-              <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=49%26cu=INR" class="w-full h-full object-contain rounded-lg" alt="UPI QR Code">
-            </div>
+        <!-- Divider -->
+        <div class="flex items-center gap-3">
+          <div class="flex-1 h-px bg-white/10"></div>
+          <span class="text-[10px] font-black text-zinc-500">OR PAY USING UPI ID</span>
+          <div class="flex-1 h-px bg-white/10"></div>
+        </div>
 
-            <div class="mt-3 flex items-center justify-center gap-2 bg-zinc-800 px-3 py-1.5 rounded-xl border border-white/15">
-              <span class="text-xs text-zinc-400 font-bold">UPI ID:</span>
-              <span class="font-mono font-black text-sm text-[#FFD600]" id="upiIdDisplay">nayeetanish@oksbi</span>
-              <button type="button" onclick="copyUpiId()" class="ml-1 bg-black hover:bg-zinc-700 text-white text-[11px] font-bold px-2 py-0.5 rounded border border-white/20 flex items-center gap-1">
-                <i class="fa-regular fa-copy"></i> <span id="copyUpiBtnText">Copy</span>
-              </button>
+        <!-- UPI ID Copy Box -->
+        <div class="bg-zinc-900 border-2 border-dashed border-[#FFD600]/40 rounded-2xl p-3.5 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div class="w-8 h-8 bg-[#FFD600]/10 text-[#FFD600] rounded-lg grid place-items-center text-sm shrink-0">
+              <i class="fa-solid fa-at"></i>
             </div>
-
-            <a id="directUpiLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="mt-2.5 block w-full bg-[#1A1C28] hover:bg-[#232636] text-white text-xs font-bold py-2 rounded-xl border border-white/10 flex items-center justify-center gap-2">
-              <i class="fa-solid fa-bolt text-[#00F562]"></i> Open GPay / PhonePe / Paytm App
-            </a>
+            <div class="min-w-0">
+              <div class="text-[9px] font-bold text-zinc-500 uppercase">UPI ID</div>
+              <div class="font-mono font-black text-[15px] text-[#FFD600] truncate" id="upiIdDisplay">nayeetanish@oksbi</div>
+            </div>
           </div>
-
-          <button onclick="goToVerificationStep('UPI')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-3.5 font-black text-[15px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-[1.02]">
-            <i class="fa-solid fa-shield-check"></i> I HAVE COMPLETED PAYMENT &rarr; VERIFY &amp; GET PRODUCT
+          <button type="button" onclick="copyUpiId()" class="bg-[#FFD600] hover:bg-[#ffe033] text-black text-[11px] font-black px-3.5 py-2 rounded-xl border-2 border-black transition flex items-center gap-1.5 shrink-0">
+            <i class="fa-regular fa-copy"></i> <span id="copyUpiBtnText">COPY</span>
           </button>
         </div>
 
-        <!-- Card Method View -->
-        <div id="payView-card" class="hidden space-y-4">
-          <div class="bg-gradient-to-br from-[#1F2232] to-[#12131A] text-white rounded-2xl p-4 border border-white/20 comic-shadow-sm relative overflow-hidden">
-            <div class="flex justify-between items-center mb-3">
-              <span class="font-display tracking-widest text-xs text-[#FFD600]">CVRTN'S THumbnaiL</span>
-              <div class="flex gap-1.5 text-base text-zinc-300"><i class="fa-brands fa-cc-visa"></i> <i class="fa-brands fa-cc-mastercard"></i> <span class="text-[10px] font-bold bg-zinc-800 px-1 rounded">RuPay</span></div>
-            </div>
-            <div class="font-mono text-base tracking-widest my-1" id="cardNumPreview">•••• •••• •••• ••••</div>
-            <div class="flex justify-between items-end mt-3 text-[11px] font-mono">
-              <div><div class="text-zinc-400 text-[9px]">CARD HOLDER</div><div id="cardNamePreview" class="font-bold uppercase">YOUR NAME</div></div>
-              <div><div class="text-zinc-400 text-[9px]">EXPIRES</div><div id="cardExpPreview" class="font-bold">MM/YY</div></div>
-            </div>
-          </div>
+        <!-- Open UPI App -->
+        <a id="directUpiLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="block w-full bg-[#1A1C28] hover:bg-[#232636] text-white text-xs font-bold py-2.5 rounded-xl border border-white/10 text-center transition">
+          <i class="fa-solid fa-bolt text-[#00F562] mr-1"></i> Open GPay / PhonePe / Paytm App
+        </a>
 
-          <div class="space-y-2.5">
-            <div>
-              <label class="block text-xs font-black mb-1 text-zinc-300">Card Number</label>
-              <input type="text" id="cardNumInput" placeholder="4532 8920 1289 0041" maxlength="19" class="w-full border border-white/20 rounded-xl px-3 py-2 text-sm font-bold bg-zinc-900 text-white outline-none">
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <div><label class="block text-xs font-black mb-1 text-zinc-300">Expiry</label><input type="text" id="cardExpInput" placeholder="MM/YY" maxlength="5" class="w-full border border-white/20 rounded-xl px-3 py-2 text-sm font-bold bg-zinc-900 text-white outline-none"></div>
-              <div><label class="block text-xs font-black mb-1 text-zinc-300">CVC</label><input type="password" id="cardCvcInput" placeholder="•••" maxlength="4" class="w-full border border-white/20 rounded-xl px-3 py-2 text-sm font-bold bg-zinc-900 text-white outline-none"></div>
-            </div>
-          </div>
+        <!-- I've Paid Button -->
+        <button onclick="goToVerificationStep('UPI')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-4 font-black text-[15px] comic-shadow-sm flex items-center justify-center gap-2.5 transition hover:scale-[1.02]">
+          <i class="fa-solid fa-check-circle text-lg"></i> I'VE PAID — VERIFY &amp; UNLOCK
+        </button>
 
-          <button onclick="goToVerificationStep('Card')" class="w-full bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full py-3.5 font-black text-[15px] comic-shadow-sm flex items-center justify-center gap-2">
-            <i class="fa-solid fa-lock"></i> AUTHORIZE CARD &amp; GET PRODUCT
-          </button>
-        </div>
-
-        <!-- PayPal / Crypto Views -->
-        <div id="payView-paypal" class="hidden text-center py-5 space-y-3">
-          <div class="w-14 h-14 bg-blue-900/40 text-[#38BDF8] rounded-full grid place-items-center mx-auto text-2xl border border-blue-400/30"><i class="fa-brands fa-paypal"></i></div>
-          <p class="text-xs text-zinc-400 max-w-sm mx-auto">Pay internationally with PayPal protection and automatic delivery.</p>
-          <button onclick="goToVerificationStep('PayPal')" class="bg-[#FFC439] hover:bg-[#ffba1a] text-black border-2 border-black rounded-full px-6 py-3 font-black text-sm comic-shadow-sm">
-            Proceed with PayPal &rarr; Instant Unlock
-          </button>
-        </div>
-
-        <div id="payView-crypto" class="hidden text-center py-5 space-y-3">
-          <div class="w-14 h-14 bg-zinc-900 text-[#FFD600] rounded-full grid place-items-center mx-auto text-2xl border border-white/20"><i class="fa-brands fa-bitcoin"></i></div>
-          <div class="bg-zinc-900 border border-white/10 rounded-xl p-3 max-w-sm mx-auto font-mono text-[11px] text-zinc-300">
-            USDT (TRC20): TXr74aK928bN109Zxq982B4910LM
-          </div>
-          <button onclick="goToVerificationStep('Crypto')" class="bg-[#FFD600] text-black border-2 border-black rounded-full px-6 py-3 font-black text-sm">
-            Verify Hash &rarr; Instant Unlock
-          </button>
+        <div class="text-center text-[10px] text-zinc-500 font-medium flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-[#00F562]"></i> 100% Secure &bull; Instant Delivery After Verification
         </div>
       </div>
 
-      <!-- STEP 2: SECURITY VERIFICATION GATE -->
+      <!-- STEP 2: VERIFICATION -->
       <div id="checkoutStep2" class="hidden space-y-4">
         <div class="bg-[#191B26] border-2 border-[#00F562]/40 rounded-2xl p-4">
           <div class="flex items-center gap-2 text-[#00F562] font-black text-sm mb-1">
-            <i class="fa-solid fa-shield-halved"></i> STEP 2: PAYMENT PROOF &amp; DELIVERY DETAILS
+            <i class="fa-solid fa-shield-halved"></i> VERIFY PAYMENT &amp; GET YOUR PRODUCT
           </div>
           <p class="text-xs text-zinc-300">
-            Attach your payment receipt or screenshot to automatically verify and dispatch your product package.
+            Upload your payment screenshot so we can verify and instantly deliver your product.
           </p>
         </div>
 
@@ -1656,46 +1613,43 @@ body { background-color: #0B0C10; color: #F3F4F6; }
           
           <!-- Email Input -->
           <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Your Email Address (For Delivery &amp; Invoice) <span class="text-[#FF2A2A]">*</span></label>
-            <input type="email" id="buyerEmail" required placeholder="yourname@gmail.com" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white focus:border-[#00F562] outline-none">
+            <label class="block text-xs font-black mb-1 text-zinc-300">Your Email <span class="text-[#FF2A2A]">*</span></label>
+            <input type="email" id="buyerEmail" required placeholder="yourname@gmail.com" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white focus:border-[#00F562] outline-none transition">
           </div>
 
-          <!-- Screenshot Upload Dropzone -->
+          <!-- Screenshot Upload -->
           <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Upload Payment Screenshot Proof <span class="text-[#FF2A2A]">*</span></label>
-            <div id="screenshotDropzone" onclick="document.getElementById('screenshotFileInput').click()" class="border-2 border-dashed border-white/30 hover:border-[#00F562] bg-zinc-900/80 rounded-2xl p-4 text-center cursor-pointer transition group">
+            <label class="block text-xs font-black mb-1 text-zinc-300">Payment Screenshot <span class="text-[#FF2A2A]">*</span></label>
+            <div id="screenshotDropzone" onclick="document.getElementById('screenshotFileInput').click()" class="border-2 border-dashed border-white/25 hover:border-[#00F562] bg-zinc-900/80 rounded-2xl p-4 text-center cursor-pointer transition group">
               <input type="file" id="screenshotFileInput" accept="image/*" class="hidden" onchange="handleScreenshotUpload(event)">
-              
               <div id="uploadPrompt" class="space-y-1.5">
                 <div class="w-10 h-10 bg-zinc-800 text-[#00F562] rounded-full grid place-items-center mx-auto text-lg group-hover:scale-110 transition border border-white/10">
                   <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
-                <div class="text-xs font-bold text-white">Click or Drag &amp; Drop Payment Screenshot</div>
-                <div class="text-[10px] text-zinc-400">Google Pay &bull; PhonePe &bull; Paytm &bull; Bank Receipt (PNG/JPG)</div>
+                <div class="text-xs font-bold text-white">Tap to Upload Payment Screenshot</div>
+                <div class="text-[10px] text-zinc-400">GPay &bull; PhonePe &bull; Paytm &bull; Bank (PNG/JPG)</div>
               </div>
-
-              <!-- Live Image Preview Area -->
               <div id="screenshotPreviewContainer" class="hidden space-y-2">
-                <img id="screenshotPreviewImg" src="" class="max-h-36 mx-auto rounded-lg border-2 border-[#00F562] shadow-lg object-contain" alt="Screenshot Proof">
+                <img id="screenshotPreviewImg" src="" class="max-h-32 mx-auto rounded-lg border-2 border-[#00F562] shadow-lg object-contain" alt="Screenshot">
                 <div class="inline-flex items-center gap-1.5 bg-[#00F562]/20 text-[#00F562] text-[11px] font-black px-3 py-1 rounded-full border border-[#00F562]/40">
-                  <i class="fa-solid fa-circle-check"></i> Screenshot Attached &bull; Click to Change
+                  <i class="fa-solid fa-circle-check"></i> Attached &bull; Tap to Change
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Requirements / Order Notes -->
+          <!-- Notes -->
           <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Thumbnail Requirements / Notes (For Custom Orders)</label>
-            <textarea id="buyerNotes" rows="2" placeholder="e.g. Video Topic: 'How I Made 10K', style: Cyberpunk gaming, colors: Red &amp; Yellow..." class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-medium bg-zinc-900 text-white focus:border-[#00F562] outline-none"></textarea>
+            <label class="block text-xs font-black mb-1 text-zinc-300">Notes <span class="text-zinc-500">(optional)</span></label>
+            <textarea id="buyerNotes" rows="2" placeholder="Any special requirements..." class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-medium bg-zinc-900 text-white focus:border-[#00F562] outline-none transition"></textarea>
           </div>
 
-          <div class="flex gap-2 pt-2">
+          <div class="flex gap-2 pt-1">
             <button type="button" onclick="backToStep1()" class="w-1/3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-3.5 font-black text-xs border border-white/10">
               &larr; BACK
             </button>
             <button type="submit" id="verifySubmitBtn" class="w-2/3 bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-3.5 font-black text-sm comic-shadow-sm flex items-center justify-center gap-2">
-              <i class="fa-solid fa-circle-check"></i> SUBMIT PROOF &amp; UNLOCK
+              <i class="fa-solid fa-circle-check"></i> SUBMIT &amp; UNLOCK
             </button>
           </div>
         </form>
@@ -1751,7 +1705,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
   <div class="p-4 border-t border-white/10 bg-zinc-900 space-y-3">
     <div class="flex justify-between text-sm font-black"><span>Subtotal</span><span id="cartTotal" class="text-[#00F562]">₹0</span></div>
     <button id="checkoutBtn" class="w-full bg-[#00F562] text-black rounded-full py-3.5 font-black flex items-center justify-center gap-2"><i class="fa-solid fa-lock"></i> PROCEED TO PAYMENT (₹)</button>
-    <div class="text-center text-[11px] font-bold text-zinc-400">Instant UPI &amp; Cards checkout</div>
+    <div class="text-center text-[11px] font-bold text-zinc-400">Pay via UPI QR Code or UPI ID</div>
   </div>
 </div>
 
@@ -2892,17 +2846,32 @@ function openPaymentModal(item, price) {
   updateUpiDetails(price);
   document.getElementById('payItemName').textContent = item;
   document.getElementById('payItemPrice').textContent = `₹${price}`;
+  // Always reset to step 1
+  document.getElementById('checkoutStep1').classList.remove('hidden');
+  document.getElementById('checkoutStep2').classList.add('hidden');
+  // Reset screenshot upload
+  uploadedScreenshotData = null;
+  const uploadPrompt = document.getElementById('uploadPrompt');
+  const previewContainer = document.getElementById('screenshotPreviewContainer');
+  if (uploadPrompt) uploadPrompt.classList.remove('hidden');
+  if (previewContainer) previewContainer.classList.add('hidden');
+  // Reset form
+  const form = document.getElementById('verifyPaymentForm');
+  if (form) form.reset();
+  // Show modal
   document.getElementById('paymentModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
 }
 
 function closePaymentModal() {
   document.getElementById('paymentModal').classList.add('hidden');
+  document.body.style.overflow = '';
 }
 
 function updateUpiDetails(amount) {
   const qr = document.getElementById('upiQrImg');
   if (qr) {
-    qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=${amount}%26cu=INR`;
+    qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=${amount}%26cu=INR`;
   }
   const link = document.getElementById('directUpiLink');
   if (link) {
@@ -2920,18 +2889,6 @@ function copyUpiId() {
   showToast('UPI ID copied: nayeetanish@oksbi');
 }
 
-function switchPayMethod(method) {
-  document.querySelectorAll('.pay-tab').forEach(t => t.className = 'pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800');
-  const activeTab = document.getElementById(`payTab-${method}`);
-  if (activeTab) activeTab.className = 'pay-tab tab-active border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1';
-
-  ['upi', 'card', 'paypal', 'crypto'].forEach(m => {
-    const v = document.getElementById(`payView-${m}`);
-    if (v) v.classList.add('hidden');
-  });
-  const currentView = document.getElementById(`payView-${method}`);
-  if (currentView) currentView.classList.remove('hidden');
-}
 
 function goToVerificationStep(method) {
   document.getElementById('checkoutStep1').classList.add('hidden');
@@ -3095,20 +3052,6 @@ document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
   document.getElementById('mobileMenu').classList.toggle('hidden');
 });
 
-// Live Card Input Preview
-document.getElementById('cardNumInput')?.addEventListener('input', (e) => {
-  let val = e.target.value.replace(/\D/g, '').substring(0, 16);
-  let formatted = val.match(/.{1,4}/g)?.join(' ') || val;
-  e.target.value = formatted;
-  document.getElementById('cardNumPreview').textContent = formatted || '•••• •••• •••• ••••';
-});
-
-document.getElementById('cardExpInput')?.addEventListener('input', (e) => {
-  let val = e.target.value.replace(/\D/g, '').substring(0, 4);
-  if (val.length >= 3) val = val.substring(0, 2) + '/' + val.substring(2);
-  e.target.value = val;
-  document.getElementById('cardExpPreview').textContent = val || 'MM/YY';
-});
 
 // --- INITIALIZATION ON LOAD ---
 window.addEventListener('DOMContentLoaded', () => {
