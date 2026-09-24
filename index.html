@@ -810,29 +810,44 @@ body{background-color:#0B0C10; color:#F3F4F6}
       </div>
 
       <!-- UPI QR Code View (Default for India) -->
-      <div id="payView-upi" class="text-center py-3 space-y-4">
-        <div class="bg-zinc-900 border border-white/20 rounded-2xl p-5 max-w-sm mx-auto">
-          <div class="font-black text-xs tracking-wider text-[#FFD600] mb-2 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-mobile-screen"></i> SCAN WITH ANY UPI APP
+      <div id="payView-upi" class="text-center py-2 space-y-4">
+        <div class="bg-zinc-900/90 border border-white/20 rounded-2xl p-5 max-w-sm mx-auto">
+          <div class="font-black text-xs tracking-wider text-[#FFD600] mb-3 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-mobile-screen"></i> SCAN TO PAY VIA ANY UPI APP
           </div>
-          <div class="w-40 h-40 bg-white rounded-2xl mx-auto grid place-items-center p-2 shadow-xl border-4 border-black">
-            <i class="fa-solid fa-qrcode text-8xl text-black"></i>
+          
+          <!-- Dynamic QR Code -->
+          <div class="w-44 h-44 bg-white rounded-2xl mx-auto flex items-center justify-center p-2 shadow-2xl border-4 border-black">
+            <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=150%26cu=INR" class="w-full h-full object-contain rounded-lg" alt="UPI QR Code">
           </div>
-          <div class="mt-3 font-mono text-sm text-zinc-300">
-            UPI ID: <span class="font-black text-white bg-zinc-800 px-2 py-1 rounded border border-white/20">cvrtn@upi</span>
+
+          <!-- UPI ID with Copy Button -->
+          <div class="mt-3.5 flex items-center justify-center gap-2 bg-zinc-800 px-3 py-2 rounded-xl border border-white/15">
+            <span class="text-xs text-zinc-400 font-bold">UPI ID:</span>
+            <span class="font-mono font-black text-sm text-[#FFD600] selection:bg-white selection:text-black" id="upiIdDisplay">nayeetanish@oksbi</span>
+            <button type="button" onclick="copyUpiId()" class="ml-1 bg-black hover:bg-zinc-700 text-white text-[11px] font-bold px-2 py-1 rounded border border-white/20 flex items-center gap-1 transition">
+              <i class="fa-regular fa-copy"></i> <span id="copyUpiBtnText">Copy</span>
+            </button>
           </div>
-          <div class="flex justify-center gap-3 text-xs text-zinc-400 mt-3">
-            <span class="bg-zinc-800 px-2 py-1 rounded">GPay</span>
-            <span class="bg-zinc-800 px-2 py-1 rounded">PhonePe</span>
-            <span class="bg-zinc-800 px-2 py-1 rounded">Paytm</span>
-            <span class="bg-zinc-800 px-2 py-1 rounded">BHIM</span>
+
+          <!-- Direct Mobile Pay Button -->
+          <a id="directUpiLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=150&cu=INR" class="mt-3 block w-full bg-[#1A1C28] hover:bg-[#232636] text-white text-xs font-bold py-2 rounded-xl border border-white/10 flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-bolt text-[#00F562]"></i> Pay with GPay / PhonePe / Paytm
+          </a>
+
+          <div class="flex justify-center gap-2 text-[11px] font-bold text-zinc-400 mt-3">
+            <span class="bg-zinc-800/80 px-2.5 py-1 rounded-md border border-white/5">Google Pay</span>
+            <span class="bg-zinc-800/80 px-2.5 py-1 rounded-md border border-white/5">PhonePe</span>
+            <span class="bg-zinc-800/80 px-2.5 py-1 rounded-md border border-white/5">Paytm</span>
+            <span class="bg-zinc-800/80 px-2.5 py-1 rounded-md border border-white/5">BHIM</span>
           </div>
         </div>
-        <button onclick="processPaymentSuccess('UPI / GPay / PhonePe')" class="bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full px-8 py-3.5 font-black text-sm comic-shadow-sm mx-auto flex items-center justify-center gap-2">
-          <i class="fa-solid fa-check"></i> I Have Paid via UPI
+
+        <button onclick="processPaymentSuccess('UPI (nayeetanish@oksbi)')" class="bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full px-8 py-3.5 font-black text-sm comic-shadow-sm mx-auto flex items-center justify-center gap-2 transition">
+          <i class="fa-solid fa-circle-check"></i> I HAVE TRANSFERRED VIA UPI
         </button>
       </div>
-
+      
       <!-- Card Method View -->
       <div id="payView-card" class="hidden space-y-4">
         <!-- Live Card Preview -->
@@ -1126,7 +1141,7 @@ let currentPaymentItem = 'Custom THumbnaL Commission';
 
 function openPaymentModal(item, price){
   currentPaymentItem = item;
-  currentPaymentAmount = price;
+  currentPaymentAmount = price; updateUpiDetails(price);
   document.getElementById('payItemName').textContent = item;
   document.getElementById('payItemPrice').textContent = `₹${price}`;
   document.getElementById('paymentModal').classList.remove('hidden');
@@ -1352,6 +1367,28 @@ function randomizeCanvas(){
 function openElementModal(el){
   addToCanvas(el);
   canvas.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+
+function copyUpiId(){
+  navigator.clipboard.writeText('nayeetanish@oksbi');
+  const btn = document.getElementById('copyUpiBtnText');
+  if(btn){
+    btn.textContent = 'Copied!';
+    setTimeout(()=>btn.textContent = 'Copy', 2000);
+  }
+  showToast('UPI ID copied: nayeetanish@oksbi');
+}
+
+function updateUpiDetails(amount){
+  const qr = document.getElementById('upiQrImg');
+  if(qr){
+    qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=${amount}%26cu=INR`;
+  }
+  const link = document.getElementById('directUpiLink');
+  if(link){
+    link.href = `upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=${amount}&cu=INR`;
+  }
 }
 
 // Init
