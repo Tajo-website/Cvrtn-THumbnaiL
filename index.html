@@ -84,6 +84,13 @@ body { background-color: #0B0C10; color: #F3F4F6; }
 .glass-card { background: rgba(20, 21, 28, 0.88); backdrop-filter: blur(16px); border: 2px solid rgba(255, 255, 255, 0.1); }
 @keyframes popIn { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
+/* Button text overflow protection */
+button, a.block, [class*="rounded-full"][class*="font-black"] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+button { white-space: nowrap; }
+
 /* Canvas Container Styling */
 #canvasWrapper {
   position: relative;
@@ -178,7 +185,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
       </button>
 
       <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="hidden sm:inline-flex bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 h-10 items-center font-black text-[13px] shadow-[0_0_15px_rgba(255,214,0,0.5)] hover:scale-105 transition gap-1.5">
-        <i class="fa-solid fa-bolt text-xs"></i> Order "THumbnaiL" — ₹150
+        <i class="fa-solid fa-bolt text-xs"></i> Custom — ₹150
       </button>
 
       <button id="cartBtn" class="relative w-10 h-10 md:w-auto md:px-3.5 md:h-10 bg-zinc-900 border-2 border-white/20 hover:border-white text-white rounded-full flex items-center justify-center gap-2 font-black transition">
@@ -244,14 +251,14 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
 
         <div class="mt-8 flex flex-col sm:flex-row gap-3.5">
-          <a href="#ai-studio" class="bg-[#00F562] hover:bg-[#00d655] text-black border-[3px] border-black rounded-full h-[58px] px-7 font-black text-[16px] comic-shadow flex items-center justify-center gap-2.5 transition shake hover:scale-105">
-            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i> TRY AI STUDIO (FREE)
+          <a href="#ai-studio" class="bg-[#00F562] hover:bg-[#00d655] text-black border-[3px] border-black rounded-full h-[58px] px-7 font-black text-[15px] md:text-[16px] comic-shadow flex items-center justify-center gap-2.5 transition shake hover:scale-105">
+            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i> AI STUDIO (FREE)
           </a>
-          <a href="#builder" class="bg-[#FFD600] hover:bg-[#ffcd00] text-black border-[3px] border-black rounded-full h-[58px] px-7 font-black text-[16px] shadow-[0_0_20px_rgba(255,214,0,0.5)] flex items-center justify-center gap-2 transition hover:scale-105">
-            <i class="fa-solid fa-paintbrush text-sm"></i> OPEN CANVAS STUDIO
+          <a href="#builder" class="bg-[#FFD600] hover:bg-[#ffcd00] text-black border-[3px] border-black rounded-full h-[58px] px-7 font-black text-[15px] md:text-[16px] shadow-[0_0_20px_rgba(255,214,0,0.5)] flex items-center justify-center gap-2 transition hover:scale-105">
+            <i class="fa-solid fa-paintbrush text-sm"></i> CANVAS STUDIO
           </a>
-          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-[3px] border-black rounded-full h-[58px] px-6 font-black text-[15px] comic-shadow flex items-center justify-center gap-2 transition">
-            <i class="fa-solid fa-bolt"></i> GET 500+ PACK — ₹200
+          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-[3px] border-black rounded-full h-[58px] px-6 font-black text-[14px] md:text-[15px] comic-shadow flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-bolt"></i> 500+ PACK — ₹200
           </button>
         </div>
 
@@ -471,11 +478,11 @@ body { background-color: #0B0C10; color: #F3F4F6; }
 
         <!-- Action Bar: Buy 4K Clean Image OR Edit in Studio -->
         <div class="grid sm:grid-cols-2 gap-3 pt-2">
-          <button onclick="buyCleanAiImage()" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-xl py-3.5 font-black text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
-            <i class="fa-solid fa-download"></i> BUY CLEAN 4K AI VISUAL — ₹49
+          <button onclick="buyCleanAiImage()" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-xl py-3.5 font-black text-[13px] md:text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
+            <i class="fa-solid fa-download"></i> BUY 4K VISUAL — ₹49
           </button>
-          <button onclick="transferAiToBuilder()" class="w-full bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-xl py-3.5 font-black text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
-            <i class="fa-solid fa-paintbrush text-sm"></i> Edit in Canvas Studio (Free) &rarr;
+          <button onclick="transferAiToBuilder()" class="w-full bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-xl py-3.5 font-black text-[13px] md:text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
+            <i class="fa-solid fa-paintbrush text-sm"></i> Edit in Studio (Free) &rarr;
           </button>
         </div>
       </div>
@@ -558,7 +565,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
           </p>
 
           <button onclick="orderCurrentAiConcept()" class="w-full bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full py-3 font-black text-xs shadow-[0_0_15px_rgba(255,214,0,0.4)] transition hover:scale-[1.02] flex items-center justify-center gap-2">
-            <i class="fa-solid fa-bolt"></i> Order Custom "THumbnaiL" — ₹150
+            <i class="fa-solid fa-bolt"></i> Order Custom — ₹150
           </button>
         </div>
 
@@ -639,7 +646,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
           <div class="mt-4 pt-3 border-t border-white/10 space-y-2">
             <input type="file" id="customImageUploader" accept="image/*" class="hidden" onchange="handleUserImageUpload(event)">
             <button onclick="document.getElementById('customImageUploader').click()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl py-2.5 font-bold text-xs border border-white/20 flex items-center justify-center gap-2 transition">
-              <i class="fa-solid fa-cloud-arrow-up text-[#0EA5E9]"></i> Upload Custom Cutout / Image
+              <i class="fa-solid fa-cloud-arrow-up text-[#0EA5E9]"></i> Upload Image / Cutout
             </button>
             <div class="text-[10px] text-zinc-400 text-center font-medium">Supports PNG (Transparent), JPG, WebP</div>
           </div>
@@ -810,7 +817,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="loadTemplateIntoBuilder('valorant')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Canvas Builder &rarr;
+            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
           </button>
         </div>
       </div>
@@ -829,7 +836,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="loadTemplateIntoBuilder('finance')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Canvas Builder &rarr;
+            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
           </button>
         </div>
       </div>
@@ -848,7 +855,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="loadTemplateIntoBuilder('tech')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Canvas Builder &rarr;
+            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
           </button>
         </div>
       </div>
@@ -867,7 +874,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="loadTemplateIntoBuilder('challenge')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Canvas Builder &rarr;
+            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
           </button>
         </div>
       </div>
@@ -886,7 +893,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="loadTemplateIntoBuilder('glass')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Canvas Builder &rarr;
+            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
           </button>
         </div>
       </div>
@@ -901,7 +908,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
       </div>
       <div class="mt-5 pt-3 border-t border-white/10 space-y-2">
         <button onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" class="w-full bg-[#FFD600] hover:bg-[#ffcd00] text-black rounded-full py-3 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-          <i class="fa-solid fa-paintbrush"></i> Open Blank 1280×720 Canvas
+          <i class="fa-solid fa-paintbrush"></i> Open Blank Canvas
         </button>
         <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#FF2A2A] hover:bg-[#e01d1d] text-white rounded-full py-3 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
           <i class="fa-solid fa-download"></i> Unlock 500+ Pack — ₹200
@@ -969,7 +976,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
 
         <div class="mt-5 space-y-2.5">
           <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-4 font-black text-[15px] flex items-center justify-center gap-2 comic-shadow-sm transition hover:scale-[1.02]">
-            <i class="fa-solid fa-download"></i> UNLOCK ALL 500+ 4K ASSETS — ₹200
+            <i class="fa-solid fa-download"></i> UNLOCK 500+ ASSETS — ₹200
           </button>
           <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white border border-white/20 rounded-full py-2.5 font-bold text-xs flex items-center justify-center gap-2 transition">
             <i class="fa-solid fa-eye"></i> Full-Resolution Sheet Preview
@@ -1040,7 +1047,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="openPaymentModal('Custom THumbnaiL: Valorant Style', 150)" class="text-[12px] md:text-[13px] font-black bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order Style "THumbnaiL" — ₹150
+            Order This — ₹150
           </button>
           <button onclick="openLightbox('assets/portfolio/portfolio-valorant.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
@@ -1069,7 +1076,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="openPaymentModal('Custom THumbnaiL: Sci-Fi Style', 150)" class="text-[12px] md:text-[13px] font-black bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order Style "THumbnaiL" — ₹150
+            Order This — ₹150
           </button>
           <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
@@ -1098,7 +1105,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="openPaymentModal('Custom THumbnaiL: Insane Gameplay FPS', 150)" class="text-[12px] md:text-[13px] font-black bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order Style "THumbnaiL" — ₹150
+            Order This — ₹150
           </button>
           <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
@@ -1156,7 +1163,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="openPaymentModal('Custom THumbnaiL: Season 1 Style', 150)" class="text-[12px] md:text-[13px] font-black bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order Style "THumbnaiL" — ₹150
+            Order This — ₹150
           </button>
           <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
@@ -1185,7 +1192,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </div>
         <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
           <button onclick="openPaymentModal('Custom THumbnaiL: 3D Glass Typography', 150)" class="text-[12px] md:text-[13px] font-black bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order Style "THumbnaiL" — ₹150
+            Order This — ₹150
           </button>
           <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
@@ -1250,8 +1257,8 @@ body { background-color: #0B0C10; color: #F3F4F6; }
           <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> <span>Full commercial rights & 4K PNG</span></div>
         </div>
 
-        <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="w-full mt-6 bg-[#FF2A2A] hover:bg-[#e01d1d] text-white rounded-full py-4 font-black text-[16px] border-2 border-black comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
-          <i class="fa-solid fa-bolt"></i> ORDER "THumbnaiL" — ₹150
+        <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="w-full mt-6 bg-[#FF2A2A] hover:bg-[#e01d1d] text-white rounded-full py-4 font-black text-[15px] border-2 border-black comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
+          <i class="fa-solid fa-bolt"></i> ORDER CUSTOM — ₹150
         </button>
       </div>
     </div>
@@ -1430,7 +1437,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
     <img id="lightboxImg" src="" class="max-w-full max-h-[82vh] object-contain rounded-2xl border-2 border-white/20 shadow-2xl" alt="Preview">
     <div class="mt-4 flex gap-3">
       <button onclick="closeLightbox()" class="bg-zinc-800 text-white px-5 py-2.5 rounded-full font-black border border-white/20 text-sm">Close Preview</button>
-      <button onclick="closeLightbox(); openPaymentModal('Custom THumbnaiL Design', 150)" class="bg-[#FFD600] text-black px-6 py-2.5 rounded-full font-black border-2 border-black text-sm comic-shadow-sm">Order Similar "THumbnaiL" — ₹150</button>
+      <button onclick="closeLightbox(); openPaymentModal('Custom THumbnaiL Design', 150)" class="bg-[#FFD600] text-black px-5 py-2.5 rounded-full font-black border-2 border-black text-sm comic-shadow-sm">Order This — ₹150</button>
     </div>
   </div>
 </div>
@@ -1456,7 +1463,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
       <!-- Option 1: Clean 4K/1280x720 Export (₹49) -->
       <button onclick="buyCleanStudioExport()" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-2xl p-4 text-left border-2 border-black comic-shadow-sm transition hover:scale-[1.02] flex items-center justify-between group">
         <div>
-          <div class="font-black text-sm flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-900"></i> Unlock Clean Ultra HD PNG (No Watermark)</div>
+          <div class="font-black text-sm flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-900"></i> Clean HD PNG (No Watermark)</div>
           <div class="text-[11px] font-bold text-black/80 mt-0.5">High quality 1280×720 native YouTube ready</div>
         </div>
         <div class="font-display text-xl text-black shrink-0">₹49</div>
@@ -1474,7 +1481,7 @@ body { background-color: #0B0C10; color: #F3F4F6; }
       <!-- Option 3: Full 500+ Pack (₹200) -->
       <button onclick="closeExportChoiceModal(); openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#FF2A2A] hover:bg-[#e01d1d] text-white rounded-2xl p-3.5 text-left border-2 border-black transition flex items-center justify-between">
         <div>
-          <div class="font-black text-xs">Unlock 500+ Pack + Unlimited Studio Exports</div>
+          <div class="font-black text-xs">500+ Pack + Unlimited Exports</div>
           <div class="text-[10px] text-white/80 mt-0.5">All 500+ 4K elements + unlimited clean exports</div>
         </div>
         <div class="font-display text-sm text-[#FFD600]">₹200</div>
@@ -1589,8 +1596,8 @@ body { background-color: #0B0C10; color: #F3F4F6; }
         </a>
 
         <!-- I've Paid Button -->
-        <button onclick="goToVerificationStep('UPI')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-4 font-black text-[15px] comic-shadow-sm flex items-center justify-center gap-2.5 transition hover:scale-[1.02]">
-          <i class="fa-solid fa-check-circle text-lg"></i> I'VE PAID — VERIFY &amp; UNLOCK
+        <button onclick="goToVerificationStep('UPI')" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-4 font-black text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-[1.02]">
+          <i class="fa-solid fa-check-circle text-lg"></i> I'VE PAID — VERIFY
         </button>
 
         <div class="text-center text-[10px] text-zinc-500 font-medium flex items-center justify-center gap-1.5">
