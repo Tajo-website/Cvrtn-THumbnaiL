@@ -1,5 +1,5 @@
 // Serverless API Endpoint: /api/verify-payment
-// Verifies transaction submission and unlocks digital product downloads.
+// Verifies transaction submission and unlocks digital product downloads (500+ Pack, AI 4K Unlocks, Studio 1280x720 Exports, and Custom Commissions).
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { orderId, customerEmail, paymentMethod = 'UPI', screenshotAttached = false, itemName, amount, notes = '' } = req.body || {};
+    const { orderId, customerEmail, paymentMethod = 'UPI', screenshotAttached = false, itemName = '', amount = 150, notes = '' } = req.body || {};
 
     if (!customerEmail || !customerEmail.includes('@')) {
       return res.status(400).json({ error: 'Valid customer email is required for invoice and delivery dispatch.' });
@@ -28,24 +28,26 @@ export default async function handler(req, res) {
     const verifiedOrderId = orderId || `CVR-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
     const verifiedAt = new Date().toISOString();
 
-    const isPack = itemName ? (itemName.toLowerCase().includes('pack') || itemName.toLowerCase().includes('starter') || amount === 200 || amount === 99) : true;
+    const lowerItem = (itemName || '').toLowerCase();
+    const isPack = lowerItem.includes('pack') || lowerItem.includes('starter') || amount === 200 || amount === 99;
+    const isAiVisual = lowerItem.includes('ai') || lowerItem.includes('visual') || amount === 49;
+    const isStudioExport = lowerItem.includes('studio') || lowerItem.includes('export');
 
-    // Generate secure unlock response
     return res.status(200).json({
       success: true,
       verified: true,
       receipt: {
         orderId: verifiedOrderId,
         customerEmail,
-        itemName: itemName || '500+ Viral Elements Pack',
-        amount: amount || 200,
+        itemName: itemName || 'CVRTN Service',
+        amount: Number(amount),
         currency: 'INR',
         paymentMethod,
         verifiedAt,
         status: 'VERIFIED_ACTIVE',
-        isDigitalPack: isPack,
+        productType: isPack ? 'PACK' : (isAiVisual ? 'AI_VISUAL' : (isStudioExport ? 'STUDIO_EXPORT' : 'CUSTOM_ORDER')),
         downloadUrl: isPack ? '/CVRTNS_THumbnaiL.zip' : null,
-        estimatedDeliveryTime: isPack ? 'INSTANT' : '24 Hours (Custom Designer Turnaround)'
+        estimatedDeliveryTime: (isPack || isAiVisual || isStudioExport) ? 'INSTANT' : '24 Hours (Custom Designer Turnaround)'
       }
     });
 
