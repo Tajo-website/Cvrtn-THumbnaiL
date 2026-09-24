@@ -92,6 +92,7 @@ body{background-color:#0B0C10; color:#F3F4F6}
     </div>
 
     <div class="hidden md:flex items-center gap-1 font-bold text-[13px] text-zinc-300">
+      <a href="#ai-studio" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition text-[#00F562] font-black"><i class="fa-solid fa-robot mr-1 text-[#00F562]"></i> AI Studio</a>
       <a href="#portfolio" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition text-[#FFD600] font-black"><i class="fa-solid fa-fire mr-1 text-[#FF2A2A]"></i> Portfolio</a>
       <a href="#custom-services" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition font-black">Order: "THumbnaiL"</a>
       <a href="#preview" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition">Elements (₹200)</a>
@@ -232,6 +233,155 @@ body{background-color:#0B0C10; color:#F3F4F6}
     <span class="mx-6">★ CUSTOM THUMBNAILS AT ₹150</span><span class="mx-6">500+ PACK AT ₹200</span><span class="mx-6">&bull;</span><span class="mx-6">ORDER: "THumbnaiL"</span><span class="mx-6">&bull;</span><span class="mx-6">GAMING & FPS</span><span class="mx-6">&bull;</span><span class="mx-6">4K PNG ELEMENTS</span><span class="mx-6">&bull;</span><span class="mx-6">3D GRAPHICS</span><span class="mx-6">&bull;</span>
   </div>
 </div>
+
+<!-- AI THUMBNAIL STUDIO & CUSTOM CREATOR AGENT SECTION -->
+<section id="ai-studio" class="max-w-[1300px] mx-auto px-4 md:px-6 py-16">
+  <div class="bg-gradient-to-b from-[#131522] via-[#0E1018] to-[#0A0B10] border-2 border-[#00F562]/30 rounded-[32px] p-6 md:p-10 comic-shadow-lg relative overflow-hidden">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-[#00F562]/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-[#FF2A2A]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 relative z-10">
+      <div>
+        <div class="inline-flex items-center gap-2 bg-[#00F562] text-black rounded-full px-4 py-1 text-[11px] font-black tracking-widest shadow-glowGreen">
+          <i class="fa-solid fa-robot"></i> AI THUMBNAIL AGENT &bull; CREATIVE ASSISTANT
+        </div>
+        <h2 class="font-display text-[32px] md:text-[48px] leading-tight mt-3 text-white">
+          CUSTOM THUMBNAIL STUDIO &amp; <span class="text-[#00F562]">AI AGENT</span>
+        </h2>
+        <p class="text-zinc-400 font-medium text-[15px] mt-1 max-w-[640px]">
+          Tell our AI Agent your video idea. It will brainstorm high-CTR visual concepts, text hooks, and element layouts—then order your custom design for only <b class="text-[#FFD600]">₹150</b>!
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="bg-zinc-900 border border-white/20 text-xs font-bold text-zinc-300 px-3 py-1.5 rounded-full flex items-center gap-2">
+          <span class="w-2 h-2 bg-[#00F562] rounded-full animate-ping"></span> AI Agent Online
+        </span>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-6 relative z-10 items-start">
+      
+      <!-- Left Column: AI Assistant Chat & Strategy Generator -->
+      <div class="lg:col-span-6 bg-zinc-950 border border-white/15 rounded-[24px] p-5 flex flex-col justify-between shadow-2xl">
+        <div>
+          <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 bg-gradient-to-tr from-[#00F562] to-[#0EA5E9] text-black rounded-xl grid place-items-center font-black text-sm comic-shadow-sm">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </div>
+              <div>
+                <div class="font-black text-sm text-white flex items-center gap-1.5">
+                  JARVIS AI AGENT <span class="text-[10px] bg-[#00F562]/20 text-[#00F562] px-2 py-0.2 rounded-full border border-[#00F562]/30">CTR PRO</span>
+                </div>
+                <div class="text-[11px] text-zinc-400">Thumbnail Strategist &amp; Idea Engine</div>
+              </div>
+            </div>
+            <span class="text-[11px] text-zinc-500 font-mono">Powered by CVRTN AI</span>
+          </div>
+
+          <!-- Quick Topic Pills -->
+          <div class="mb-3">
+            <span class="text-[11px] font-bold text-zinc-400 block mb-1.5">Instant Concept Presets:</span>
+            <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+              <button onclick="applyAiPreset('COD Warzone 1v4 Clutch Montage with crazy reaction face')" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white px-2.5 py-1 rounded-lg border border-white/10 transition">🎮 Gaming 1v4</button>
+              <button onclick="applyAiPreset('How I Made ₹50,000 in 7 Days Trading Crypto/Stocks')" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white px-2.5 py-1 rounded-lg border border-white/10 transition">💰 Finance ₹50K</button>
+              <button onclick="applyAiPreset('I Tested 100 AI Tools for 24 Hours')" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white px-2.5 py-1 rounded-lg border border-white/10 transition">🤖 Tech &amp; AI</button>
+              <button onclick="applyAiPreset('I Survived 100 Days in Hardcore Horror World')" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white px-2.5 py-1 rounded-lg border border-white/10 transition">🔥 Challenge</button>
+            </div>
+          </div>
+
+          <!-- Interactive AI Idea Input Area -->
+          <div class="space-y-2">
+            <label class="block text-xs font-black text-zinc-300">Enter Your YouTube Video Title or Idea:</label>
+            <div class="flex gap-2">
+              <input type="text" id="aiIdeaInput" placeholder="e.g. Surviving 100 Days on 1 Heart Minecraft..." class="flex-1 border border-white/20 rounded-xl px-3.5 py-2.5 text-xs font-bold bg-zinc-900 text-white focus:border-[#00F562] outline-none">
+              <button onclick="generateAiThumbnailConcept()" id="aiGenBtn" class="bg-[#00F562] hover:bg-[#00d655] text-black px-4 py-2.5 rounded-xl font-black text-xs comic-shadow-sm flex items-center gap-1.5 transition whitespace-nowrap">
+                <i class="fa-solid fa-sparkles"></i> Brainstorm
+              </button>
+            </div>
+          </div>
+
+          <!-- AI Concept Output Box -->
+          <div id="aiConceptOutput" class="mt-4 bg-[#141520] border border-white/15 rounded-2xl p-4 text-xs space-y-2.5">
+            <div class="flex items-center justify-between text-[#00F562] font-black">
+              <span><i class="fa-solid fa-lightbulb"></i> AI STRATEGY BRIEF GENERATED:</span>
+              <span class="text-[10px] bg-zinc-800 text-zinc-300 px-2 py-0.5 rounded">Estimated CTR: 13.5%+</span>
+            </div>
+            
+            <div class="space-y-1.5 text-zinc-300">
+              <div class="font-bold text-white"><span class="text-[#FFD600]">⚡ Recommended Hook Text:</span> <span id="aiHookText" class="font-mono text-white bg-black px-2 py-0.5 rounded border border-white/20">"HOW I MADE ₹10K IN 7 DAYS"</span></div>
+              <div><span class="text-zinc-400 font-bold">🎨 Color Theme:</span> <span id="aiColorTheme" class="text-white">Electric Yellow + Deep Dark Contrast</span></div>
+              <div><span class="text-zinc-400 font-bold">🎯 Composition Plan:</span> <span id="aiComposition" class="text-white">Subject on left with shock expression, giant money stack + red curved arrow on right side.</span></div>
+              <div><span class="text-zinc-400 font-bold">🧩 Recommended 4K Elements:</span> <span id="aiElements" class="text-[#00F562]">Red Arrow, Cash Stack, WOW! Burst, Fire Aura</span></div>
+            </div>
+
+            <button onclick="transferAiToOrder()" class="w-full mt-2 bg-[#FFD600] hover:bg-[#ffcd00] text-black font-black py-2.5 rounded-xl border-2 border-black comic-shadow-sm flex items-center justify-center gap-2 transition">
+              <i class="fa-solid fa-arrow-right"></i> Use This Concept &rarr; Fill Order Form
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Custom Thumbnail Order Form -->
+      <div class="lg:col-span-6 bg-zinc-950 border-2 border-white/20 rounded-[24px] p-6 shadow-2xl">
+        <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+          <div>
+            <div class="text-[11px] font-black text-[#FFD600] tracking-widest uppercase">CUSTOM REQUEST FORM</div>
+            <h3 class="font-display text-xl text-white">CUSTOM "THumbnaiL" SPECIFICATIONS</h3>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] text-zinc-400 font-bold block">PRICE</span>
+            <span class="font-display text-2xl text-[#00F562]">₹150</span>
+          </div>
+        </div>
+
+        <form onsubmit="submitCustomStudioOrder(event)" class="space-y-3">
+          <div>
+            <label class="block text-xs font-black mb-1 text-zinc-300">Video Title / Hook Text <span class="text-[#FF2A2A]">*</span></label>
+            <input type="text" id="studioVideoTitle" required placeholder="e.g. HOW I MADE 100K IN 30 DAYS" class="w-full border border-white/20 rounded-xl px-3.5 py-2 text-xs font-bold bg-zinc-900 text-white focus:border-[#FFD600] outline-none">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-black mb-1 text-zinc-300">Category / Niche</label>
+              <select id="studioNiche" class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-bold bg-zinc-900 text-white focus:border-[#FFD600] outline-none">
+                <option value="Gaming">Gaming / Montages</option>
+                <option value="Finance">Finance &amp; Money</option>
+                <option value="Tech">Tech &amp; AI</option>
+                <option value="Vlog">Vlog &amp; Lifestyle</option>
+                <option value="Esports">Esports &amp; Tournaments</option>
+                <option value="Other">Other Category</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-black mb-1 text-zinc-300">Delivery Speed</label>
+              <div class="bg-zinc-900 border border-white/20 rounded-xl px-3 py-2 text-xs font-bold text-[#00F562] flex items-center gap-1.5">
+                <i class="fa-solid fa-bolt"></i> 24h Express Included
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-black mb-1 text-zinc-300">Style Instructions &amp; Element Requests</label>
+            <textarea id="studioInstructions" rows="2" placeholder="e.g. Add red glowing arrows, high contrast background, 3D character text..." class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-medium bg-zinc-900 text-white focus:border-[#FFD600] outline-none"></textarea>
+          </div>
+
+          <div class="bg-zinc-900 border border-white/10 rounded-xl p-3 text-xs space-y-1 text-zinc-400">
+            <div class="flex items-center gap-1.5 text-white font-bold"><i class="fa-solid fa-circle-check text-[#00F562]"></i> Includes 4K High-Res PNG + Free PSD Source File</div>
+            <div class="flex items-center gap-1.5 text-white font-bold"><i class="fa-solid fa-circle-check text-[#00F562]"></i> Unlimited Revisions until you are 100% happy</div>
+          </div>
+
+          <button type="submit" class="w-full bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full py-3.5 font-black text-sm comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-[1.02]">
+            <i class="fa-solid fa-lock"></i> ORDER CUSTOM "THumbnaiL" NOW — ₹150
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 <!-- THUMBNAIL PORTFOLIO SECTION -->
 <section id="portfolio" class="max-w-[1300px] mx-auto px-4 md:px-6 py-16">
@@ -936,14 +1086,7 @@ body{background-color:#0B0C10; color:#F3F4F6}
             </div>
           </div>
 
-          <!-- 12-Digit UTR Input -->
-          <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">12-Digit UPI Ref / UTR Number (Optional)</label>
-            <div class="relative">
-              <input type="text" id="buyerUtr" placeholder="e.g. 426189304128" maxlength="16" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-mono font-bold bg-zinc-900 text-[#FFD600] focus:border-[#00F562] outline-none pl-9">
-              <i class="fa-solid fa-receipt absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-xs"></i>
-            </div>
-          </div>
+          
 
           <!-- Requirements / Order Notes -->
           <div>
@@ -981,7 +1124,7 @@ body{background-color:#0B0C10; color:#F3F4F6}
     <div class="bg-zinc-900 border border-white/15 rounded-2xl p-4 my-4 text-left text-xs space-y-1.5 font-bold">
       <div class="flex justify-between"><span class="text-zinc-400">Order ID:</span><span class="font-mono text-[#FFD600]" id="orderIdText">#THUMB-9481</span></div>
       <div class="flex justify-between"><span class="text-zinc-400">Customer Email:</span><span class="font-mono text-white" id="orderEmailText">user@gmail.com</span></div>
-      <div class="flex justify-between"><span class="text-zinc-400">Transaction UTR:</span><span class="font-mono text-[#00F562]" id="orderUtrText">426189304128</span></div>
+      
       <div class="flex justify-between"><span class="text-zinc-400">Status:</span><span class="text-[#00F562] bg-[#00F562]/10 px-2 py-0.5 rounded border border-[#00F562]/30">ACTIVE &bull; PAID ₹</span></div>
     </div>
 
@@ -1476,7 +1619,7 @@ function backToStep1(){
 function handleSecurityVerification(e){
   e.preventDefault();
   const email = document.getElementById('buyerEmail').value.trim();
-  const utr = document.getElementById('buyerUtr').value.trim() || 'UPI-APP-TRANSFER';
+  
   const notes = document.getElementById('buyerNotes').value.trim();
   
   if(!email){
@@ -1497,7 +1640,7 @@ function handleSecurityVerification(e){
     
     document.getElementById('orderIdText').textContent = orderId;
     document.getElementById('orderEmailText').textContent = email;
-    document.getElementById('orderUtrText').textContent = utr;
+    
     
     const deliveryAction = document.getElementById('productDeliveryAction');
     const isPack = currentPaymentItem.toLowerCase().includes('pack') || currentPaymentItem.toLowerCase().includes('starter') || currentPaymentAmount === 200 || currentPaymentAmount === 99;
@@ -1553,6 +1696,91 @@ function handleSecurityVerification(e){
     cart = [];
     updateCartUI();
   }, 1000);
+}
+
+
+// AI Thumbnail Studio Agent Logic
+const aiPresetsData = {
+  gaming: {
+    hook: "1v4 CLUTCH GOD!",
+    color: "Neon Red, Acid Green & Weapon Flare",
+    composition: "Extreme zoom character on left, glowing blue targeting crosshair, epic victory badge.",
+    elements: "Red Curved Arrow, 1v4 Burst, Blue Lightning, Victory Crown"
+  },
+  finance: {
+    hook: "₹50,000 IN 7 DAYS!",
+    color: "Emerald Green, Gold & Dark Slate",
+    composition: "Shocked face cutout, 3D flying money stacks, upward green stock chart line.",
+    elements: "Money Stack, Gold Coins, Upward Chart, WOW! Burst"
+  },
+  tech: {
+    hook: "100 AI TOOLS TESTED",
+    color: "Cyber Cyan & Dark Violet Glow",
+    composition: "Split-screen before/after, floating glowing AI robot head, futuristic HUD frame.",
+    elements: "Glowing HUD Rings, Shock Symbols, Blue Energy, Sparkles"
+  },
+  challenge: {
+    hook: "SURVIVED 100 DAYS!",
+    color: "Fire Orange, Danger Red & Smoke",
+    composition: "Intense character in armor with high contrast vignette, flame aura and skull counter.",
+    elements: "Fire Flame, Explosion Burst, Warning Tag, Red Straight Arrow"
+  }
+};
+
+function applyAiPreset(promptText){
+  document.getElementById('aiIdeaInput').value = promptText;
+  generateAiThumbnailConcept();
+}
+
+function generateAiThumbnailConcept(){
+  const input = document.getElementById('aiIdeaInput').value.trim() || 'Custom YouTube Video';
+  const btn = document.getElementById('aiGenBtn');
+  btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Brainstorming...';
+  
+  setTimeout(()=>{
+    btn.innerHTML = '<i class="fa-solid fa-sparkles"></i> Brainstorm';
+    
+    let chosen = aiPresetsData.gaming;
+    const lower = input.toLowerCase();
+    if(lower.includes('money') || lower.includes('₹') || lower.includes('trading') || lower.includes('finance') || lower.includes('rich')){
+      chosen = aiPresetsData.finance;
+    } else if(lower.includes('ai') || lower.includes('tool') || lower.includes('tech') || lower.includes('code')){
+      chosen = aiPresetsData.tech;
+    } else if(lower.includes('survive') || lower.includes('100') || lower.includes('hardcore') || lower.includes('horror')){
+      chosen = aiPresetsData.challenge;
+    }
+    
+    document.getElementById('aiHookText').textContent = `"${input.toUpperCase().substring(0, 24)}"`;
+    document.getElementById('aiColorTheme').textContent = chosen.color;
+    document.getElementById('aiComposition').textContent = chosen.composition;
+    document.getElementById('aiElements').textContent = chosen.elements;
+    
+    showToast('AI Agent generated visual strategy brief!');
+  }, 600);
+}
+
+function transferAiToOrder(){
+  const hook = document.getElementById('aiHookText').textContent.replace(/"/g, '');
+  const comp = document.getElementById('aiComposition').textContent;
+  const elems = document.getElementById('aiElements').textContent;
+  
+  document.getElementById('studioVideoTitle').value = hook;
+  document.getElementById('studioInstructions').value = `Composition: ${comp}\nElements: ${elems}`;
+  
+  showToast('Brief transferred to Custom Request Form!');
+  document.getElementById('studioVideoTitle').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function submitCustomStudioOrder(e){
+  e.preventDefault();
+  const title = document.getElementById('studioVideoTitle').value;
+  const niche = document.getElementById('studioNiche').value;
+  const instructions = document.getElementById('studioInstructions').value;
+  
+  openPaymentModal(`Custom "${niche}" THumbnaiL — "${title}"`, 150);
+  if(document.getElementById('buyerNotes')){
+    document.getElementById('buyerNotes').value = `Title: ${title}\nNiche: ${niche}\nInstructions: ${instructions}`;
+  }
 }
 
 // Init
