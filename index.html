@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bangers&family=Inter:wght@400;500;600;700;800;900&family=Fredoka:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bangers&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Fredoka:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script>
 tailwind.config={
@@ -17,12 +17,15 @@ tailwind.config={
         display:['Archivo Black','sans-serif'],
         comic:['Bangers','cursive'],
         fredoka:['Fredoka','sans-serif'],
-        sans:['Inter','sans-serif']
+        sans:['Plus Jakarta Sans','sans-serif']
       },
       boxShadow:{
-        comic:'6px 6px 0px 0px #000',
-        comicSm:'4px 4px 0px 0px #000',
+        comic:'5px 5px 0px 0px #000',
+        comicSm:'3px 3px 0px 0px #000',
         comicLg:'8px 8px 0px 0px #000',
+        glowRed:'0 0 25px rgba(255, 42, 42, 0.45)',
+        glowGold:'0 0 25px rgba(255, 214, 0, 0.45)',
+        glowGreen:'0 0 25px rgba(0, 245, 98, 0.45)',
       }
     }
   }
@@ -30,163 +33,189 @@ tailwind.config={
 </script>
 <style>
 *{scroll-behavior:smooth}
-.comic-shadow{box-shadow:6px 6px 0 #000}
-.comic-shadow-sm{box-shadow:4px 4px 0 #000}
-.comic-shadow-lg{box-shadow:8px 8px 0 #000}
-.text-stroke{-webkit-text-stroke:2px #000; text-shadow:4px 4px 0 #000}
+body{background-color:#0B0C10; color:#F3F4F6}
+.comic-shadow{box-shadow:5px 5px 0px #000}
+.comic-shadow-sm{box-shadow:3px 3px 0px #000}
+.comic-shadow-lg{box-shadow:8px 8px 0px #000}
+.comic-shadow-yellow{box-shadow:5px 5px 0px #FFD600}
+.comic-shadow-red{box-shadow:5px 5px 0px #FF2A2A}
 .rotate-slight{transform:rotate(-1.5deg)}
 .grid-pattern{
-  background-image: radial-gradient(#000 1.5px, transparent 1.5px);
-  background-size:22px 22px;
-  opacity:.06
+  background-image: radial-gradient(rgba(255,255,255,0.12) 1.5px, transparent 1.5px);
+  background-size:24px 24px;
 }
 .marquee{animation:marquee 18s linear infinite}
 @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .bounce-slow{animation:bounceSlow 2.5s ease-in-out infinite}
 @keyframes bounceSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .shake:hover{animation:shake .35s ease}
-@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-1deg)}75%{transform:rotate(1deg)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-1.2deg)}75%{transform:rotate(1.2deg)}}
 .canvas-element{cursor:grab; user-select:none; touch-action:none}
 .canvas-element:active{cursor:grabbing}
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-thumb{background:#000;border-radius:999px}
-.tab-active{background:#000; color:#fff}
-.credit-card-preview{background:linear-gradient(135deg, #1e1e24 0%, #0b0b0e 100%)}
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-track{background:#0b0c10}
+::-webkit-scrollbar-thumb{background:#2a2b33;border-radius:999px;border:1px solid #000}
+::-webkit-scrollbar-thumb:hover{background:#FF2A2A}
+.tab-active{background:#FF2A2A; color:#fff; border-color:#FF2A2A}
+.credit-card-preview{background:linear-gradient(135deg, #181920 0%, #0F1015 100%)}
+.glass-card{background:rgba(20, 21, 28, 0.85); backdrop-filter:blur(16px); border:2px solid rgba(255, 255, 255, 0.1)}
+.glass-card-hover:hover{border-color:rgba(255, 214, 0, 0.6); box-shadow:0 10px 30px -10px rgba(255, 214, 0, 0.25)}
 </style>
 </head>
-<body class="bg-[#FFFDF5] text-zinc-900 font-sans antialiased overflow-x-hidden">
+<body class="font-sans antialiased overflow-x-hidden selection:bg-[#FF2A2A] selection:text-white">
 
-<div class="bg-black text-white text-[12px] md:text-[13px] font-extrabold tracking-wide py-2.5 px-4 flex items-center justify-center gap-3 md:gap-6 relative z-50">
-  <span class="bg-[#FF1A1A] text-white px-2.5 py-1 rounded-full text-[11px] tracking-widest">CUSTOM ORDERS OPEN</span>
-  <span class="hidden md:inline opacity-90">🔥 CUSTOM THUMBNAIL COMMISSIONS & 500+ PACK PREVIEW AVAILABLE</span>
-  <span class="md:hidden">🔥 CUSTOM "THumbnaL" COMMISSIONS OPEN</span>
-  <span class="hidden sm:flex items-center gap-2 bg-white text-black px-3 py-1 rounded-full ml-2">
+<!-- Announcement Bar -->
+<div class="bg-gradient-to-r from-[#FF2A2A] via-[#FF7A00] to-[#FFD600] text-black text-[12px] md:text-[13px] font-black tracking-wide py-2.5 px-4 flex items-center justify-center gap-3 md:gap-6 relative z-50 shadow-md">
+  <span class="bg-black text-white px-2.5 py-0.5 rounded-full text-[11px] tracking-widest border border-black/20">🔥 SPECIAL SALE</span>
+  <span class="hidden md:inline">500+ VIRAL ELEMENTS PACK AT JUST <b class="underline decoration-black decoration-2">₹200</b> &bull; CUSTOM THUMBNAILS AT ONLY <b class="underline decoration-black decoration-2">₹150</b></span>
+  <span class="md:hidden">PACK AT ₹200 &bull; CUSTOM THUMBNAILS ₹150</span>
+  <span class="hidden sm:flex items-center gap-2 bg-black text-[#FFD600] px-3 py-0.5 rounded-full ml-2 border border-black">
     <i class="fa-regular fa-clock text-[11px]"></i>
     <span id="countdown" class="tabular-nums">11:42:18</span>
   </span>
-  <button onclick="document.getElementById('announcement').remove()" class="absolute right-3 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 md:hidden"><i class="fa-solid fa-xmark"></i></button>
+  <button onclick="document.getElementById('announcement').remove()" class="absolute right-3 top-1/2 -translate-y-1/2 opacity-75 hover:opacity-100 md:hidden"><i class="fa-solid fa-xmark"></i></button>
 </div>
 <div id="announcement"></div>
 
-<nav class="sticky top-0 z-40 bg-white border-b-[3px] border-black">
-  <div class="max-w-[1280px] mx-auto px-4 md:px-6 h-[64px] md:h-[70px] flex items-center justify-between gap-4">
+<!-- STICKY NAVBAR -->
+<nav class="sticky top-0 z-40 bg-[#12131A]/90 backdrop-blur-xl border-b-2 border-white/10">
+  <div class="max-w-[1300px] mx-auto px-4 md:px-6 h-[68px] md:h-[74px] flex items-center justify-between gap-4">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 md:w-11 md:h-11 bg-[#FF1A1A] border-[3px] border-black rounded-xl flex items-center justify-center comic-shadow-sm rotate-[-3deg]">
-        <span class="font-display text-white text-[18px] tracking-tighter leading-none">C×T</span>
+      <div class="w-11 h-11 bg-gradient-to-br from-[#FF2A2A] to-[#FF7A00] border-2 border-black rounded-xl flex items-center justify-center comic-shadow-sm rotate-[-3deg]">
+        <span class="font-display text-white text-[19px] tracking-tighter leading-none">C×T</span>
       </div>
       <div class="leading-none">
-        <div class="font-display text-[18px] md:text-[20px] tracking-tight">CVRTN'S <span class="text-[#FF1A1A]">THumbnaiL</span></div>
-        <div class="text-[10px] font-black tracking-[0.18em] text-zinc-500 -mt-1">PORTFOLIO & ASSETS • 4K</div>
+        <div class="font-display text-[19px] md:text-[22px] tracking-tight text-white">CVRTN'S <span class="text-[#FF2A2A]">THumbnaiL</span></div>
+        <div class="text-[10px] font-black tracking-[0.2em] text-[#FFD600] -mt-0.5">PORTFOLIO & 500+ PACK</div>
       </div>
-      <span class="hidden lg:inline-flex ml-3 bg-[#FFD600] border-2 border-black rounded-full px-3 py-1 text-[11px] font-black">PORTFOLIO & PREVIEW</span>
+      <span class="hidden lg:inline-flex ml-3 bg-[#FFD600] text-black border-2 border-black rounded-full px-3 py-0.5 text-[11px] font-black">₹150 / THUMBNAIL</span>
     </div>
-    <div class="hidden md:flex items-center gap-1 font-bold text-[13px]">
-      <a href="#portfolio" class="px-3.5 py-2 hover:bg-zinc-100 rounded-full transition text-[#FF1A1A] font-black"><i class="fa-solid fa-image mr-1"></i> Portfolio</a>
-      <a href="#custom-services" class="px-3.5 py-2 hover:bg-zinc-100 rounded-full transition font-black">Order: "THumbnaL"</a>
-      <a href="#preview" class="px-3.5 py-2 hover:bg-zinc-100 rounded-full transition">Elements Preview</a>
-      <a href="#builder" class="px-3.5 py-2 hover:bg-zinc-100 rounded-full transition">Builder</a>
-      <a href="#pricing" class="px-3.5 py-2 hover:bg-zinc-100 rounded-full transition">Pricing</a>
-      <a href="#faq" class="px-3.5 py-2 hover:bg-zinc-100 rounded-full transition">FAQ</a>
+
+    <div class="hidden md:flex items-center gap-1 font-bold text-[13px] text-zinc-300">
+      <a href="#portfolio" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition text-[#FFD600] font-black"><i class="fa-solid fa-fire mr-1 text-[#FF2A2A]"></i> Portfolio</a>
+      <a href="#custom-services" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition font-black">Order: "THumbnaL"</a>
+      <a href="#preview" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition">Elements (₹200)</a>
+      <a href="#builder" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition">Builder</a>
+      <a href="#pricing" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition">Pricing (₹)</a>
+      <a href="#faq" class="px-3.5 py-2 hover:text-white hover:bg-white/10 rounded-full transition">FAQ</a>
     </div>
+
     <div class="flex items-center gap-2 md:gap-3">
-      <button onclick="openPaymentModal('Custom THumbnaL Package', 35)" class="hidden sm:inline-flex bg-[#FFD600] text-black border-[2.5px] border-black rounded-full px-4 h-10 items-center font-black text-[13px] comic-shadow-sm hover:translate-y-[1px] hover:shadow-none transition gap-1.5">
-        <i class="fa-solid fa-wand-magic-sparkles text-xs"></i> Order Custom
+      <button onclick="openPaymentModal('Custom THumbnaL Commission', 150)" class="hidden sm:inline-flex bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 h-10 items-center font-black text-[13px] comic-shadow-sm hover:translate-y-[1px] hover:shadow-none transition gap-1.5">
+        <i class="fa-solid fa-bolt text-xs"></i> Order "THumbnaL" — ₹150
       </button>
-      <button id="cartBtn" class="relative w-10 h-10 md:w-auto md:px-4 md:h-10 bg-white border-[2.5px] border-black rounded-full flex items-center justify-center gap-2 font-black comic-shadow-sm hover:translate-y-[1px] hover:shadow-none transition">
-        <i class="fa-solid fa-bag-shopping"></i>
+      <button id="cartBtn" class="relative w-10 h-10 md:w-auto md:px-4 md:h-10 bg-zinc-900 border-2 border-white/20 hover:border-white text-white rounded-full flex items-center justify-center gap-2 font-black transition">
+        <i class="fa-solid fa-bag-shopping text-sm"></i>
         <span class="hidden md:inline text-[13px]">Cart</span>
-        <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-[#FF1A1A] text-white text-[11px] w-5 h-5 rounded-full grid place-items-center border-2 border-black">0</span>
+        <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-[#FF2A2A] text-white text-[11px] w-5 h-5 rounded-full grid place-items-center border-2 border-black font-bold">0</span>
       </button>
-      <button onclick="openPaymentModal('Pro Pack — 500+ Elements', 29)" class="hidden md:inline-flex bg-[#FF1A1A] text-white border-[2.5px] border-black rounded-full px-5 h-10 items-center font-black text-[13px] comic-shadow-sm hover:translate-y-[1px] hover:shadow-none transition">BUY PACK — $29</button>
-      <button id="mobileMenuBtn" class="md:hidden w-10 h-10 bg-black text-white rounded-full grid place-items-center"><i class="fa-solid fa-bars"></i></button>
+      <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="hidden md:inline-flex bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full px-5 h-10 items-center font-black text-[13px] comic-shadow-sm hover:translate-y-[1px] hover:shadow-none transition">GET PACK — ₹200</button>
+      <button id="mobileMenuBtn" class="md:hidden w-10 h-10 bg-zinc-800 text-white border border-white/20 rounded-full grid place-items-center"><i class="fa-solid fa-bars"></i></button>
     </div>
   </div>
-  <div id="mobileMenu" class="hidden md:hidden border-t-2 border-black bg-white px-4 py-4 space-y-1">
-    <a href="#portfolio" class="block px-4 py-3 bg-[#FF1A1A] text-white rounded-xl font-black">View Thumbnail Portfolio</a>
-    <a href="#custom-services" class="block px-4 py-3 bg-[#FFD600] text-black rounded-xl font-black">Order: "THumbnaL"</a>
-    <a href="#preview" class="block px-4 py-3 bg-zinc-50 rounded-xl font-bold">Preview Elements Pack</a>
-    <a href="#builder" class="block px-4 py-3 bg-zinc-50 rounded-xl font-bold">Thumbnail Builder</a>
-    <a href="#pricing" class="block px-4 py-3 bg-zinc-50 rounded-xl font-bold">Pricing & Packs</a>
-    <button onclick="openPaymentModal('Custom THumbnaL Package', 35)" class="w-full text-center px-4 py-3 bg-black text-white rounded-xl font-black mt-2">Open Checkout / Payment UI</button>
+
+  <div id="mobileMenu" class="hidden md:hidden border-t-2 border-white/10 bg-[#12131A] px-4 py-4 space-y-1.5 text-sm">
+    <a href="#portfolio" class="block px-4 py-3 bg-[#FF2A2A] text-white rounded-xl font-black">View Thumbnail Portfolio</a>
+    <a href="#custom-services" class="block px-4 py-3 bg-[#FFD600] text-black rounded-xl font-black">Order: "THumbnaL" (₹150)</a>
+    <a href="#preview" class="block px-4 py-3 bg-zinc-900 text-white rounded-xl font-bold border border-white/10">Preview Elements Pack (₹200)</a>
+    <a href="#builder" class="block px-4 py-3 bg-zinc-900 text-white rounded-xl font-bold border border-white/10">Thumbnail Builder</a>
+    <a href="#pricing" class="block px-4 py-3 bg-zinc-900 text-white rounded-xl font-bold border border-white/10">Pricing in Rupees (₹)</a>
+    <button onclick="openPaymentModal('Custom THumbnaL Commission', 150)" class="w-full text-center px-4 py-3 bg-[#00F562] text-black rounded-xl font-black mt-2">Open Checkout / Payment UI</button>
   </div>
 </nav>
 
-<section class="relative overflow-hidden">
-  <div class="absolute inset-0 grid-pattern"></div>
-  <div class="absolute inset-0 bg-gradient-to-br from-[#FFF7CC] via-transparent to-[#FFE0E0]"></div>
-  <div class="max-w-[1280px] mx-auto px-4 md:px-6 pt-6 md:pt-10 pb-8 md:pb-12 relative">
-    <div class="grid lg:grid-cols-[1.05fr_0.95fr] gap-6 md:gap-8 items-start">
-      <div class="pt-2">
+<!-- HERO SECTION -->
+<section class="relative overflow-hidden pt-8 pb-14 md:pb-20">
+  <div class="absolute inset-0 grid-pattern opacity-40"></div>
+  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#FF2A2A]/20 via-[#FF7A00]/20 to-[#FFD600]/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="max-w-[1300px] mx-auto px-4 md:px-6 relative">
+    <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-12 items-center">
+      <div>
         <div class="inline-flex flex-wrap items-center gap-2 mb-4">
-          <span class="bg-black text-white rounded-full px-3 py-1.5 text-[11px] font-black tracking-widest flex items-center gap-2"><span class="w-2 h-2 bg-[#00E054] rounded-full animate-pulse"></span> PORTFOLIO & ASSET SUITE • 4K</span>
-          <span class="bg-white border-2 border-black rounded-full px-3 py-1 text-[11px] font-black flex items-center gap-1.5"><i class="fa-solid fa-star text-[#FFB800]"></i> 4.9/5 (2,847 creators)</span>
+          <span class="bg-[#FF2A2A] text-white rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest flex items-center gap-2 shadow-glowRed">
+            <span class="w-2 h-2 bg-white rounded-full animate-ping"></span> CUSTOM COMMISSIONS OPEN
+          </span>
+          <span class="bg-zinc-900/90 text-zinc-300 border border-white/20 rounded-full px-3 py-1 text-[11px] font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-star text-[#FFD600]"></i> 4.9/5 Rating (Creators Choice)
+          </span>
         </div>
-        <h1 class="font-display text-[40px] md:text-[60px] leading-[0.9] tracking-tight">
-          HIGH-CTR <span class="inline-block bg-[#FF1A1A] text-white px-2 md:px-3 leading-none border-[3px] border-black rotate-slight comic-shadow-sm">THUMBNAILS</span><br>
-          & CUSTOM <span class="relative inline-block"><span class="bg-[#FFD600] px-2 md:px-3 border-[3px] border-black rotate-[1deg] inline-block comic-shadow-sm">ELEMENTS</span></span><br>
-          FOR CREATORS<span class="text-[#FF1A1A]">.</span>
+
+        <h1 class="font-display text-[44px] sm:text-[56px] md:text-[66px] leading-[0.92] tracking-tight text-white">
+          AESTHETIC <span class="inline-block bg-[#FF2A2A] text-white px-3 py-0.5 border-[3px] border-black rotate-slight comic-shadow">THUMBNAILS</span><br>
+          & 500+ PACK <span class="relative inline-block text-black bg-[#FFD600] px-3 py-0.5 border-[3px] border-black rotate-[1deg] comic-shadow">ELEMENTS</span>
         </h1>
-        <p class="mt-4 text-[15px] md:text-[17px] leading-relaxed text-zinc-700 max-w-[560px] font-medium">
-          Explore my official thumbnail portfolio and interactive 500+ element visual pack. I make custom, high-converting YouTube thumbnails and personalized element packs that guarantee sky-high CTRs.
+
+        <p class="mt-5 text-[16px] md:text-[18px] leading-relaxed text-zinc-300 max-w-[580px] font-medium">
+          Get viral, scroll-stopping YouTube thumbnails custom crafted for your niche at just <b class="text-[#FFD600] font-black">₹150</b>. Or unlock the complete 500+ isolated 4K element pack for only <b class="text-[#00F562] font-black">₹200</b>.
         </p>
-        <div class="mt-5 flex flex-wrap gap-2 text-[12px] font-bold">
-          <span class="bg-white border-2 border-black rounded-full px-3 py-1.5 flex items-center gap-1.5"><i class="fa-solid fa-check text-[#00C950]"></i> Custom 1-on-1 Thumbnails</span>
-          <span class="bg-white border-2 border-black rounded-full px-3 py-1.5 flex items-center gap-1.5"><i class="fa-solid fa-check text-[#00C950]"></i> 500+ Element Pack</span>
-          <span class="bg-white border-2 border-black rounded-full px-3 py-1.5 flex items-center gap-1.5"><i class="fa-solid fa-check text-[#00C950]"></i> 4K Ultra HD</span>
-          <span class="bg-white border-2 border-black rounded-full px-3 py-1.5 flex items-center gap-1.5"><i class="fa-solid fa-check text-[#00C950]"></i> 24h Turnaround</span>
+
+        <div class="mt-6 flex flex-wrap gap-2 text-[12px] font-bold">
+          <span class="bg-zinc-900 border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> Custom Thumbnail ₹150</span>
+          <span class="bg-zinc-900 border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> 500+ Elements Pack ₹200</span>
+          <span class="bg-zinc-900 border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> 4K UHD Transparent PNGs</span>
+          <span class="bg-zinc-900 border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> Instant UPI / Cards</span>
         </div>
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="#portfolio" class="bg-[#FF1A1A] hover:bg-[#E60000] text-white border-[3px] border-black rounded-full h-[56px] px-7 md:px-8 font-black text-[16px] comic-shadow flex items-center justify-center gap-3 transition shake">
-            <i class="fa-solid fa-eye"></i> VIEW THUMBNAIL PORTFOLIO
+
+        <div class="mt-7 flex flex-col sm:flex-row gap-3.5">
+          <button onclick="openPaymentModal('Custom THumbnaL Commission', 150)" class="bg-[#FFD600] hover:bg-[#ffcd00] text-black border-[3px] border-black rounded-full h-[58px] px-8 font-black text-[16px] comic-shadow flex items-center justify-center gap-2.5 transition shake">
+            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i> ORDER "THumbnaL" — ₹150
+          </button>
+          <a href="#portfolio" class="bg-zinc-900 hover:bg-zinc-800 text-white border-2 border-white/20 rounded-full h-[58px] px-7 font-black text-[15px] flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-images text-[#FF2A2A]"></i> VIEW PORTFOLIO
           </a>
-          <button onclick="openPaymentModal('Custom THumbnaL Package', 35)" class="bg-[#FFD600] hover:bg-[#ffcd00] text-black border-[3px] border-black rounded-full h-[56px] px-6 font-black text-[15px] flex items-center justify-center gap-2 transition comic-shadow-sm">
-            <i class="fa-solid fa-bolt"></i> ORDER: "THumbnaL" — $35
+          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-[3px] border-black rounded-full h-[58px] px-6 font-black text-[15px] comic-shadow flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-bolt"></i> GET PACK — ₹200
           </button>
         </div>
-        <div class="mt-4 flex items-center gap-3 text-[13px]">
+
+        <div class="mt-6 flex items-center gap-3 text-[13px] text-zinc-400">
           <div class="flex -space-x-2">
-            <img src="https://i.pravatar.cc/100?img=11" class="w-8 h-8 rounded-full border-2 border-white">
-            <img src="https://i.pravatar.cc/100?img=12" class="w-8 h-8 rounded-full border-2 border-white">
-            <img src="https://i.pravatar.cc/100?img=14" class="w-8 h-8 rounded-full border-2 border-white">
-            <img src="https://i.pravatar.cc/100?img=15" class="w-8 h-8 rounded-full border-2 border-white">
+            <img src="https://i.pravatar.cc/100?img=11" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]">
+            <img src="https://i.pravatar.cc/100?img=12" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]">
+            <img src="https://i.pravatar.cc/100?img=14" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]">
+            <img src="https://i.pravatar.cc/100?img=15" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]">
           </div>
-          <div class="leading-tight">
-            <div class="font-black">Trusted by top YouTube & Gaming channels</div>
-            <div class="text-zinc-500 font-semibold text-[12px]">Average CTR boost from 4.2% → 9.8%</div>
+          <div>
+            <span class="font-bold text-white">100+ Creators Boosted CTR</span>
+            <span class="text-xs text-zinc-500 block">Avg CTR Jumped 4.1% &rarr; 12.8%</span>
           </div>
         </div>
       </div>
 
+      <!-- Hero Visual Card -->
       <div class="relative">
-        <div class="bg-black p-2 md:p-3 rounded-[28px] comic-shadow-lg relative">
-          <div class="bg-[#1A1A1A] rounded-[20px] overflow-hidden border-2 border-white/10">
-            <div class="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#FF1A1A] to-[#FF7A00] text-white">
-              <div class="flex items-center gap-2 font-black text-[12px] tracking-widest"><span class="w-2 h-2 bg-white rounded-full animate-pulse"></span> FEATURED WORK • PREVIEW MODE</div>
+        <div class="glass-card p-3 rounded-[28px] comic-shadow-lg relative overflow-hidden group">
+          <div class="bg-[#151722] rounded-[20px] overflow-hidden border border-white/10">
+            <div class="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#FF2A2A] to-[#FF7A00] text-white">
+              <div class="flex items-center gap-2 font-black text-[12px] tracking-widest"><span class="w-2 h-2 bg-white rounded-full animate-pulse"></span> PORTFOLIO SHOWCASE &bull; 4K ULTRA HD</div>
               <div class="flex items-center gap-1.5">
                 <span class="w-3 h-3 bg-white/30 rounded-full"></span><span class="w-3 h-3 bg-white/30 rounded-full"></span><span class="w-3 h-3 bg-white rounded-full"></span>
               </div>
             </div>
-            <div class="relative bg-zinc-950 p-2 md:p-3 group">
-              <img id="heroPackImg" src="assets/portfolio/portfolio-2.webp" alt="Thumbnail Preview" class="w-full rounded-xl border-2 border-white/20 block hover:scale-[1.01] transition duration-500 cursor-zoom-in" onclick="openLightbox('assets/portfolio/portfolio-2.webp')">
-              <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="absolute bottom-5 right-5 bg-white text-black border-2 border-black rounded-full px-4 py-2 text-[12px] font-black flex items-center gap-2 comic-shadow-sm">
-                <i class="fa-solid fa-magnifying-glass-plus"></i> CLICK TO PREVIEW 4K
+
+            <div class="relative bg-zinc-950 p-2.5">
+              <img src="assets/portfolio/portfolio-2.webp" alt="Featured Thumbnail" class="w-full rounded-xl border border-white/20 block hover:scale-[1.01] transition duration-500 cursor-zoom-in" onclick="openLightbox('assets/portfolio/portfolio-2.webp')">
+              <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="absolute bottom-5 right-5 bg-black/80 hover:bg-black text-white border-2 border-white/30 rounded-full px-4 py-2 text-[12px] font-black flex items-center gap-2 backdrop-blur-md">
+                <i class="fa-solid fa-magnifying-glass-plus text-[#FFD600]"></i> PREVIEW 4K
               </button>
-              <div class="absolute top-5 left-5 bg-[#FF1A1A] text-white border-2 border-black rounded-full px-3 py-1 text-[11px] font-black flex items-center gap-1.5 rotate-[-2deg] comic-shadow-sm">
-                <i class="fa-solid fa-fire"></i> FEATURED PORTFOLIO PIECE
+              <div class="absolute top-5 left-5 bg-[#FF2A2A] text-white border-2 border-black rounded-full px-3 py-1 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
+                <i class="fa-solid fa-trophy"></i> FEATURED WORK
               </div>
             </div>
-            <div class="grid grid-cols-3 gap-2 p-3 bg-zinc-900">
-              <div class="bg-white rounded-xl p-2.5 border-2 border-black text-center">
-                <div class="text-[11px] font-black tracking-widest text-zinc-500">RESOLUTION</div>
-                <div class="font-display text-[13px]">4K ULTRA HD</div>
+
+            <div class="grid grid-cols-3 gap-2 p-3 bg-zinc-900 border-t border-white/10">
+              <div class="bg-zinc-800/80 rounded-xl p-2.5 border border-white/10 text-center">
+                <div class="text-[10px] font-black tracking-widest text-zinc-400">CUSTOM PRICE</div>
+                <div class="font-display text-[14px] text-[#FFD600]">₹150 ONLY</div>
               </div>
-              <div class="bg-[#FFD600] rounded-xl p-2.5 border-2 border-black text-center">
-                <div class="text-[11px] font-black tracking-widest text-black/60">STYLE</div>
-                <div class="font-display text-[13px]">HIGH CTR GAMING</div>
+              <div class="bg-zinc-800/80 rounded-xl p-2.5 border border-white/10 text-center">
+                <div class="text-[10px] font-black tracking-widest text-zinc-400">ELEMENTS PACK</div>
+                <div class="font-display text-[14px] text-[#00F562]">₹200 FLAT</div>
               </div>
-              <div class="bg-[#00E054] rounded-xl p-2.5 border-2 border-black text-center">
-                <div class="text-[11px] font-black tracking-widest text-black/60">SERVICES</div>
-                <div class="font-display text-[13px]">CUSTOM ORDERS</div>
+              <div class="bg-zinc-800/80 rounded-xl p-2.5 border border-white/10 text-center">
+                <div class="text-[10px] font-black tracking-widest text-zinc-400">DELIVERY</div>
+                <div class="font-display text-[14px] text-white">24H EXPRESS</div>
               </div>
             </div>
           </div>
@@ -196,60 +225,62 @@ tailwind.config={
   </div>
 </section>
 
-<div class="bg-[#FFD600] border-y-[3px] border-black overflow-hidden py-2.5">
-  <div class="flex whitespace-nowrap marquee font-display text-[14px] tracking-wide">
-    <span class="mx-6">★ CUSTOM THUMBNAIL DESIGN</span><span class="mx-6">ORDER: "THumbnaL"</span><span class="mx-6">•</span><span class="mx-6">GAMING & ESPORTS</span><span class="mx-6">•</span><span class="mx-6">500+ ELEMENT PACK PREVIEW</span><span class="mx-6">•</span><span class="mx-6">3D GRAPHICS</span><span class="mx-6">•</span><span class="mx-6">4K RESOLUTION</span><span class="mx-6">•</span>
-    <span class="mx-6">★ CUSTOM THUMBNAIL DESIGN</span><span class="mx-6">ORDER: "THumbnaL"</span><span class="mx-6">•</span><span class="mx-6">GAMING & ESPORTS</span><span class="mx-6">•</span><span class="mx-6">500+ ELEMENT PACK PREVIEW</span><span class="mx-6">•</span><span class="mx-6">3D GRAPHICS</span><span class="mx-6">•</span><span class="mx-6">4K RESOLUTION</span><span class="mx-6">•</span>
+<!-- Marquee Strip -->
+<div class="bg-[#FFD600] text-black border-y-[3px] border-black overflow-hidden py-3 font-display text-[15px] tracking-wide">
+  <div class="flex whitespace-nowrap marquee">
+    <span class="mx-6">★ CUSTOM THUMBNAILS AT ₹150</span><span class="mx-6">500+ PACK AT ₹200</span><span class="mx-6">&bull;</span><span class="mx-6">ORDER: "THumbnaL"</span><span class="mx-6">&bull;</span><span class="mx-6">GAMING & FPS</span><span class="mx-6">&bull;</span><span class="mx-6">4K PNG ELEMENTS</span><span class="mx-6">&bull;</span><span class="mx-6">3D GRAPHICS</span><span class="mx-6">&bull;</span>
+    <span class="mx-6">★ CUSTOM THUMBNAILS AT ₹150</span><span class="mx-6">500+ PACK AT ₹200</span><span class="mx-6">&bull;</span><span class="mx-6">ORDER: "THumbnaL"</span><span class="mx-6">&bull;</span><span class="mx-6">GAMING & FPS</span><span class="mx-6">&bull;</span><span class="mx-6">4K PNG ELEMENTS</span><span class="mx-6">&bull;</span><span class="mx-6">3D GRAPHICS</span><span class="mx-6">&bull;</span>
   </div>
 </div>
 
-<!-- PORTFOLIO SECTION -->
-<section id="portfolio" class="max-w-[1280px] mx-auto px-4 md:px-6 py-12">
-  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<!-- THUMBNAIL PORTFOLIO SECTION -->
+<section id="portfolio" class="max-w-[1300px] mx-auto px-4 md:px-6 py-16">
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
     <div>
-      <div class="inline-flex items-center gap-2 bg-[#FF1A1A] text-white rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest">
-        <i class="fa-solid fa-camera-retro"></i> MY SHOWCASE & PORTFOLIO
+      <div class="inline-flex items-center gap-2 bg-[#FF2A2A] text-white rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest shadow-glowRed">
+        <i class="fa-solid fa-palette"></i> RECENT THUMBNAILS SHOWCASE
       </div>
-      <h2 class="font-display text-[32px] md:text-[46px] leading-tight mt-2">
-        THUMBNAIL <span class="bg-[#FFD600] px-2.5 border-[3px] border-black rotate-[-1deg] inline-block comic-shadow-sm">PORTFOLIO</span>
+      <h2 class="font-display text-[34px] md:text-[50px] leading-tight mt-2 text-white">
+        THUMBNAIL <span class="text-black bg-[#FFD600] px-3 py-0.5 border-[3px] border-black rotate-[-1deg] inline-block comic-shadow">PORTFOLIO</span>
       </h2>
-      <p class="text-zinc-600 font-medium text-[15px] mt-1 max-w-[620px]">
-        Here are thumbnails and graphics I have designed. Click any thumbnail below to preview in full 4K high-resolution!
+      <p class="text-zinc-400 font-medium text-[15px] mt-2 max-w-[620px]">
+        High-CTR YouTube thumbnails crafted by me. Click on any thumbnail to preview it in full 4K high resolution!
       </p>
     </div>
+
     <div class="flex flex-wrap items-center gap-2">
-      <button onclick="filterPortfolio('all')" class="port-filter-btn active bg-black text-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black">All Work</button>
-      <button onclick="filterPortfolio('gaming')" class="port-filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-50">Gaming</button>
-      <button onclick="filterPortfolio('scifi')" class="port-filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-50">Sci-Fi / 3D</button>
-      <button onclick="filterPortfolio('elements')" class="port-filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-50">Elements Pack</button>
+      <button onclick="filterPortfolio('all')" class="port-filter-btn active bg-[#FF2A2A] text-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black transition">All Work</button>
+      <button onclick="filterPortfolio('gaming')" class="port-filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition">Gaming FPS</button>
+      <button onclick="filterPortfolio('scifi')" class="port-filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition">Sci-Fi / 3D</button>
+      <button onclick="filterPortfolio('elements')" class="port-filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition">Elements Pack</button>
     </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid">
     
     <!-- Thumbnail 1 -->
-    <div class="port-card scifi bg-white border-[3px] border-black rounded-[22px] overflow-hidden comic-shadow flex flex-col group transition hover:-translate-y-1">
-      <div class="relative bg-zinc-900 overflow-hidden aspect-video">
+    <div class="port-card scifi glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300">
+      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
         <img src="assets/portfolio/portfolio-1.jpg" alt="New Game Available Now" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-1.jpg')">
-        <span class="absolute top-3 left-3 bg-black text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/40">PREVIEW ONLY</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-black border-2 border-black rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
-          <i class="fa-solid fa-magnifying-glass-plus"></i> Preview
+        <span class="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/20">PREVIEW ONLY</span>
+        <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
+          <i class="fa-solid fa-magnifying-glass-plus text-[#FFD600]"></i> 4K Zoom
         </button>
       </div>
-      <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+      <div class="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#8B5CF6] text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-black">SCI-FI / GAME ART</span>
-            <span class="text-[11px] font-black text-[#00A83E]"><i class="fa-solid fa-arrow-trend-up"></i> 11.4% CTR</span>
+            <span class="bg-[#8B5CF6]/30 text-[#C4B5FD] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#8B5CF6]/40">SCI-FI / GAME ART</span>
+            <span class="text-[12px] font-black text-[#00F562]"><i class="fa-solid fa-arrow-trend-up"></i> 11.4% CTR</span>
           </div>
-          <h3 class="font-display text-[18px] leading-snug">NEW GAME — LEGENDARY RELEASE</h3>
-          <p class="text-zinc-600 text-[12px] font-medium mt-1">Neon futuristic theme with vibrant character illustration and retro gaming UI badges.</p>
+          <h3 class="font-display text-[18px] text-white leading-snug">NEW GAME — LEGENDARY RELEASE</h3>
+          <p class="text-zinc-400 text-[13px] font-medium mt-1">Neon futuristic character art, high-contrast gaming level badges, and cyber circuit background.</p>
         </div>
-        <div class="mt-4 pt-3 border-t-2 border-zinc-100 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaL: New Game Sci-Fi Style', 35)" class="text-[12px] font-black bg-[#FFD600] border-2 border-black rounded-full px-3.5 py-1.5 hover:bg-[#ffcd00] transition">
-            Order Style "THumbnaL"
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+          <button onclick="openPaymentModal('Custom THumbnaL: Sci-Fi Style', 150)" class="text-[12px] font-black bg-[#FFD600] text-black border-2 border-black rounded-full px-4 py-1.5 hover:bg-[#ffcd00] transition comic-shadow-sm">
+            Order Style "THumbnaL" — ₹150
           </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="text-[12px] font-black text-zinc-700 hover:text-black">
+          <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full HD <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
           </button>
         </div>
@@ -257,28 +288,28 @@ tailwind.config={
     </div>
 
     <!-- Thumbnail 2 -->
-    <div class="port-card gaming bg-white border-[3px] border-black rounded-[22px] overflow-hidden comic-shadow flex flex-col group transition hover:-translate-y-1">
-      <div class="relative bg-zinc-900 overflow-hidden aspect-video">
+    <div class="port-card gaming glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300">
+      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
         <img src="assets/portfolio/portfolio-2.webp" alt="Insane Gameplay" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-2.webp')">
-        <span class="absolute top-3 left-3 bg-[#FF1A1A] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/40">FEATURED</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-black border-2 border-black rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
-          <i class="fa-solid fa-magnifying-glass-plus"></i> Preview
+        <span class="absolute top-3 left-3 bg-[#FF2A2A] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowRed">MOST VIRAL</span>
+        <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
+          <i class="fa-solid fa-magnifying-glass-plus text-[#FFD600]"></i> 4K Zoom
         </button>
       </div>
-      <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+      <div class="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#FF1A1A] text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-black">CALL OF DUTY / FPS</span>
-            <span class="text-[11px] font-black text-[#00A83E]"><i class="fa-solid fa-arrow-trend-up"></i> 14.8% CTR</span>
+            <span class="bg-[#FF2A2A]/30 text-[#FFA4A4] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#FF2A2A]/40">CALL OF DUTY / FPS</span>
+            <span class="text-[12px] font-black text-[#00F562]"><i class="fa-solid fa-arrow-trend-up"></i> 14.8% CTR</span>
           </div>
-          <h3 class="font-display text-[18px] leading-snug">INSANE GAME PLAY — VICTORY IS OURS!</h3>
-          <p class="text-zinc-600 text-[12px] font-medium mt-1">High-impact combat composition with comic text bursts, diamond emblems, and custom lightning smoke.</p>
+          <h3 class="font-display text-[18px] text-white leading-snug">INSANE GAME PLAY — VICTORY IS OURS!</h3>
+          <p class="text-zinc-400 text-[13px] font-medium mt-1">High-impact warfare composition, comic text bursts, diamond battle emblems, and lightning effects.</p>
         </div>
-        <div class="mt-4 pt-3 border-t-2 border-zinc-100 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaL: Insane Gameplay FPS Style', 35)" class="text-[12px] font-black bg-[#FFD600] border-2 border-black rounded-full px-3.5 py-1.5 hover:bg-[#ffcd00] transition">
-            Order Style "THumbnaL"
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+          <button onclick="openPaymentModal('Custom THumbnaL: Insane Gameplay FPS', 150)" class="text-[12px] font-black bg-[#FFD600] text-black border-2 border-black rounded-full px-4 py-1.5 hover:bg-[#ffcd00] transition comic-shadow-sm">
+            Order Style "THumbnaL" — ₹150
           </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="text-[12px] font-black text-zinc-700 hover:text-black">
+          <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full HD <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
           </button>
         </div>
@@ -286,28 +317,28 @@ tailwind.config={
     </div>
 
     <!-- Thumbnail 3 -->
-    <div class="port-card elements bg-white border-[3px] border-black rounded-[22px] overflow-hidden comic-shadow flex flex-col group transition hover:-translate-y-1">
-      <div class="relative bg-zinc-900 overflow-hidden aspect-video">
+    <div class="port-card elements glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300">
+      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
         <img src="assets/portfolio/portfolio-3.webp" alt="Gaming Thumbnail Elements Pack" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-3.webp')">
-        <span class="absolute top-3 left-3 bg-black text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/40">PACK PREVIEW</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-black border-2 border-black rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
-          <i class="fa-solid fa-magnifying-glass-plus"></i> Preview
+        <span class="absolute top-3 left-3 bg-[#00F562] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black">PACK PREVIEW</span>
+        <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
+          <i class="fa-solid fa-magnifying-glass-plus text-[#FFD600]"></i> 4K Zoom
         </button>
       </div>
-      <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+      <div class="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#00E054] text-black text-[10px] font-black px-2 py-0.5 rounded-full border border-black">ELEMENTS PACK</span>
-            <span class="text-[11px] font-black text-zinc-600">4K OVERLAYS</span>
+            <span class="bg-[#00F562]/30 text-[#86EFAC] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#00F562]/40">ELEMENTS SUITE</span>
+            <span class="text-[12px] font-black text-zinc-300">500+ PACK</span>
           </div>
-          <h3 class="font-display text-[18px] leading-snug">GAMING THUMBNAIL ELEMENTS PACK</h3>
-          <p class="text-zinc-600 text-[12px] font-medium mt-1">Soldier 3D render with custom level up tags, action buttons, subscribe alerts, and victory badges.</p>
+          <h3 class="font-display text-[18px] text-white leading-snug">GAMING THUMBNAIL ELEMENTS PACK</h3>
+          <p class="text-zinc-400 text-[13px] font-medium mt-1">Special ops character cutout, victory crown banners, subscribe buttons, and HUD next level indicators.</p>
         </div>
-        <div class="mt-4 pt-3 border-t-2 border-zinc-100 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom Elements & Thumbnail Pack', 45)" class="text-[12px] font-black bg-[#FFD600] border-2 border-black rounded-full px-3.5 py-1.5 hover:bg-[#ffcd00] transition">
-            Order Style "THumbnaL"
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="text-[12px] font-black bg-[#00F562] text-black border-2 border-black rounded-full px-4 py-1.5 hover:bg-[#00d655] transition comic-shadow-sm">
+            Get Pack — ₹200
           </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="text-[12px] font-black text-zinc-700 hover:text-black">
+          <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full HD <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
           </button>
         </div>
@@ -315,28 +346,28 @@ tailwind.config={
     </div>
 
     <!-- Thumbnail 4 -->
-    <div class="port-card gaming bg-white border-[3px] border-black rounded-[22px] overflow-hidden comic-shadow flex flex-col group transition hover:-translate-y-1">
-      <div class="relative bg-zinc-900 overflow-hidden aspect-video">
+    <div class="port-card gaming glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300">
+      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
         <img src="assets/portfolio/portfolio-4.webp" alt="Season 1 Epic Win" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-4.webp')">
-        <span class="absolute top-3 left-3 bg-black text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/40">PREVIEW ONLY</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-black border-2 border-black rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
-          <i class="fa-solid fa-magnifying-glass-plus"></i> Preview
+        <span class="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/20">PREVIEW ONLY</span>
+        <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
+          <i class="fa-solid fa-magnifying-glass-plus text-[#FFD600]"></i> 4K Zoom
         </button>
       </div>
-      <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+      <div class="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#FF7A00] text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-black">CYBER WARRIOR</span>
-            <span class="text-[11px] font-black text-[#00A83E]"><i class="fa-solid fa-arrow-trend-up"></i> 15.6% CTR</span>
+            <span class="bg-[#FF7A00]/30 text-[#FED7AA] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#FF7A00]/40">CYBER WARRIOR</span>
+            <span class="text-[12px] font-black text-[#00F562]"><i class="fa-solid fa-arrow-trend-up"></i> 15.6% CTR</span>
           </div>
-          <h3 class="font-display text-[18px] leading-snug">SEASON 1 — EPIC WIN SHOWDOWN</h3>
-          <p class="text-zinc-600 text-[12px] font-medium mt-1">3D gold metallic text rendering with high-energy sword slash lighting effects and particle trails.</p>
+          <h3 class="font-display text-[18px] text-white leading-snug">SEASON 1 — EPIC WIN SHOWDOWN</h3>
+          <p class="text-zinc-400 text-[13px] font-medium mt-1">High-gloss 3D gold typography, energy sword glow trails, anime cyberpunk warrior lighting.</p>
         </div>
-        <div class="mt-4 pt-3 border-t-2 border-zinc-100 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaL: Season 1 Epic Win Style', 35)" class="text-[12px] font-black bg-[#FFD600] border-2 border-black rounded-full px-3.5 py-1.5 hover:bg-[#ffcd00] transition">
-            Order Style "THumbnaL"
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+          <button onclick="openPaymentModal('Custom THumbnaL: Season 1 Epic Win Style', 150)" class="text-[12px] font-black bg-[#FFD600] text-black border-2 border-black rounded-full px-4 py-1.5 hover:bg-[#ffcd00] transition comic-shadow-sm">
+            Order Style "THumbnaL" — ₹150
           </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="text-[12px] font-black text-zinc-700 hover:text-black">
+          <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full HD <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
           </button>
         </div>
@@ -344,45 +375,49 @@ tailwind.config={
     </div>
 
     <!-- Thumbnail 5 -->
-    <div class="port-card scifi bg-white border-[3px] border-black rounded-[22px] overflow-hidden comic-shadow flex flex-col group transition hover:-translate-y-1">
-      <div class="relative bg-zinc-900 overflow-hidden aspect-video">
+    <div class="port-card scifi glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300">
+      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
         <img src="assets/portfolio/portfolio-5.webp" alt="The Last Survivor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-5.webp')">
-        <span class="absolute top-3 left-3 bg-black text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/40">3D GLASS ART</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="absolute bottom-3 right-3 bg-white/90 hover:bg-white text-black border-2 border-black rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
-          <i class="fa-solid fa-magnifying-glass-plus"></i> Preview
+        <span class="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-white/20">3D GLASS ART</span>
+        <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
+          <i class="fa-solid fa-magnifying-glass-plus text-[#FFD600]"></i> 4K Zoom
         </button>
       </div>
-      <div class="p-5 flex-1 flex flex-col justify-between bg-white">
+      <div class="p-5 flex-1 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#0EA5E9] text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-black">3D TYPOGRAPHY</span>
-            <span class="text-[11px] font-black text-[#00A83E]"><i class="fa-solid fa-arrow-trend-up"></i> 13.2% CTR</span>
+            <span class="bg-[#0EA5E9]/30 text-[#BAE6FD] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#0EA5E9]/40">3D TYPOGRAPHY</span>
+            <span class="text-[12px] font-black text-[#00F562]"><i class="fa-solid fa-arrow-trend-up"></i> 13.2% CTR</span>
           </div>
-          <h3 class="font-display text-[18px] leading-snug">THE LAST SURVIVOR — 3D GLASS "X"</h3>
-          <p class="text-zinc-600 text-[12px] font-medium mt-1">Photorealistic glass refraction with liquid bubbles, modern streetwear typography, and gradient flame shapes.</p>
+          <h3 class="font-display text-[18px] text-white leading-snug">THE LAST SURVIVOR — 3D GLASS "X"</h3>
+          <p class="text-zinc-400 text-[13px] font-medium mt-1">Realistic 3D glass refraction, floating fluid spheres, clean bold streetwear branding typography.</p>
         </div>
-        <div class="mt-4 pt-3 border-t-2 border-zinc-100 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaL: 3D Glass Typography Style', 35)" class="text-[12px] font-black bg-[#FFD600] border-2 border-black rounded-full px-3.5 py-1.5 hover:bg-[#ffcd00] transition">
-            Order Style "THumbnaL"
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+          <button onclick="openPaymentModal('Custom THumbnaL: 3D Glass Typography', 150)" class="text-[12px] font-black bg-[#FFD600] text-black border-2 border-black rounded-full px-4 py-1.5 hover:bg-[#ffcd00] transition comic-shadow-sm">
+            Order Style "THumbnaL" — ₹150
           </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="text-[12px] font-black text-zinc-700 hover:text-black">
+          <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
             Full HD <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Custom Order Callout Card -->
-    <div class="bg-gradient-to-br from-[#FF1A1A] to-[#FF7A00] text-white border-[3px] border-black rounded-[22px] p-6 comic-shadow flex flex-col justify-between relative overflow-hidden">
-      <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-white/10 rounded-full"></div>
+    <!-- Custom Order Card -->
+    <div class="bg-gradient-to-br from-[#FF2A2A] via-[#FF7A00] to-[#FFD600] text-black border-[3px] border-black rounded-[24px] p-6 comic-shadow flex flex-col justify-between relative overflow-hidden">
+      <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-black/10 rounded-full"></div>
       <div>
-        <span class="bg-white text-black text-[11px] font-black px-3 py-1 rounded-full">NEED A CUSTOM DESIGN?</span>
-        <h3 class="font-display text-[26px] leading-tight mt-3">WANT A THUMBNAIL LIKE THIS FOR YOUR CHANNEL?</h3>
-        <p class="text-white/90 text-[13px] font-medium mt-2">I create custom high-converting thumbnails & elements tailored specifically for your brand with guaranteed fast delivery.</p>
+        <span class="bg-black text-white text-[11px] font-black px-3 py-1 rounded-full">CUSTOM COMMISSIONS</span>
+        <h3 class="font-display text-[28px] leading-tight mt-3">WANT A VIRAL THUMBNAIL FOR YOUR VIDEO?</h3>
+        <p class="text-black/80 text-[14px] font-bold mt-2">Get high-converting YouTube thumbnails custom created with 24-hour turnaround and unlimited revisions.</p>
       </div>
-      <div class="mt-6">
-        <button onclick="openPaymentModal('Custom THumbnaL Commission', 35)" class="w-full bg-white hover:bg-zinc-100 text-black border-[3px] border-black rounded-full py-3.5 font-black text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition">
-          <i class="fa-solid fa-paper-plane"></i> COMMISSION A "THumbnaL" — $35
+      <div class="mt-6 pt-4 border-t-2 border-black/20">
+        <div class="flex items-baseline justify-between mb-3">
+          <span class="text-xs font-black uppercase">PRICE PER THUMBNAIL</span>
+          <span class="font-display text-2xl">₹150 ONLY</span>
+        </div>
+        <button onclick="openPaymentModal('Custom THumbnaL Commission', 150)" class="w-full bg-black hover:bg-zinc-800 text-white border-2 border-black rounded-full py-3.5 font-black text-[15px] comic-shadow-sm flex items-center justify-center gap-2 transition">
+          <i class="fa-solid fa-bolt text-[#FFD600]"></i> ORDER "THumbnaL" — ₹150
         </button>
       </div>
     </div>
@@ -391,170 +426,195 @@ tailwind.config={
 </section>
 
 <!-- CUSTOM SERVICES BANNER / SECTION -->
-<section id="custom-services" class="max-w-[1280px] mx-auto px-4 md:px-6 pb-12">
-  <div class="bg-black text-white border-[3px] border-black rounded-[28px] p-6 md:p-10 comic-shadow-lg relative overflow-hidden">
-    <div class="absolute top-0 right-0 w-80 h-80 bg-[#FF1A1A]/20 rounded-full blur-3xl pointer-events-none"></div>
+<section id="custom-services" class="max-w-[1300px] mx-auto px-4 md:px-6 pb-16">
+  <div class="bg-gradient-to-br from-[#161722] to-[#0F1018] border-2 border-white/20 rounded-[32px] p-7 md:p-12 comic-shadow-lg relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#FF2A2A]/20 rounded-full blur-3xl pointer-events-none"></div>
+
     <div class="grid lg:grid-cols-12 gap-8 items-center relative z-10">
       <div class="lg:col-span-8">
-        <div class="inline-flex items-center gap-2 bg-[#FFD600] text-black rounded-full px-4 py-1 text-[12px] font-black tracking-widest">
-          <i class="fa-solid fa-sparkles"></i> BESPOKE CREATOR SERVICES
+        <div class="inline-flex items-center gap-2 bg-[#FFD600] text-black rounded-full px-4 py-1 text-[12px] font-black tracking-widest shadow-glowGold">
+          <i class="fa-solid fa-sparkles"></i> 1-ON-1 CREATOR SERVICE
         </div>
-        <h2 class="font-display text-[30px] md:text-[46px] leading-[0.95] mt-4">
-          I CAN MAKE <span class="text-[#FF1A1A]">CUSTOM THUMBNAILS</span><br>
+        
+        <h2 class="font-display text-[32px] md:text-[50px] leading-[0.94] mt-4 text-white">
+          I CAN MAKE <span class="text-[#FF2A2A]">CUSTOM THUMBNAILS</span><br>
           AND <span class="text-[#FFD600]">THUMBNAIL ELEMENTS</span>.
         </h2>
-        <div class="inline-block mt-3 bg-white text-black px-4 py-1.5 rounded-xl border-2 border-black font-display text-[18px] md:text-[22px] rotate-[-1deg]">
-          In this Order:- <span class="text-[#FF1A1A]">"THumbnaL"</span>
+
+        <div class="inline-block mt-3 bg-white text-black px-4 py-1.5 rounded-xl border-[3px] border-black font-display text-[18px] md:text-[24px] rotate-[-1deg] comic-shadow-sm">
+          In this Order:- <span class="text-[#FF2A2A]">"THumbnaL"</span>
         </div>
-        <p class="text-zinc-300 font-medium text-[15px] mt-4 max-w-[640px] leading-relaxed">
-          Need custom arrows, HUD bars, 3D character cutouts, or full YouTube thumbnails tailored to your video topic? Place an order for <b class="text-white">"THumbnaL"</b> and receive custom 4K graphics with unlimited revisions.
+
+        <p class="text-zinc-300 font-medium text-[15px] md:text-[16px] mt-4 max-w-[660px] leading-relaxed">
+          Need bespoke YouTube thumbnails, personalized arrows, fire burst badges, or 3D weapon cutouts for your channel? Commission under <b class="text-[#FFD600]">"THumbnaL"</b> and get custom 4K graphics crafted directly for you!
         </p>
-        <div class="grid sm:grid-cols-3 gap-3 mt-6">
-          <div class="bg-zinc-900 border border-zinc-700 rounded-xl p-3.5">
-            <div class="text-[#00E054] text-lg font-black"><i class="fa-solid fa-bolt"></i> 24h Delivery</div>
-            <div class="text-xs text-zinc-400 mt-0.5">Quick turnaround for video schedules</div>
+
+        <div class="grid sm:grid-cols-3 gap-3.5 mt-6">
+          <div class="bg-zinc-900/90 border border-white/10 rounded-2xl p-4">
+            <div class="text-[#00F562] text-xl font-black"><i class="fa-solid fa-bolt"></i> 24h Delivery</div>
+            <div class="text-xs text-zinc-400 mt-1">Superfast express turnaround for upload deadlines</div>
           </div>
-          <div class="bg-zinc-900 border border-zinc-700 rounded-xl p-3.5">
-            <div class="text-[#FFD600] text-lg font-black"><i class="fa-solid fa-rotate-right"></i> Unlimited Revisions</div>
-            <div class="text-xs text-zinc-400 mt-0.5">We tweak it until it is 100% perfect</div>
+          <div class="bg-zinc-900/90 border border-white/10 rounded-2xl p-4">
+            <div class="text-[#FFD600] text-xl font-black"><i class="fa-solid fa-rotate-right"></i> Unlimited Revisions</div>
+            <div class="text-xs text-zinc-400 mt-1">Tweak text, color & layout until you 100% love it</div>
           </div>
-          <div class="bg-zinc-900 border border-zinc-700 rounded-xl p-3.5">
-            <div class="text-[#0EA5E9] text-lg font-black"><i class="fa-solid fa-layer-group"></i> 4K + PSD File</div>
-            <div class="text-xs text-zinc-400 mt-0.5">Full source files included</div>
+          <div class="bg-zinc-900/90 border border-white/10 rounded-2xl p-4">
+            <div class="text-[#0EA5E9] text-xl font-black"><i class="fa-solid fa-layer-group"></i> 4K + PSD File</div>
+            <div class="text-xs text-zinc-400 mt-1">Source files and clean isolated layers included</div>
           </div>
         </div>
       </div>
-      <div class="lg:col-span-4 bg-zinc-900 border-2 border-zinc-700 rounded-2xl p-6 text-center">
-        <div class="text-[12px] font-black text-[#FFD600] tracking-widest uppercase">CUSTOM COMMISSION</div>
-        <div class="font-display text-[38px] mt-1">$35 <span class="text-[14px] font-sans text-zinc-400">/ thumbnail</span></div>
-        <p class="text-zinc-400 text-[12px] mt-1">Includes custom thumbnail + custom element assets</p>
-        <div class="space-y-2 mt-4 text-[13px] text-left">
-          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00E054]"></i> <span>High CTR custom thumbnail</span></div>
-          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00E054]"></i> <span>Isolated elements included</span></div>
-          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00E054]"></i> <span>Commercial use license</span></div>
+
+      <div class="lg:col-span-4 bg-zinc-900/90 border-2 border-white/20 rounded-[24px] p-6 text-center comic-shadow">
+        <div class="text-[12px] font-black text-[#FFD600] tracking-widest uppercase">CUSTOM COMMISSION RATE</div>
+        <div class="font-display text-[44px] text-white mt-1">₹150 <span class="text-[15px] font-sans text-zinc-400 font-bold">/ thumbnail</span></div>
+        <p class="text-zinc-400 text-[13px] mt-1">Includes custom thumbnail + custom isolated element pack</p>
+
+        <div class="space-y-2 mt-5 text-[13px] text-left text-zinc-300">
+          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> <span>High CTR tailored composition</span></div>
+          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> <span>Custom isolated PNG elements</span></div>
+          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#00F562]"></i> <span>Full commercial rights & 4K PNG</span></div>
         </div>
-        <button onclick="openPaymentModal('Custom THumbnaL Commission', 35)" class="w-full mt-6 bg-[#FF1A1A] hover:bg-[#e60000] text-white rounded-full py-3.5 font-black text-[15px] border-2 border-white flex items-center justify-center gap-2 transition">
-          <i class="fa-solid fa-lock"></i> ORDER "THumbnaL" NOW
+
+        <button onclick="openPaymentModal('Custom THumbnaL Commission', 150)" class="w-full mt-6 bg-[#FF2A2A] hover:bg-[#e01d1d] text-white rounded-full py-4 font-black text-[16px] border-2 border-black comic-shadow-sm flex items-center justify-center gap-2 transition">
+          <i class="fa-solid fa-bolt"></i> ORDER "THumbnaL" — ₹150
         </button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- THUMBNAIL ELEMENTS PREVIEW ONLY -->
-<section id="preview" class="max-w-[1280px] mx-auto px-4 md:px-6 pb-8">
-  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5">
+<!-- 500+ THUMBNAIL ELEMENTS (PREVIEW ONLY) -->
+<section id="preview" class="max-w-[1300px] mx-auto px-4 md:px-6 pb-16">
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
     <div>
-      <div class="inline-flex items-center gap-2 bg-black text-white rounded-full px-3 py-1 text-[11px] font-black tracking-widest"><i class="fa-solid fa-shapes"></i> ELEMENTS CATALOG (PREVIEW ONLY)</div>
-      <h2 class="font-display text-[28px] md:text-[36px] leading-none mt-2">500+ PACK <span class="text-[#FF1A1A]">PREVIEW.</span></h2>
-      <p class="text-zinc-600 font-medium text-[14px] mt-1 max-w-[560px]">All thumbnail elements are shown here in preview mode. Click any element to test it in the live builder or inspect it.</p>
+      <div class="inline-flex items-center gap-2 bg-[#00F562] text-black rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest shadow-glowGreen">
+        <i class="fa-solid fa-shapes"></i> 500+ ELEMENTS PACK (PREVIEW ONLY)
+      </div>
+      <h2 class="font-display text-[30px] md:text-[42px] leading-none mt-2 text-white">
+        VIRAL ASSET PACK &bull; <span class="text-[#00F562]">₹200 ONLY</span>
+      </h2>
+      <p class="text-zinc-400 font-medium text-[14px] mt-1 max-w-[600px]">
+        Thick arrows, comic text bursts, money stacks, HUD bars, lightning, and fire overlays — isolated in 4K PNGs.
+      </p>
     </div>
+
     <div class="flex items-center gap-2 text-[12px] font-black">
-      <span class="hidden md:inline text-zinc-500">Filter:</span>
       <div id="filterBar" class="flex flex-wrap gap-2">
-        <button data-filter="all" class="filter-btn active bg-black text-white border-2 border-black rounded-full px-4 py-1.5">All</button>
-        <button data-filter="arrows" class="filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 hover:bg-zinc-50">Arrows</button>
-        <button data-filter="bubbles" class="filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 hover:bg-zinc-50">Bubbles</button>
-        <button data-filter="money" class="filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 hover:bg-zinc-50">Money</button>
-        <button data-filter="effects" class="filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 hover:bg-zinc-50">Effects</button>
-        <button data-filter="ui" class="filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 hover:bg-zinc-50">UI & HUD</button>
+        <button data-filter="all" class="filter-btn active bg-white text-black border-2 border-black rounded-full px-4 py-1.5">All</button>
+        <button data-filter="arrows" class="filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 hover:bg-zinc-800">Arrows</button>
+        <button data-filter="bubbles" class="filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 hover:bg-zinc-800">Bubbles</button>
+        <button data-filter="money" class="filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 hover:bg-zinc-800">Money</button>
+        <button data-filter="effects" class="filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 hover:bg-zinc-800">Effects</button>
+        <button data-filter="ui" class="filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 hover:bg-zinc-800">HUD & UI</button>
       </div>
     </div>
   </div>
 
-  <div class="bg-white border-[3px] border-black rounded-[20px] overflow-hidden comic-shadow">
+  <div class="glass-card rounded-[24px] overflow-hidden comic-shadow">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
-      <div class="lg:col-span-5 bg-zinc-900 p-3 md:p-4">
-        <div class="bg-white rounded-xl overflow-hidden border-2 border-black relative">
-          <img src="assets/portfolio/portfolio-3.webp" class="w-full block" alt="Pack sheet preview">
-          <span class="absolute top-2 right-2 bg-black text-white text-[10px] font-black px-2 py-0.5 rounded">PREVIEW ONLY</span>
+      <div class="lg:col-span-5 bg-zinc-950 p-4 md:p-6 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between">
+        <div>
+          <div class="bg-zinc-900 rounded-2xl overflow-hidden border border-white/20 relative group">
+            <img src="assets/portfolio/portfolio-3.webp" class="w-full block" alt="Elements Sheet">
+            <span class="absolute top-3 left-3 bg-black/90 text-[#FFD600] text-[10px] font-black px-2.5 py-1 rounded-full border border-white/20">PREVIEW ONLY</span>
+          </div>
+          <div class="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] font-black">
+            <div class="bg-[#FFD600] text-black rounded-xl py-2 border-2 border-black">ARROWS<br><span class="text-[10px] font-bold opacity-75">48 assets</span></div>
+            <div class="bg-[#FF2A2A] text-white rounded-xl py-2 border-2 border-black">BURSTS<br><span class="text-[10px] font-bold opacity-80">36 assets</span></div>
+            <div class="bg-[#00F562] text-black rounded-xl py-2 border-2 border-black">EFFECTS<br><span class="text-[10px] font-bold opacity-75">72 assets</span></div>
+          </div>
         </div>
-        <div class="mt-3 grid grid-cols-3 gap-2 text-center text-[11px] font-black">
-          <div class="bg-[#FFD600] rounded-xl border-2 border-black py-2">ARROWS<br><span class="text-[10px] font-bold opacity-70">48 assets</span></div>
-          <div class="bg-[#FF7A00] rounded-xl border-2 border-black py-2 text-white">BURSTS<br><span class="text-[10px] font-bold opacity-80">36 assets</span></div>
-          <div class="bg-[#00E054] rounded-xl border-2 border-black py-2">EFFECTS<br><span class="text-[10px] font-bold opacity-70">72 assets</span></div>
+        <div class="mt-4 space-y-2">
+          <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="w-full bg-zinc-900 hover:bg-zinc-800 text-white border border-white/20 rounded-full py-3 font-black text-[13px] flex items-center justify-center gap-2">
+            <i class="fa-solid fa-up-right-and-down-left-from-center"></i> Full-Resolution Sheet Preview
+          </button>
+          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-3 font-black text-[14px] flex items-center justify-center gap-2 comic-shadow-sm">
+            <i class="fa-solid fa-download"></i> UNLOCK ALL 500+ ASSETS — ₹200
+          </button>
         </div>
-        <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="w-full mt-3 bg-white border-2 border-black rounded-full py-2.5 font-black text-[13px] flex items-center justify-center gap-2"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Full-res sheet preview</button>
       </div>
-      <div class="lg:col-span-7 p-3 md:p-4 bg-[#FFFDF5]">
+
+      <div class="lg:col-span-7 p-4 md:p-6 bg-[#0E0F14]">
         <div id="elementGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[520px] overflow-y-auto pr-1">
         </div>
-        <div class="mt-3 flex flex-col sm:flex-row items-center justify-between bg-black text-white rounded-2xl md:rounded-full px-4 py-2.5 gap-2">
-          <span class="text-[12px] font-black tracking-wide"><span id="visibleCount">24</span> ELEMENTS PREVIEWED • CLICK TO ADD TO BUILDER</span>
-          <button onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" class="bg-[#FF1A1A] text-white rounded-full px-4 py-1.5 text-[12px] font-black border-2 border-white">TRY BUILDER ↓</button>
+        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between bg-zinc-900 border border-white/10 text-white rounded-2xl px-4 py-3 gap-2">
+          <span class="text-[12px] font-bold text-zinc-300"><span id="visibleCount" class="font-black text-[#FFD600]">24</span> ELEMENTS PREVIEWED &bull; CLICK TO TEST IN BUILDER</span>
+          <button onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" class="bg-[#FF2A2A] text-white rounded-full px-4 py-1.5 text-[12px] font-black border border-white">TRY BUILDER &darr;</button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- THUMBNAIL BUILDER -->
-<section id="builder" class="max-w-[1280px] mx-auto px-4 md:px-6 pb-8">
-  <div class="bg-gradient-to-br from-[#FF1A1A] via-[#FF7A00] to-[#FFD600] border-[3px] border-black rounded-[24px] p-2 md:p-3 comic-shadow">
-    <div class="bg-white rounded-[18px] border-[3px] border-black overflow-hidden">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 px-4 md:px-6 py-4 border-b-[3px] border-black bg-zinc-50">
+<!-- LIVE THUMBNAIL BUILDER -->
+<section id="builder" class="max-w-[1300px] mx-auto px-4 md:px-6 pb-16">
+  <div class="bg-gradient-to-br from-[#FF2A2A] via-[#FF7A00] to-[#FFD600] border-[3px] border-black rounded-[28px] p-2 md:p-3 comic-shadow-lg">
+    <div class="bg-[#12131A] rounded-[22px] border-2 border-black overflow-hidden text-white">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 px-5 py-4 border-b-2 border-white/10 bg-zinc-900/90">
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-black text-white rounded-xl grid place-items-center"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <div class="w-10 h-10 bg-[#FF2A2A] text-white rounded-xl grid place-items-center comic-shadow-sm"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
           <div>
             <div class="font-display text-[18px] leading-none">LIVE THUMBNAIL BUILDER (PREVIEW)</div>
-            <div class="text-[12px] font-bold text-zinc-500">Drag elements from the tray onto the thumbnail. Double-click to remove.</div>
+            <div class="text-[12px] font-bold text-zinc-400">Click & drag elements from the tray onto the thumbnail.</div>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <select id="bgSelect" class="border-2 border-black rounded-full px-3 py-2 text-[13px] font-bold bg-white">
+          <select id="bgSelect" class="border-2 border-black rounded-full px-3 py-1.5 text-[13px] font-bold bg-zinc-800 text-white">
             <option value="gradient1">Sunset Gradient</option>
             <option value="gradient2">Neon Dark</option>
             <option value="gradient3">Money Green</option>
             <option value="gradient4">MrBeast Red</option>
             <option value="photo">Studio Grey</option>
           </select>
-          <button id="clearCanvas" class="bg-white border-2 border-black rounded-full px-4 py-2 text-[13px] font-black">Clear</button>
-          <button id="downloadMock" class="bg-black text-white border-2 border-black rounded-full px-5 py-2 text-[13px] font-black flex items-center gap-2"><i class="fa-solid fa-download"></i> Export Mock</button>
+          <button id="clearCanvas" class="bg-zinc-800 border-2 border-black rounded-full px-4 py-1.5 text-[13px] font-black hover:bg-zinc-700">Clear</button>
+          <button id="downloadMock" class="bg-[#FFD600] text-black border-2 border-black rounded-full px-5 py-1.5 text-[13px] font-black flex items-center gap-2"><i class="fa-solid fa-download"></i> Export Mock</button>
         </div>
       </div>
+
       <div class="grid lg:grid-cols-[280px_1fr_260px] gap-0">
-        <div class="border-b lg:border-b-0 lg:border-r-[3px] border-black bg-[#FFF7CC] p-3">
-          <div class="font-black text-[12px] tracking-widest flex items-center gap-2 mb-3"><i class="fa-solid fa-grip"></i> DRAG ELEMENTS</div>
-          <div id="tray" class="grid grid-cols-4 lg:grid-cols-3 gap-2">
-          </div>
-          <div class="mt-3 bg-white border-2 border-black rounded-xl p-3">
-            <div class="text-[11px] font-black tracking-widest">PRO TIP</div>
-            <div class="text-[12px] font-medium leading-snug mt-1">Combine a <b>red arrow + WOW burst + money stack</b> for finance thumbnails. Use glowing circles to highlight faces.</div>
+        <div class="border-b lg:border-b-0 lg:border-r border-white/10 bg-[#161720] p-4">
+          <div class="font-black text-[12px] tracking-widest text-[#FFD600] flex items-center gap-2 mb-3"><i class="fa-solid fa-grip"></i> DRAG ELEMENTS</div>
+          <div id="tray" class="grid grid-cols-4 lg:grid-cols-3 gap-2"></div>
+          <div class="mt-4 bg-zinc-900 border border-white/10 rounded-xl p-3">
+            <div class="text-[11px] font-black text-[#00F562] tracking-widest">BUILDER TIP</div>
+            <div class="text-[12px] text-zinc-400 font-medium leading-snug mt-1">Combine a <b>Red Arrow + WOW Burst + Money Stack</b> for maximum CTR finance thumbnails!</div>
           </div>
         </div>
-        <div class="bg-zinc-100 p-3 md:p-6 flex flex-col items-center">
-          <div id="canvas" class="relative w-full max-w-[640px] aspect-[16/9] bg-gradient-to-br from-[#FF3B30] via-[#FF9500] to-[#FFCC00] rounded-xl border-[3px] border-black overflow-hidden comic-shadow-sm select-none">
+
+        <div class="bg-zinc-950 p-4 md:p-6 flex flex-col items-center justify-center">
+          <div id="canvas" class="relative w-full max-w-[640px] aspect-[16/9] bg-gradient-to-br from-[#FF3B30] via-[#FF9500] to-[#FFCC00] rounded-xl border-[3px] border-black overflow-hidden comic-shadow select-none">
             <div class="absolute inset-0 p-4 md:p-6 flex flex-col justify-between pointer-events-none">
               <div class="flex justify-between items-start">
                 <span class="bg-black text-white rounded-full px-3 py-1 text-[11px] font-black tracking-widest">NEW VIDEO</span>
-                <span class="bg-white border-2 border-black rounded-full px-2.5 py-1 text-[11px] font-black">12:42</span>
+                <span class="bg-white border-2 border-black text-black rounded-full px-2.5 py-1 text-[11px] font-black">12:42</span>
               </div>
               <div>
-                <div class="font-display text-white text-[28px] md:text-[38px] leading-[0.9] drop-shadow-[3px_3px_0_#000]">HOW I MADE<br><span class="bg-white text-black px-2">$10K IN 7 DAYS</span></div>
+                <div class="font-display text-white text-[28px] md:text-[38px] leading-[0.9] drop-shadow-[3px_3px_0_#000]">HOW I MADE<br><span class="bg-white text-black px-2">₹10K IN 7 DAYS</span></div>
                 <div class="mt-2 inline-flex bg-black text-white text-[11px] font-black px-2 py-1 rounded-full">WITHOUT SHOWING MY FACE</div>
               </div>
             </div>
           </div>
-          <div class="mt-3 flex items-center gap-2 text-[11px] font-bold text-zinc-600">
-            <span class="w-2 h-2 bg-[#00C950] rounded-full animate-pulse"></span> Click any tray item to add — drag to move, double-click to delete, scroll to scale
+          <div class="mt-3 flex items-center gap-2 text-[11px] font-bold text-zinc-400">
+            <span class="w-2 h-2 bg-[#00F562] rounded-full animate-pulse"></span> Click any tray item to add &bull; Drag to move &bull; Double-click to delete
           </div>
         </div>
-        <div class="border-t lg:border-t-0 lg:border-l-[3px] border-black p-3 bg-white">
-          <div class="font-black text-[12px] tracking-widest mb-3">THUMBNAIL TEXT</div>
-          <input id="thumbTitle" value="HOW I MADE $10K" class="w-full border-2 border-black rounded-xl px-3 py-2.5 font-black text-[14px]">
-          <input id="thumbSubtitle" value="IN 7 DAYS" class="w-full mt-2 border-2 border-black rounded-xl px-3 py-2.5 font-black text-[14px] bg-[#FFD600]">
+
+        <div class="border-t lg:border-t-0 lg:border-l border-white/10 p-4 bg-[#161720]">
+          <div class="font-black text-[12px] tracking-widest text-zinc-400 mb-2">THUMBNAIL TEXT</div>
+          <input id="thumbTitle" value="HOW I MADE ₹10K" class="w-full border-2 border-black rounded-xl px-3 py-2 font-black text-[13px] bg-zinc-900 text-white">
+          <input id="thumbSubtitle" value="IN 7 DAYS" class="w-full mt-2 border-2 border-black rounded-xl px-3 py-2 font-black text-[13px] bg-[#FFD600] text-black">
+
           <div class="grid grid-cols-2 gap-2 mt-3">
-            <button onclick="randomizeCanvas()" class="bg-[#8B5CF6] text-white border-2 border-black rounded-full py-2.5 font-black text-[13px] flex items-center justify-center gap-2"><i class="fa-solid fa-shuffle"></i> Randomize</button>
-            <button onclick="openPaymentModal('Pro Pack — 500+ Elements', 29)" class="bg-[#FF1A1A] text-white border-2 border-black rounded-full py-2.5 font-black text-[13px]">Buy Pack $29</button>
+            <button onclick="randomizeCanvas()" class="bg-[#8B5CF6] text-white border-2 border-black rounded-full py-2 font-black text-[12px] flex items-center justify-center gap-1.5"><i class="fa-solid fa-shuffle"></i> Random</button>
+            <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="bg-[#FF2A2A] text-white border-2 border-black rounded-full py-2 font-black text-[12px]">Pack ₹200</button>
           </div>
-          <div class="mt-4 bg-zinc-900 text-white rounded-xl p-3 border-2 border-black">
-            <div class="text-[11px] font-black tracking-widest opacity-70">CANVAS ELEMENTS</div>
-            <div id="layerList" class="mt-2 space-y-1.5 text-[12px] font-bold max-h-[140px] overflow-auto">
-              <div class="opacity-60 text-center py-4">No elements yet</div>
+
+          <div class="mt-4 bg-zinc-900 text-white rounded-xl p-3 border border-white/10">
+            <div class="text-[11px] font-black tracking-widest text-zinc-400">CANVAS LAYERS</div>
+            <div id="layerList" class="mt-2 space-y-1.5 text-[12px] font-bold max-h-[130px] overflow-auto">
+              <div class="opacity-60 text-center py-3">No elements yet</div>
             </div>
-          </div>
-          <div class="mt-3 flex items-center gap-2 text-[11px] font-black bg-[#00E054] border-2 border-black rounded-full px-3 py-2">
-            <i class="fa-solid fa-check"></i> All elements are PNG • Transparent
           </div>
         </div>
       </div>
@@ -562,141 +622,155 @@ tailwind.config={
   </div>
 </section>
 
-<!-- PRICING SECTION -->
-<section id="pricing" class="max-w-[1280px] mx-auto px-4 md:px-6 pb-8">
-  <div class="text-center max-w-2xl mx-auto">
-    <div class="inline-flex bg-[#FFD600] border-2 border-black rounded-full px-4 py-1 text-[11px] font-black tracking-widest">PRICING & PACKAGES</div>
-    <h2 class="font-display text-[32px] md:text-[42px] leading-none mt-2">CHOOSE YOUR PACK<br>OR CUSTOM ORDER</h2>
-    <p class="text-zinc-600 font-medium mt-2">Instant delivery with commercial license included. One-time payment.</p>
+<!-- PRICING TABLE IN RUPEES (₹) -->
+<section id="pricing" class="max-w-[1300px] mx-auto px-4 md:px-6 pb-16">
+  <div class="text-center max-w-2xl mx-auto mb-10">
+    <div class="inline-flex bg-[#FFD600] text-black border-2 border-black rounded-full px-4 py-1 text-[11px] font-black tracking-widest">
+      TRANSPARENT PRICING IN RUPEES (₹)
+    </div>
+    <h2 class="font-display text-[34px] md:text-[48px] leading-none mt-3 text-white">
+      CHOOSE YOUR PACKAGE
+    </h2>
+    <p class="text-zinc-400 font-medium mt-2">
+      Instant delivery via email and UPI / Cards / NetBanking checkout. Commercial license included.
+    </p>
   </div>
-  <div class="grid md:grid-cols-3 gap-4 mt-6 items-start">
-    <!-- Starter -->
-    <div class="bg-white border-[3px] border-black rounded-[20px] p-5 comic-shadow">
-      <div class="text-[11px] font-black tracking-widest text-zinc-500">STARTER PACK</div>
-      <div class="font-display text-[28px] leading-none mt-1">$19 <span class="text-[14px] font-bold text-zinc-500">/ once</span></div>
-      <div class="text-[13px] font-bold text-zinc-600">150 essential elements</div>
-      <ul class="mt-4 space-y-2 text-[13px] font-medium">
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> 24 Arrows + 18 Shapes</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> 30 Bursts & Bubbles (WOW! etc)</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> Basic effects (fire, smoke)</li>
-        <li class="flex gap-2 opacity-50"><i class="fa-solid fa-xmark mt-1"></i> No custom commission included</li>
-      </ul>
-      <button onclick="openPaymentModal('Starter Pack — 150 Elements', 19)" class="w-full mt-5 bg-white border-[3px] border-black rounded-full py-3 font-black hover:bg-zinc-50 transition">GET STARTER</button>
-      <div class="text-center text-[11px] font-bold text-zinc-500 mt-2">Good for testing style</div>
-    </div>
-    <!-- Pro -->
-    <div class="bg-[#0A0A0A] text-white border-[3px] border-black rounded-[20px] p-5 comic-shadow-lg relative overflow-hidden scale-[1.02]">
-      <div class="absolute top-0 inset-x-0 bg-gradient-to-r from-[#FF1A1A] to-[#FFD600] h-1.5"></div>
-      <div class="absolute -right-8 -top-8 bg-[#FFD600] text-black font-black text-[11px] tracking-widest px-10 py-2 rotate-[25deg] border-2 border-black">MOST POPULAR</div>
-      <div class="text-[11px] font-black tracking-widest text-[#FFD600] mt-2">PRO PACK — 500+ ELEMENTS</div>
-      <div class="flex items-baseline gap-2 mt-1">
-        <span class="font-display text-[36px] leading-none">$29</span>
-        <span class="line-through opacity-50 font-bold">$58</span>
-        <span class="bg-[#FF1A1A] rounded-full px-2 py-1 text-[11px] font-black">50% OFF</span>
+
+  <div class="grid md:grid-cols-3 gap-6 items-start">
+    <!-- Starter Elements -->
+    <div class="glass-card rounded-[26px] p-6 comic-shadow flex flex-col justify-between">
+      <div>
+        <div class="text-[11px] font-black tracking-widest text-zinc-400">ELEMENTS STARTER</div>
+        <div class="font-display text-[32px] text-white leading-none mt-2">₹99 <span class="text-[14px] font-sans font-bold text-zinc-400">/ one-time</span></div>
+        <div class="text-[13px] font-bold text-[#FFD600] mt-1">150 Essential Isolated Assets</div>
+        <ul class="mt-5 space-y-2.5 text-[13px] text-zinc-300 font-medium">
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> 24 Arrows + 18 Shapes</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> 30 Bursts & Speech Bubbles</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Fire, Lightning & Smoke PNGs</li>
+          <li class="flex gap-2 opacity-40"><i class="fa-solid fa-xmark mt-0.5"></i> No custom thumbnail design</li>
+        </ul>
       </div>
-      <div class="text-[13px] font-bold text-white/70">Everything in reference sheet + more</div>
-      <ul class="mt-4 space-y-2 text-[13px] font-bold">
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00E054] mt-1"></i> All categories (48 arrows, 52 bubbles, 72 effects...)</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00E054] mt-1"></i> Money, diamond, chest, charts</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00E054] mt-1"></i> Fire, lightning, explosions, portals</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00E054] mt-1"></i> HUD: XP bars, hearts, cursors, targeting</li>
-      </ul>
-      <button onclick="openPaymentModal('Pro Pack — 500+ Elements', 29)" class="w-full mt-5 bg-[#FF1A1A] border-[3px] border-white rounded-full py-3.5 font-black text-[16px] flex items-center justify-center gap-2 hover:bg-[#E60000] transition"><i class="fa-solid fa-bolt"></i> GET PRO PACK — $29</button>
-      <div class="text-center text-[11px] font-bold text-white/60 mt-2">Instant ZIP Download</div>
+      <button onclick="openPaymentModal('Starter Elements Pack', 99)" class="w-full mt-6 bg-zinc-800 hover:bg-zinc-700 text-white border-2 border-white/20 rounded-full py-3.5 font-black text-sm transition">
+        GET STARTER — ₹99
+      </button>
     </div>
-    <!-- Custom THumbnaL Commission -->
-    <div class="bg-[#FFFDF5] border-[3px] border-black rounded-[20px] p-5 comic-shadow">
-      <div class="text-[11px] font-black tracking-widest text-[#FF1A1A]">COMMISSION SERVICE</div>
-      <div class="font-display text-[28px] leading-none mt-1">$35 <span class="text-[14px] font-bold text-zinc-500">/ thumbnail</span></div>
-      <div class="text-[13px] font-bold text-zinc-600">Custom "THumbnaL" + Elements</div>
-      <ul class="mt-4 space-y-2 text-[13px] font-medium">
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> 1x Bespoke YouTube Thumbnail</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> Custom isolated elements set</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> 24h Express Turnaround</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00C950] mt-1"></i> Unlimited Revisions & PSD Source</li>
+
+    <!-- 500+ Elements Pack (Featured ₹200) -->
+    <div class="bg-gradient-to-b from-[#181924] to-[#101118] text-white border-[3px] border-[#FF2A2A] rounded-[26px] p-6 comic-shadow-lg relative overflow-hidden scale-[1.03]">
+      <div class="absolute -right-8 -top-8 bg-[#FFD600] text-black font-black text-[11px] tracking-widest px-10 py-2 rotate-[25deg] border-2 border-black">BEST VALUE</div>
+      <div class="text-[11px] font-black tracking-widest text-[#FFD600]">COMPLETE 500+ PACK</div>
+      <div class="flex items-baseline gap-2 mt-2">
+        <span class="font-display text-[40px] leading-none text-white">₹200</span>
+        <span class="line-through text-zinc-500 font-bold">₹400</span>
+        <span class="bg-[#FF2A2A] rounded-full px-2 py-0.5 text-[10px] font-black">50% OFF</span>
+      </div>
+      <div class="text-[13px] font-bold text-zinc-300 mt-1">All 500+ 4K isolated elements & overlays</div>
+      <ul class="mt-5 space-y-2.5 text-[13px] font-bold">
+        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> All 48 arrows, 52 bubbles, 72 effects</li>
+        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Money stacks, diamonds, gold coins</li>
+        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Gaming HUD: XP bars, hearts, targeting</li>
+        <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> 4K Ultra HD &bull; 300 DPI &bull; Free Updates</li>
       </ul>
-      <button onclick="openPaymentModal('Custom THumbnaL Commission', 35)" class="w-full mt-5 bg-[#FFD600] text-black border-[3px] border-black rounded-full py-3 font-black hover:bg-[#ffcd00] transition">ORDER "THumbnaL"</button>
-      <div class="text-center text-[11px] font-bold text-zinc-500 mt-2">1-on-1 Designer Service</div>
+      <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full mt-6 bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full py-4 font-black text-[16px] comic-shadow-sm flex items-center justify-center gap-2 transition">
+        <i class="fa-solid fa-bolt text-[#FFD600]"></i> BUY 500+ PACK — ₹200
+      </button>
+      <div class="text-center text-[11px] font-bold text-zinc-400 mt-2">Instant ZIP file download</div>
+    </div>
+
+    <!-- Custom "THumbnaL" Commission (₹150) -->
+    <div class="glass-card rounded-[26px] p-6 comic-shadow flex flex-col justify-between border-2 border-[#FFD600]/40">
+      <div>
+        <div class="text-[11px] font-black tracking-widest text-[#FFD600]">CUSTOM COMMISSION</div>
+        <div class="font-display text-[32px] text-white leading-none mt-2">₹150 <span class="text-[14px] font-sans font-bold text-zinc-400">/ thumbnail</span></div>
+        <div class="text-[13px] font-bold text-[#00F562] mt-1">1-on-1 "THumbnaL" Design Service</div>
+        <ul class="mt-5 space-y-2.5 text-[13px] text-zinc-300 font-medium">
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> 1x Custom High-CTR YouTube Thumbnail</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Tailored for your niche / video topic</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> 24h Express Turnaround</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Unlimited Revisions & PSD Source File</li>
+        </ul>
+      </div>
+      <button onclick="openPaymentModal('Custom THumbnaL Commission', 150)" class="w-full mt-6 bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition">
+        ORDER "THumbnaL" — ₹150
+      </button>
     </div>
   </div>
 </section>
 
 <!-- FAQ SECTION -->
-<section id="faq" class="max-w-[880px] mx-auto px-4 md:px-6 pb-12">
-  <h3 class="font-display text-[28px] text-center">FREQUENTLY ASKED QUESTIONS</h3>
-  <div class="mt-4 bg-white border-[3px] border-black rounded-[20px] overflow-hidden comic-shadow">
-    <div class="divide-y-2 divide-black">
-      <details class="group open:bg-[#FFF7CC]" open>
-        <summary class="flex items-center justify-between p-4 md:p-5 cursor-pointer list-none">
-          <span class="font-black text-[14px] md:text-[15px]">Can you make custom thumbnails and elements for my specific niche?</span>
-          <span class="w-8 h-8 rounded-full bg-black text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
-        </summary>
-        <div class="px-4 md:px-5 pb-5 text-[13px] font-medium leading-relaxed text-zinc-700">
-          Yes! You can order under <b>"THumbnaL"</b> custom service. Send your video idea, face cutout, or reference style, and I will craft high-CTR thumbnails and custom isolated graphics for you.
-        </div>
-      </details>
-      <details class="group open:bg-[#FFF7CC]">
-        <summary class="flex items-center justify-between p-4 md:p-5 cursor-pointer list-none">
-          <span class="font-black text-[14px] md:text-[15px]">What payment methods are supported?</span>
-          <span class="w-8 h-8 rounded-full bg-black text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
-        </summary>
-        <div class="px-4 md:px-5 pb-5 text-[13px] font-medium leading-relaxed text-zinc-700">
-          We support all major Credit/Debit cards (Visa, Mastercard, Amex), PayPal, Apple Pay, Google Pay, UPI/QR code, and Crypto.
-        </div>
-      </details>
-      <details class="group open:bg-[#FFF7CC]">
-        <summary class="flex items-center justify-between p-4 md:p-5 cursor-pointer list-none">
-          <span class="font-black text-[14px] md:text-[15px]">Are the element pack files 4K PNG with transparent background?</span>
-          <span class="w-8 h-8 rounded-full bg-black text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
-        </summary>
-        <div class="px-4 md:px-5 pb-5 text-[13px] font-medium leading-relaxed text-zinc-700">
-          Yes. Every asset in the pack has crisp 4K resolution (3840x2160), 300 DPI, and clean transparent cutouts ready for Photoshop, Figma, Premiere Pro, or Canva.
-        </div>
-      </details>
-    </div>
+<section id="faq" class="max-w-[900px] mx-auto px-4 md:px-6 pb-16">
+  <h3 class="font-display text-[30px] text-center text-white">FREQUENTLY ASKED QUESTIONS</h3>
+  <div class="mt-6 glass-card rounded-[24px] overflow-hidden comic-shadow divide-y divide-white/10">
+    <details class="group open:bg-white/5" open>
+      <summary class="flex items-center justify-between p-5 cursor-pointer list-none text-white font-bold text-[15px]">
+        <span>How much does a custom thumbnail cost?</span>
+        <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
+      </summary>
+      <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
+        Custom thumbnails are priced at just <b>₹150</b> per thumbnail under our <b>"THumbnaL"</b> service. It includes full 4K export, source PSD file, and unlimited revisions.
+      </div>
+    </details>
+    <details class="group open:bg-white/5">
+      <summary class="flex items-center justify-between p-5 cursor-pointer list-none text-white font-bold text-[15px]">
+        <span>What is included in the ₹200 Elements Pack?</span>
+        <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
+      </summary>
+      <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
+        You receive the complete 500+ isolated PNG elements library in 4K resolution (Arrows, Bursts, Money, Flames, Lightning, HUD bars, and overlays) with transparent backgrounds.
+      </div>
+    </details>
+    <details class="group open:bg-white/5">
+      <summary class="flex items-center justify-between p-5 cursor-pointer list-none text-white font-bold text-[15px]">
+        <span>What payment options are available?</span>
+        <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
+      </summary>
+      <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
+        We support instant Indian UPI (Google Pay, PhonePe, Paytm, BHIM QR), Debit/Credit Cards (RuPay, Visa, MasterCard), NetBanking, PayPal, and Crypto.
+      </div>
+    </details>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="border-t-[3px] border-black bg-white">
-  <div class="max-w-[1280px] mx-auto px-4 md:px-6 py-8">
+<footer class="border-t-2 border-white/10 bg-[#0E0F14] text-white">
+  <div class="max-w-[1300px] mx-auto px-4 md:px-6 py-10">
     <div class="flex flex-col md:flex-row justify-between gap-6">
       <div>
         <div class="flex items-center gap-2">
-          <div class="w-9 h-9 bg-black text-white rounded-xl grid place-items-center font-display">C×T</div>
-          <span class="font-display text-[16px]">CVRTN'S THumbnaiL</span>
-          <span class="text-[11px] font-black bg-zinc-100 border border-black rounded-full px-2 py-1">© 2026</span>
+          <div class="w-9 h-9 bg-[#FF2A2A] text-white rounded-xl grid place-items-center font-display">C×T</div>
+          <span class="font-display text-[18px]">CVRTN'S THumbnaiL</span>
+          <span class="text-[11px] font-black bg-zinc-800 text-[#FFD600] border border-white/20 rounded-full px-2.5 py-0.5">&copy; 2026</span>
         </div>
-        <p class="text-[12px] font-medium text-zinc-500 mt-2 max-w-[420px]">
-          Professional thumbnail design, portfolio showcase, and high-CTR elements pack for content creators.
+        <p class="text-[13px] font-medium text-zinc-400 mt-2 max-w-[420px]">
+          Viral YouTube thumbnail design, aesthetic portfolio showcase, and high-converting 4K elements pack.
         </p>
       </div>
       <div class="flex gap-8 text-[13px] font-bold">
-        <div class="space-y-2"><div class="font-black">Navigation</div><a href="#portfolio" class="block text-zinc-600 hover:text-black">Portfolio</a><a href="#custom-services" class="block text-zinc-600 hover:text-black">Order "THumbnaL"</a><a href="#preview" class="block text-zinc-600 hover:text-black">Elements</a></div>
-        <div class="space-y-2"><div class="font-black">Support</div><a href="#" onclick="openPaymentModal('Custom THumbnaL Commission', 35); return false;" class="block text-zinc-600 hover:text-black">Hire Me</a><a href="#faq" class="block text-zinc-600 hover:text-black">FAQ</a></div>
+        <div class="space-y-2"><div class="font-black text-white">Navigation</div><a href="#portfolio" class="block text-zinc-400 hover:text-white">Portfolio</a><a href="#custom-services" class="block text-zinc-400 hover:text-white">Order "THumbnaL" (₹150)</a><a href="#preview" class="block text-zinc-400 hover:text-white">Elements (₹200)</a></div>
+        <div class="space-y-2"><div class="font-black text-white">Direct Order</div><a href="#" onclick="openPaymentModal('Custom THumbnaL Commission', 150); return false;" class="block text-zinc-400 hover:text-white">Order Custom (₹150)</a><a href="#faq" class="block text-zinc-400 hover:text-white">FAQ</a></div>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- LIGHTBOX MODAL -->
-<div id="lightbox" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden p-4 md:p-8 flex flex-col items-center justify-center">
+<!-- LIGHTBOX PREVIEW MODAL -->
+<div id="lightbox" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 hidden p-4 md:p-8 flex flex-col items-center justify-center">
   <div class="relative max-w-5xl w-full flex flex-col items-center">
-    <button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-4 w-10 h-10 bg-white rounded-full grid place-items-center border-2 border-black font-black hover:bg-zinc-100"><i class="fa-solid fa-xmark text-lg"></i></button>
-    <img id="lightboxImg" src="" class="max-w-full max-h-[82vh] object-contain rounded-2xl border-4 border-white shadow-2xl">
+    <button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-4 w-10 h-10 bg-zinc-900 text-white rounded-full grid place-items-center border border-white/30 font-black hover:bg-zinc-800"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <img id="lightboxImg" src="" class="max-w-full max-h-[82vh] object-contain rounded-2xl border-2 border-white/20 shadow-2xl">
     <div class="mt-4 flex gap-3">
-      <button onclick="closeLightbox()" class="bg-white text-black px-5 py-2 rounded-full font-black border-2 border-black text-sm">Close Preview</button>
-      <button onclick="closeLightbox(); openPaymentModal('Custom THumbnaL Design', 35)" class="bg-[#FF1A1A] text-white px-6 py-2 rounded-full font-black border-2 border-white text-sm">Order Similar "THumbnaL"</button>
+      <button onclick="closeLightbox()" class="bg-zinc-800 text-white px-5 py-2.5 rounded-full font-black border border-white/20 text-sm">Close Preview</button>
+      <button onclick="closeLightbox(); openPaymentModal('Custom THumbnaL Design', 150)" class="bg-[#FFD600] text-black px-6 py-2.5 rounded-full font-black border-2 border-black text-sm comic-shadow-sm">Order Similar "THumbnaL" — ₹150</button>
     </div>
   </div>
 </div>
 
-<!-- PAYMENT METHOD UI MODAL -->
-<div id="paymentModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 md:p-6 overflow-y-auto">
-  <div class="bg-white border-[3px] border-black rounded-[24px] comic-shadow-lg max-w-2xl w-full overflow-hidden my-auto relative">
-    <div class="bg-black text-white px-6 py-4 flex items-center justify-between border-b-[3px] border-black">
+<!-- AESTHETIC PAYMENT MODAL (IN RUPEES ₹) -->
+<div id="paymentModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 md:p-6 overflow-y-auto">
+  <div class="bg-[#14151F] border-2 border-white/20 rounded-[28px] comic-shadow-lg max-w-2xl w-full overflow-hidden my-auto relative text-white">
+    <div class="bg-[#1C1E2A] px-6 py-4 flex items-center justify-between border-b border-white/10">
       <div class="flex items-center gap-2">
-        <span class="w-3 h-3 rounded-full bg-[#00E054] animate-pulse"></span>
+        <span class="w-3 h-3 rounded-full bg-[#00F562] animate-pulse"></span>
         <span class="font-display text-[18px]">SECURE PAYMENT CHECKOUT</span>
       </div>
       <button onclick="closePaymentModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
@@ -704,44 +778,68 @@ tailwind.config={
 
     <div class="p-5 md:p-6">
       <!-- Order summary header -->
-      <div class="bg-[#FFFDF5] border-2 border-black rounded-2xl p-4 mb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <div class="bg-zinc-900/90 border border-white/15 rounded-2xl p-4 mb-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <span class="text-[11px] font-black tracking-widest text-[#FF1A1A] uppercase">ITEM SELECTED</span>
-          <div class="font-display text-[18px]" id="payItemName">Custom THumbnaL Commission</div>
-          <div class="text-zinc-500 text-xs font-semibold">Instant digital access & confirmation receipt</div>
+          <span class="text-[11px] font-black tracking-widest text-[#FFD600] uppercase">ITEM SELECTED</span>
+          <div class="font-display text-[20px] text-white" id="payItemName">Custom THumbnaL Commission</div>
+          <div class="text-zinc-400 text-xs font-semibold">Instant access, 24h turnaround & invoice receipt</div>
         </div>
         <div class="text-right">
-          <span class="text-xs font-bold text-zinc-500">TOTAL TO PAY</span>
-          <div class="font-display text-[26px] text-black" id="payItemPrice">$35</div>
+          <span class="text-xs font-bold text-zinc-400">TOTAL TO PAY</span>
+          <div class="font-display text-[30px] text-[#00F562]" id="payItemPrice">₹150</div>
         </div>
       </div>
 
       <!-- Payment Method Tabs -->
       <div class="mb-5">
-        <label class="block text-xs font-black tracking-wider uppercase text-zinc-600 mb-2">Select Payment Method</label>
+        <label class="block text-xs font-black tracking-wider uppercase text-zinc-400 mb-2">Select Payment Method</label>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <button type="button" onclick="switchPayMethod('card')" id="payTab-card" class="pay-tab tab-active border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1">
-            <i class="fa-solid fa-credit-card text-base"></i> Card
+          <button type="button" onclick="switchPayMethod('upi')" id="payTab-upi" class="pay-tab tab-active border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1">
+            <i class="fa-solid fa-qrcode text-base text-[#00F562]"></i> UPI / QR
           </button>
-          <button type="button" onclick="switchPayMethod('paypal')" id="payTab-paypal" class="pay-tab bg-white border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-50">
-            <i class="fa-brands fa-paypal text-base text-[#003087]"></i> PayPal
+          <button type="button" onclick="switchPayMethod('card')" id="payTab-card" class="pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800">
+            <i class="fa-solid fa-credit-card text-base"></i> Cards (RuPay/Visa)
           </button>
-          <button type="button" onclick="switchPayMethod('applepay')" id="payTab-applepay" class="pay-tab bg-white border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-50">
-            <i class="fa-brands fa-apple text-base"></i> Pay
+          <button type="button" onclick="switchPayMethod('paypal')" id="payTab-paypal" class="pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800">
+            <i class="fa-brands fa-paypal text-base text-[#38BDF8]"></i> PayPal
           </button>
-          <button type="button" onclick="switchPayMethod('upi')" id="payTab-upi" class="pay-tab bg-white border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-50">
-            <i class="fa-solid fa-qrcode text-base text-[#00A83E]"></i> UPI / Crypto
+          <button type="button" onclick="switchPayMethod('crypto')" id="payTab-crypto" class="pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800">
+            <i class="fa-brands fa-bitcoin text-base text-[#FFD600]"></i> Crypto (USDT)
           </button>
         </div>
       </div>
 
-      <!-- Card UI Method View -->
-      <div id="payView-card" class="space-y-4">
-        <!-- Visual Credit Card -->
-        <div class="credit-card-preview text-white rounded-2xl p-5 border-2 border-black comic-shadow-sm relative overflow-hidden">
+      <!-- UPI QR Code View (Default for India) -->
+      <div id="payView-upi" class="text-center py-3 space-y-4">
+        <div class="bg-zinc-900 border border-white/20 rounded-2xl p-5 max-w-sm mx-auto">
+          <div class="font-black text-xs tracking-wider text-[#FFD600] mb-2 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-mobile-screen"></i> SCAN WITH ANY UPI APP
+          </div>
+          <div class="w-40 h-40 bg-white rounded-2xl mx-auto grid place-items-center p-2 shadow-xl border-4 border-black">
+            <i class="fa-solid fa-qrcode text-8xl text-black"></i>
+          </div>
+          <div class="mt-3 font-mono text-sm text-zinc-300">
+            UPI ID: <span class="font-black text-white bg-zinc-800 px-2 py-1 rounded border border-white/20">cvrtn@upi</span>
+          </div>
+          <div class="flex justify-center gap-3 text-xs text-zinc-400 mt-3">
+            <span class="bg-zinc-800 px-2 py-1 rounded">GPay</span>
+            <span class="bg-zinc-800 px-2 py-1 rounded">PhonePe</span>
+            <span class="bg-zinc-800 px-2 py-1 rounded">Paytm</span>
+            <span class="bg-zinc-800 px-2 py-1 rounded">BHIM</span>
+          </div>
+        </div>
+        <button onclick="processPaymentSuccess('UPI / GPay / PhonePe')" class="bg-[#00F562] hover:bg-[#00d655] text-black border-2 border-black rounded-full px-8 py-3.5 font-black text-sm comic-shadow-sm mx-auto flex items-center justify-center gap-2">
+          <i class="fa-solid fa-check"></i> I Have Paid via UPI
+        </button>
+      </div>
+
+      <!-- Card Method View -->
+      <div id="payView-card" class="hidden space-y-4">
+        <!-- Live Card Preview -->
+        <div class="credit-card-preview text-white rounded-2xl p-5 border border-white/20 comic-shadow-sm relative overflow-hidden">
           <div class="flex justify-between items-center mb-4">
             <span class="font-display tracking-widest text-sm text-[#FFD600]">CVRTN'S THumbnaiL</span>
-            <div class="flex gap-1 text-lg"><i class="fa-brands fa-cc-visa"></i> <i class="fa-brands fa-cc-mastercard"></i></div>
+            <div class="flex gap-1.5 text-lg text-zinc-300"><i class="fa-brands fa-cc-visa"></i> <i class="fa-brands fa-cc-mastercard"></i> <span class="text-xs font-bold bg-zinc-800 px-1.5 rounded">RuPay</span></div>
           </div>
           <div class="font-mono text-lg md:text-xl tracking-widest my-2" id="cardNumPreview">•••• •••• •••• ••••</div>
           <div class="flex justify-between items-end mt-4 text-xs font-mono">
@@ -758,140 +856,120 @@ tailwind.config={
 
         <div class="space-y-3">
           <div>
-            <label class="block text-xs font-black mb-1">Card Number</label>
+            <label class="block text-xs font-black mb-1 text-zinc-300">Card Number</label>
             <div class="relative">
-              <input type="text" id="cardNumInput" placeholder="4532 8920 1289 0041" maxlength="19" class="w-full border-2 border-black rounded-xl px-3.5 py-2.5 text-sm font-bold bg-white pl-10">
+              <input type="text" id="cardNumInput" placeholder="4532 8920 1289 0041" maxlength="19" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white pl-10 focus:border-[#FFD600] outline-none">
               <i class="fa-solid fa-credit-card absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400"></i>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-black mb-1">Expiration Date</label>
-              <input type="text" id="cardExpInput" placeholder="MM / YY" maxlength="5" class="w-full border-2 border-black rounded-xl px-3.5 py-2.5 text-sm font-bold bg-white">
+              <label class="block text-xs font-black mb-1 text-zinc-300">Expiration Date</label>
+              <input type="text" id="cardExpInput" placeholder="MM / YY" maxlength="5" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white focus:border-[#FFD600] outline-none">
             </div>
             <div>
-              <label class="block text-xs font-black mb-1">Security Code (CVC)</label>
-              <input type="password" id="cardCvcInput" placeholder="•••" maxlength="4" class="w-full border-2 border-black rounded-xl px-3.5 py-2.5 text-sm font-bold bg-white">
+              <label class="block text-xs font-black mb-1 text-zinc-300">CVC / CVV</label>
+              <input type="password" id="cardCvcInput" placeholder="•••" maxlength="4" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white focus:border-[#FFD600] outline-none">
             </div>
           </div>
           <div>
-            <label class="block text-xs font-black mb-1">Cardholder Name</label>
-            <input type="text" id="cardNameInput" placeholder="Full name on card" class="w-full border-2 border-black rounded-xl px-3.5 py-2.5 text-sm font-bold bg-white">
+            <label class="block text-xs font-black mb-1 text-zinc-300">Cardholder Name</label>
+            <input type="text" id="cardNameInput" placeholder="Full name on card" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-zinc-900 text-white focus:border-[#FFD600] outline-none">
           </div>
+        </div>
+
+        <div class="mt-4 pt-2">
+          <button id="paySubmitBtn" onclick="processPaymentSuccess('Credit/Debit Card')" class="w-full bg-[#FF2A2A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full py-3.5 font-black text-[15px] comic-shadow-sm flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-lock"></i> PAY SECURELY NOW
+          </button>
         </div>
       </div>
 
       <!-- PayPal View -->
       <div id="payView-paypal" class="hidden text-center py-6 space-y-4">
-        <div class="w-16 h-16 bg-blue-50 text-[#003087] rounded-full grid place-items-center mx-auto text-3xl border-2 border-black"><i class="fa-brands fa-paypal"></i></div>
+        <div class="w-16 h-16 bg-blue-900/40 text-[#38BDF8] rounded-full grid place-items-center mx-auto text-3xl border border-blue-400/30"><i class="fa-brands fa-paypal"></i></div>
         <div>
-          <div class="font-display text-lg">FAST & SECURE PAYPAL CHECKOUT</div>
-          <p class="text-xs text-zinc-500 max-w-sm mx-auto mt-1">You will be securely redirected to PayPal to complete your purchase or custom order commission.</p>
+          <div class="font-display text-lg">INTERNATIONAL PAYPAL CHECKOUT</div>
+          <p class="text-xs text-zinc-400 max-w-sm mx-auto mt-1">Pay with your PayPal balance or international credit cards with automatic currency conversion.</p>
         </div>
         <button onclick="processPaymentSuccess('PayPal')" class="bg-[#FFC439] hover:bg-[#ffba1a] text-black border-2 border-black rounded-full px-8 py-3.5 font-black text-sm comic-shadow-sm flex items-center justify-center gap-2 mx-auto">
-          <i class="fa-brands fa-paypal text-base"></i> Pay with PayPal Checkout
+          <i class="fa-brands fa-paypal text-base"></i> Continue with PayPal
         </button>
       </div>
 
-      <!-- Apple / Google Pay View -->
-      <div id="payView-applepay" class="hidden text-center py-6 space-y-4">
-        <div class="w-16 h-16 bg-zinc-100 text-black rounded-full grid place-items-center mx-auto text-3xl border-2 border-black"><i class="fa-brands fa-apple"></i></div>
-        <div>
-          <div class="font-display text-lg">ONE-TOUCH EXPRESS PAY</div>
-          <p class="text-xs text-zinc-500 max-w-sm mx-auto mt-1">Pay instantly using your saved Apple Pay, Google Wallet, or biometric payment method.</p>
+      <!-- Crypto View -->
+      <div id="payView-crypto" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 bg-zinc-900 text-[#FFD600] rounded-full grid place-items-center mx-auto text-3xl border border-white/20"><i class="fa-brands fa-bitcoin"></i></div>
+        <div class="bg-zinc-900 border border-white/10 rounded-2xl p-4 max-w-sm mx-auto text-left font-mono text-xs">
+          <div class="text-zinc-400 text-[10px]">USDT (TRC20 / BEP20) ADDRESS</div>
+          <div class="font-bold text-white break-all mt-1">TXr74aK928bN109Zxq982B4910LM</div>
         </div>
-        <button onclick="processPaymentSuccess('Apple / Google Pay')" class="bg-black text-white border-2 border-black rounded-full px-8 py-3.5 font-black text-sm flex items-center justify-center gap-2 mx-auto">
-          <i class="fa-brands fa-apple"></i> Pay with Apple Pay
+        <button onclick="processPaymentSuccess('Crypto USDT')" class="bg-[#FFD600] text-black border-2 border-black rounded-full px-8 py-3.5 font-black text-sm comic-shadow-sm mx-auto">
+          Confirm Crypto Transaction
         </button>
-      </div>
-
-      <!-- UPI / Crypto View -->
-      <div id="payView-upi" class="hidden text-center py-4 space-y-4">
-        <div class="bg-[#FFF7CC] border-2 border-black rounded-xl p-4 max-w-sm mx-auto">
-          <div class="font-black text-xs tracking-wider mb-2">SCAN QR TO PAY (UPI / CRYPTO)</div>
-          <div class="w-36 h-36 bg-white border-2 border-black rounded-xl mx-auto grid place-items-center p-2 shadow-inner">
-            <i class="fa-solid fa-qrcode text-7xl text-zinc-900"></i>
-          </div>
-          <div class="font-mono text-xs mt-2 text-zinc-700">UPI ID: <span class="font-black text-black">cvrtn@upi</span></div>
-          <div class="font-mono text-[10px] text-zinc-500 mt-1">USDT (TRC20): 0x71C...B49</div>
-        </div>
-        <button onclick="processPaymentSuccess('UPI / Crypto QR')" class="bg-[#00E054] text-black border-2 border-black rounded-full px-8 py-3 font-black text-sm comic-shadow-sm mx-auto">
-          I Have Made The Payment
-        </button>
-      </div>
-
-      <!-- Payment Action Button (Default for Card) -->
-      <div id="cardPayBtnContainer" class="mt-6 pt-4 border-t-2 border-black/10">
-        <button id="paySubmitBtn" onclick="processPaymentSuccess('Credit/Debit Card')" class="w-full bg-[#FF1A1A] hover:bg-[#e60000] text-white border-[3px] border-black rounded-full py-4 font-black text-[16px] comic-shadow-sm flex items-center justify-center gap-2 transition">
-          <i class="fa-solid fa-lock"></i> COMPLETE PAYMENT & ORDER NOW
-        </button>
-        <div class="flex items-center justify-center gap-4 text-[11px] font-bold text-zinc-500 mt-3">
-          <span><i class="fa-solid fa-shield-check text-[#00A83E]"></i> 256-Bit SSL Encrypted</span>
-          <span><i class="fa-solid fa-check text-[#00A83E]"></i> Instant Receipt & Download</span>
-        </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- PAYMENT SUCCESS CONFIRMATION MODAL -->
-<div id="paySuccessModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-white border-[3px] border-black rounded-[24px] comic-shadow-lg max-w-md w-full p-6 text-center">
-    <div class="w-16 h-16 bg-[#00E054] border-2 border-black rounded-full grid place-items-center mx-auto text-black text-2xl comic-shadow-sm animate-bounce">
+<div id="paySuccessModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-[#151722] border-2 border-white/20 rounded-[28px] comic-shadow-lg max-w-md w-full p-6 text-center text-white">
+    <div class="w-16 h-16 bg-[#00F562] text-black border-2 border-black rounded-full grid place-items-center mx-auto text-2xl comic-shadow-sm animate-bounce">
       <i class="fa-solid fa-check"></i>
     </div>
-    <h3 class="font-display text-[24px] mt-4">PAYMENT SUCCESSFUL!</h3>
-    <p class="text-zinc-600 text-sm mt-1" id="successDetails">Thank you! Your order has been placed and confirmation details have been generated.</p>
-    <div class="bg-zinc-50 border-2 border-black rounded-2xl p-4 my-4 text-left text-xs space-y-1.5 font-bold">
-      <div class="flex justify-between"><span class="text-zinc-500">Order ID:</span><span class="font-mono" id="orderIdText">#THUMB-9481</span></div>
-      <div class="flex justify-between"><span class="text-zinc-500">Status:</span><span class="text-[#00A83E]">CONFIRMED ✓</span></div>
-      <div class="flex justify-between"><span class="text-zinc-500">Service:</span><span id="orderServiceText">Custom THumbnaL</span></div>
+    <h3 class="font-display text-[24px] mt-4 text-white">ORDER CONFIRMED!</h3>
+    <p class="text-zinc-300 text-sm mt-1" id="successDetails">Thank you! Your payment has been received and order details have been registered.</p>
+    <div class="bg-zinc-900 border border-white/10 rounded-2xl p-4 my-4 text-left text-xs space-y-1.5 font-bold">
+      <div class="flex justify-between"><span class="text-zinc-400">Order ID:</span><span class="font-mono text-[#FFD600]" id="orderIdText">#THUMB-9481</span></div>
+      <div class="flex justify-between"><span class="text-zinc-400">Payment Status:</span><span class="text-[#00F562]">CONFIRMED &bull; ₹ PAID</span></div>
+      <div class="flex justify-between"><span class="text-zinc-400">Service / Pack:</span><span id="orderServiceText" class="text-white">Custom THumbnaL</span></div>
     </div>
-    <button onclick="closeSuccessModal()" class="w-full bg-black text-white rounded-full py-3.5 font-black text-sm">
-      DONE & RETURN TO SITE
+    <button onclick="closeSuccessModal()" class="w-full bg-[#FF2A2A] hover:bg-[#e01d1d] text-white rounded-full py-3.5 font-black text-sm border-2 border-black">
+      DONE &amp; RETURN TO SITE
     </button>
   </div>
 </div>
 
 <!-- CART DRAWER -->
-<div id="cartOverlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden"></div>
-<div id="cartDrawer" class="fixed top-0 right-0 h-full w-[92%] max-w-[420px] bg-white z-50 translate-x-full transition-transform duration-300 border-l-[3px] border-black flex flex-col">
-  <div class="p-5 border-b-[3px] border-black flex items-center justify-between bg-zinc-50">
+<div id="cartOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden"></div>
+<div id="cartDrawer" class="fixed top-0 right-0 h-full w-[92%] max-w-[420px] bg-[#14151F] text-white z-50 translate-x-full transition-transform duration-300 border-l-2 border-white/20 flex flex-col">
+  <div class="p-5 border-b border-white/10 flex items-center justify-between bg-zinc-900">
     <div class="font-display text-[18px]">YOUR CART</div>
-    <button id="closeCart" class="w-9 h-9 bg-black text-white rounded-full grid place-items-center"><i class="fa-solid fa-xmark"></i></button>
+    <button id="closeCart" class="w-9 h-9 bg-zinc-800 text-white rounded-full grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
   </div>
   <div id="cartItems" class="flex-1 overflow-auto p-4 space-y-3">
     <div class="text-center py-12">
-      <div class="w-16 h-16 bg-zinc-100 border-2 border-black rounded-full grid place-items-center mx-auto text-xl"><i class="fa-solid fa-bag-shopping"></i></div>
-      <div class="font-black mt-3">Your cart is empty</div>
-      <div class="text-sm text-zinc-500 font-medium">Add the Pro Pack or a Custom THumbnaL</div>
-      <button onclick="addToCart('pro'); closeCartDrawer()" class="mt-4 bg-[#FF1A1A] text-white border-2 border-black rounded-full px-6 py-2.5 font-black">ADD PRO PACK — $29</button>
+      <div class="w-16 h-16 bg-zinc-900 border border-white/10 rounded-full grid place-items-center mx-auto text-xl text-zinc-400"><i class="fa-solid fa-bag-shopping"></i></div>
+      <div class="font-black mt-3 text-white">Your cart is empty</div>
+      <div class="text-sm text-zinc-400 font-medium">Add the 500+ Elements Pack or a Custom THumbnaL</div>
+      <button onclick="addToCart('pro'); closeCartDrawer()" class="mt-4 bg-[#FF2A2A] text-white border-2 border-black rounded-full px-6 py-2.5 font-black">ADD 500+ PACK — ₹200</button>
     </div>
   </div>
-  <div class="p-4 border-t-[3px] border-black bg-white space-y-3">
-    <div class="flex justify-between text-sm font-black"><span>Subtotal</span><span id="cartTotal">$0</span></div>
-    <button id="checkoutBtn" class="w-full bg-black text-white rounded-full py-3.5 font-black flex items-center justify-center gap-2"><i class="fa-solid fa-lock"></i> SECURE CHECKOUT</button>
-    <div class="text-center text-[11px] font-bold text-zinc-500">Instant download • 30-day guarantee</div>
+  <div class="p-4 border-t border-white/10 bg-zinc-900 space-y-3">
+    <div class="flex justify-between text-sm font-black"><span>Subtotal</span><span id="cartTotal" class="text-[#00F562]">₹0</span></div>
+    <button id="checkoutBtn" class="w-full bg-[#00F562] text-black rounded-full py-3.5 font-black flex items-center justify-center gap-2"><i class="fa-solid fa-lock"></i> PROCEED TO PAYMENT (₹)</button>
+    <div class="text-center text-[11px] font-bold text-zinc-400">Instant UPI &amp; Cards checkout</div>
   </div>
 </div>
 
-<div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-black text-white px-5 py-3 rounded-full font-black text-[13px] flex items-center gap-3 border-2 border-white z-50 hidden shadow-xl">
-  <span class="w-7 h-7 bg-[#00E054] rounded-full grid place-items-center text-black"><i class="fa-solid fa-check text-xs"></i></span>
+<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#12131A] text-white px-5 py-3 rounded-full font-black text-[13px] flex items-center gap-3 border border-white/20 z-50 hidden shadow-2xl">
+  <span class="w-7 h-7 bg-[#00F562] rounded-full grid place-items-center text-black"><i class="fa-solid fa-check text-xs"></i></span>
   <span id="toastMsg">Added to cart!</span>
 </div>
 
 <script>
 const elementsData = [
-  {id:1, cat:'arrows', label:'Red Curved Arrow', color:'#FF1A1A', icon:'↷', style:'font-size:42px; color:#FF1A1A; filter:drop-shadow(2px 2px 0 #000); font-weight:900;'},
+  {id:1, cat:'arrows', label:'Red Curved Arrow', color:'#FF2A2A', icon:'↷', style:'font-size:42px; color:#FF2A2A; filter:drop-shadow(2px 2px 0 #000); font-weight:900;'},
   {id:2, cat:'arrows', label:'Yellow Boost Arrow', color:'#FFD600', icon:'↗', style:'font-size:44px; color:#FFD600; -webkit-text-stroke:2px #000; font-weight:900;'},
-  {id:3, cat:'arrows', label:'Green Up Arrow', color:'#00E054', icon:'⬆', style:'font-size:40px; color:#00E054; -webkit-text-stroke:2px #000;'},
+  {id:3, cat:'arrows', label:'Green Up Arrow', color:'#00F562', icon:'⬆', style:'font-size:40px; color:#00F562; -webkit-text-stroke:2px #000;'},
   {id:4, cat:'arrows', label:'Blue Loop Arrow', color:'#0EA5E9', icon:'↻', style:'font-size:42px; color:#0EA5E9; -webkit-text-stroke:2px #000;'},
-  {id:5, cat:'bubbles', label:'WOW! Burst', burst:'WOW!', bg:'#FF1A1A', text:'#FFD600'},
-  {id:6, cat:'bubbles', label:'OMG! Burst', burst:'OMG!', bg:'#FF1A1A', text:'white'},
-  {id:7, cat:'bubbles', label:'NEW! Burst', burst:'NEW!', bg:'#FF1A1A', text:'#FFD600'},
+  {id:5, cat:'bubbles', label:'WOW! Burst', burst:'WOW!', bg:'#FF2A2A', text:'#FFD600'},
+  {id:6, cat:'bubbles', label:'OMG! Burst', burst:'OMG!', bg:'#FF2A2A', text:'white'},
+  {id:7, cat:'bubbles', label:'NEW! Burst', burst:'NEW!', bg:'#FF2A2A', text:'#FFD600'},
   {id:8, cat:'bubbles', label:'BRO! Burst', burst:'BRO!', bg:'#0EA5E9', text:'white'},
   {id:9, cat:'symbols', label:'!! Shock', icon:'‼️', style:'font-size:38px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:10, cat:'symbols', label:'??? Red', icon:'⁇?', style:'font-size:36px; color:#FF1A1A; -webkit-text-stroke:1.5px #000; font-weight:900'},
+  {id:10, cat:'symbols', label:'??? Red', icon:'⁇?', style:'font-size:36px; color:#FF2A2A; -webkit-text-stroke:1.5px #000; font-weight:900'},
   {id:11, cat:'money', label:'Cash Stack', icon:'💵', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:12, cat:'money', label:'Money Bag', icon:'💰', style:'font-size:42px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:13, cat:'money', label:'Gold Coins', icon:'🪙', style:'font-size:40px; filter:drop-shadow(2px 2px 0 #000)'},
@@ -912,15 +990,14 @@ const elementsData = [
   {id:28, cat:'ui', label:'Chart Up', icon:'📈', style:'font-size:36px;'},
   {id:29, cat:'ui', label:'Chart Down', icon:'📉', style:'font-size:36px;'},
   {id:30, cat:'ui', label:'Hand Point', icon:'👉', style:'font-size:38px; filter:drop-shadow(1px 1px 0 #000)'},
-  {id:31, cat:'arrows', label:'Red Straight Arrow', color:'#FF1A1A', icon:'➜', style:'font-size:44px; color:#FF1A1A; -webkit-text-stroke:2px #000;'},
+  {id:31, cat:'arrows', label:'Red Straight Arrow', color:'#FF2A2A', icon:'➜', style:'font-size:44px; color:#FF2A2A; -webkit-text-stroke:2px #000;'},
   {id:32, cat:'effects', label:'Portal Blue', icon:'🌀', style:'font-size:42px; filter:drop-shadow(2px 2px 0 #000)'},
 ];
 
 const products = {
-  starter:{name:'Starter Pack — 150 elements', price:19, badge:'150 PNGs'},
-  pro:{name:'Pro Pack — 500+ elements (Most Popular)', price:29, badge:'500+ PNGs • 4K'},
-  studio:{name:'Studio Bundle — 1000 elements', price:49, badge:'1000 PNGs + PSD'},
-  custom:{name:'Custom "THumbnaL" Commission', price:35, badge:'1-on-1 Design'}
+  starter:{name:'Starter Pack — 150 elements', price:99, badge:'150 PNGs'},
+  pro:{name:'500+ Viral Elements Pack', price:200, badge:'500+ PNGs • 4K'},
+  custom:{name:'Custom "THumbnaL" Commission', price:150, badge:'1-on-1 Design'}
 };
 
 let cart = [];
@@ -939,15 +1016,15 @@ function renderGrid(){
   if(countEl) countEl.textContent=filtered.length;
   filtered.forEach(el=>{
     const card=document.createElement('button');
-    card.className='bg-white border-[2.5px] border-black rounded-2xl p-3 text-center hover:translate-y-[-2px] hover:shadow-[4px_4px_0_#000] transition text-left group';
+    card.className='bg-zinc-900 border border-white/15 rounded-2xl p-3 text-center hover:border-[#FFD600] hover:translate-y-[-2px] transition text-left group';
     card.onclick=()=>openElementModal(el);
     let inner='';
     if(el.burst){
-      inner=`<div class="mx-auto w-fit bg-[${el.bg}] text-[${el.text}] font-display text-[16px] leading-none px-3 py-2 rounded-xl border-2 border-black rotate-[-2deg] comic-shadow-sm" style="background:${el.bg}; color:${el.text}; border:2px solid #000; font-family:'Archivo Black';">${el.burst}</div>`;
+      inner=`<div class="mx-auto w-fit text-white font-display text-[15px] leading-none px-3 py-1.5 rounded-xl border border-black rotate-[-2deg]" style="background:${el.bg}; color:${el.text}; font-family:'Archivo Black';">${el.burst}</div>`;
     } else {
       inner=`<div class="h-[52px] grid place-items-center"><span style="${el.style}">${el.icon}</span></div>`;
     }
-    card.innerHTML=`${inner}<div class="font-black text-[11px] leading-tight mt-2">${el.label}</div><div class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">${el.cat}</div><div class="mt-2 text-[10px] font-black bg-zinc-900 text-white rounded-full py-0.5">PREVIEW ONLY</div>`;
+    card.innerHTML=`${inner}<div class="font-bold text-[12px] text-white leading-tight mt-2">${el.label}</div><div class="text-[10px] font-semibold text-zinc-400 uppercase tracking-widest">${el.cat}</div><div class="mt-2 text-[10px] font-black bg-black text-[#FFD600] border border-white/10 rounded-full py-0.5 text-center">PREVIEW ONLY</div>`;
     grid.appendChild(card);
   });
 }
@@ -960,13 +1037,13 @@ function renderTray(){
   trayIds.forEach(id=>{
     const el=elementsData.find(e=>e.id===id);
     const b=document.createElement('button');
-    b.className='bg-white border-2 border-black rounded-xl h-[64px] grid place-items-center hover:bg-zinc-50 active:scale-95 transition comic-shadow-sm';
+    b.className='bg-zinc-900 border border-white/20 rounded-xl h-[60px] grid place-items-center hover:bg-zinc-800 active:scale-95 transition';
     b.draggable=false;
     b.onclick=()=>addToCanvas(el);
     if(el.burst){
-      b.innerHTML=`<span class="font-display text-[13px] px-2 py-1 rounded-lg border-2 border-black" style="background:${el.bg}; color:${el.text}">${el.burst}</span>`;
+      b.innerHTML=`<span class="font-display text-[12px] px-2 py-0.5 rounded border border-black" style="background:${el.bg}; color:${el.text}">${el.burst}</span>`;
     } else {
-      b.innerHTML=`<span style="${el.style}; font-size:28px">${el.icon}</span>`;
+      b.innerHTML=`<span style="${el.style}; font-size:26px">${el.icon}</span>`;
     }
     b.title=el.label;
     tray.appendChild(b);
@@ -974,8 +1051,8 @@ function renderTray(){
 }
 
 function filterPortfolio(cat){
-  document.querySelectorAll('.port-filter-btn').forEach(btn=>btn.className='port-filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-50');
-  event.target.className='port-filter-btn active bg-black text-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black';
+  document.querySelectorAll('.port-filter-btn').forEach(btn=>btn.className='port-filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition');
+  event.target.className='port-filter-btn active bg-[#FF2A2A] text-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black transition';
   const cards = document.querySelectorAll('.port-card');
   cards.forEach(card=>{
     if(cat==='all' || card.classList.contains(cat)){
@@ -987,7 +1064,7 @@ function filterPortfolio(cat){
 }
 
 function addToCart(key){
-  const prod=products[key] || {name:key, price:29, badge:'Custom'};
+  const prod=products[key] || {name:key, price:150, badge:'Custom'};
   const existing=cart.find(c=>c.key===key);
   if(existing) existing.qty++;
   else cart.push({key, ...prod, qty:1});
@@ -1002,22 +1079,22 @@ function updateCartUI(){
   const itemsEl=document.getElementById('cartItems');
   const total=cart.reduce((a,c)=>a+c.price*c.qty,0);
   const totalEl=document.getElementById('cartTotal');
-  if(totalEl) totalEl.textContent=`$${total}`;
+  if(totalEl) totalEl.textContent=`₹${total}`;
   if(!itemsEl) return;
   if(cart.length===0){
-    itemsEl.innerHTML=`<div class="text-center py-12"><div class="w-16 h-16 bg-zinc-100 border-2 border-black rounded-full grid place-items-center mx-auto text-xl"><i class="fa-solid fa-bag-shopping"></i></div><div class="font-black mt-3">Your cart is empty</div><div class="text-sm text-zinc-500 font-medium">Add the Pro Pack to get started</div><button onclick="addToCart('pro')" class="mt-4 bg-[#FF1A1A] text-white border-2 border-black rounded-full px-6 py-2.5 font-black">ADD PRO PACK — $29</button></div>`;
+    itemsEl.innerHTML=`<div class="text-center py-12"><div class="w-16 h-16 bg-zinc-900 border border-white/10 rounded-full grid place-items-center mx-auto text-xl text-zinc-400"><i class="fa-solid fa-bag-shopping"></i></div><div class="font-black mt-3 text-white">Your cart is empty</div><div class="text-sm text-zinc-400 font-medium">Add the 500+ Elements Pack or a Custom THumbnaL</div><button onclick="addToCart('pro')" class="mt-4 bg-[#FF2A2A] text-white border-2 border-black rounded-full px-6 py-2.5 font-black">ADD 500+ PACK — ₹200</button></div>`;
   } else {
     itemsEl.innerHTML=cart.map(item=>`
-      <div class="bg-zinc-50 border-2 border-black rounded-2xl p-3 flex gap-3 items-center">
-        <div class="w-12 h-12 bg-white border-2 border-black rounded-xl grid place-items-center text-lg shrink-0"><i class="fa-solid fa-cube"></i></div>
+      <div class="bg-zinc-900 border border-white/15 rounded-2xl p-3 flex gap-3 items-center">
+        <div class="w-12 h-12 bg-black border border-white/15 rounded-xl grid place-items-center text-lg shrink-0 text-[#FFD600]"><i class="fa-solid fa-cube"></i></div>
         <div class="flex-1 min-w-0">
-          <div class="font-black text-[13px] leading-tight truncate">${item.name}</div>
-          <div class="text-[11px] font-bold text-zinc-500">${item.badge} • Qty ${item.qty}</div>
-          <div class="font-black text-[13px]">$${item.price}</div>
+          <div class="font-black text-[13px] leading-tight truncate text-white">${item.name}</div>
+          <div class="text-[11px] font-bold text-zinc-400">${item.badge} &bull; Qty ${item.qty}</div>
+          <div class="font-black text-[14px] text-[#00F562]">₹${item.price}</div>
         </div>
         <div class="flex flex-col gap-1">
-          <button onclick="changeQty('${item.key}',1)" class="w-7 h-7 bg-white border-2 border-black rounded-full grid place-items-center text-xs"><i class="fa-solid fa-plus"></i></button>
-          <button onclick="changeQty('${item.key}',-1)" class="w-7 h-7 bg-white border-2 border-black rounded-full grid place-items-center text-xs"><i class="fa-solid fa-minus"></i></button>
+          <button onclick="changeQty('${item.key}',1)" class="w-7 h-7 bg-zinc-800 text-white rounded-full grid place-items-center text-xs hover:bg-zinc-700"><i class="fa-solid fa-plus"></i></button>
+          <button onclick="changeQty('${item.key}',-1)" class="w-7 h-7 bg-zinc-800 text-white rounded-full grid place-items-center text-xs hover:bg-zinc-700"><i class="fa-solid fa-minus"></i></button>
         </div>
       </div>
     `).join('');
@@ -1044,14 +1121,14 @@ document.getElementById('checkoutBtn').onclick=()=>{
 };
 
 // Payment UI Logic
-let currentPaymentAmount = 35;
+let currentPaymentAmount = 150;
 let currentPaymentItem = 'Custom THumbnaL Commission';
 
 function openPaymentModal(item, price){
   currentPaymentItem = item;
   currentPaymentAmount = price;
   document.getElementById('payItemName').textContent = item;
-  document.getElementById('payItemPrice').textContent = `$${price}`;
+  document.getElementById('payItemPrice').textContent = `₹${price}`;
   document.getElementById('paymentModal').classList.remove('hidden');
 }
 function closePaymentModal(){
@@ -1059,43 +1136,37 @@ function closePaymentModal(){
 }
 
 function switchPayMethod(method){
-  document.querySelectorAll('.pay-tab').forEach(t=>t.className='pay-tab bg-white border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-50');
+  document.querySelectorAll('.pay-tab').forEach(t=>t.className='pay-tab bg-zinc-900 border border-white/20 rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1 hover:bg-zinc-800');
   const activeTab = document.getElementById(`payTab-${method}`);
   if(activeTab) activeTab.className='pay-tab tab-active border-2 border-black rounded-xl py-2.5 px-2 text-center text-xs font-black flex flex-col items-center gap-1';
   
-  ['card', 'paypal', 'applepay', 'upi'].forEach(m=>{
+  ['upi', 'card', 'paypal', 'crypto'].forEach(m=>{
     const v = document.getElementById(`payView-${m}`);
     if(v) v.classList.add('hidden');
   });
   const currentView = document.getElementById(`payView-${method}`);
   if(currentView) currentView.classList.remove('hidden');
-
-  const container = document.getElementById('cardPayBtnContainer');
-  if(container){
-    if(method === 'card') container.classList.remove('hidden');
-    else container.classList.add('hidden');
-  }
 }
 
 function processPaymentSuccess(method){
   const btn = document.getElementById('paySubmitBtn');
-  if(btn) btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> PROCESSING ENCRYPTED PAYMENT...';
+  if(btn) btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> VERIFYING PAYMENT...';
   
   setTimeout(()=>{
-    if(btn) btn.innerHTML = '<i class="fa-solid fa-lock"></i> COMPLETE PAYMENT & ORDER NOW';
+    if(btn) btn.innerHTML = '<i class="fa-solid fa-lock"></i> PAY SECURELY NOW';
     closePaymentModal();
     document.getElementById('orderIdText').textContent = `#THUMB-${Math.floor(1000 + Math.random()*9000)}`;
     document.getElementById('orderServiceText').textContent = currentPaymentItem;
-    document.getElementById('successDetails').textContent = `Your payment of $${currentPaymentAmount} via ${method} has been verified successfully. Download links and order dashboard access have been unlocked!`;
+    document.getElementById('successDetails').textContent = `Payment of ₹${currentPaymentAmount} via ${method} confirmed! We will contact you or provide instant download link.`;
     document.getElementById('paySuccessModal').classList.remove('hidden');
     cart = [];
     updateCartUI();
-  }, 1000);
+  }, 900);
 }
 
 function closeSuccessModal(){
   document.getElementById('paySuccessModal').classList.add('hidden');
-  showToast('Order confirmed! Check your email for delivery details 📩');
+  showToast('Order confirmed! 📩');
 }
 
 // Live card inputs
@@ -1127,8 +1198,8 @@ if(cardExpInput){
 // Filter buttons for element pack
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.onclick=()=>{
-    document.querySelectorAll('.filter-btn').forEach(b=>b.className='filter-btn bg-white border-2 border-black rounded-full px-4 py-1.5 hover:bg-zinc-50');
-    btn.className='filter-btn active bg-black text-white border-2 border-black rounded-full px-4 py-1.5';
+    document.querySelectorAll('.filter-btn').forEach(b=>b.className='filter-btn bg-zinc-900 text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 hover:bg-zinc-800');
+    btn.className='filter-btn active bg-white text-black border-2 border-black rounded-full px-4 py-1.5';
     activeFilter=btn.dataset.filter;
     renderGrid();
   }
@@ -1186,12 +1257,12 @@ function renderCanvas(){
   [...canvas.querySelectorAll('.canvas-element')].forEach(n=>n.remove());
   const list=document.getElementById('layerList');
   if(canvasElements.length===0){
-    if(list) list.innerHTML='<div class="opacity-60 text-center py-4">No elements yet</div>';
+    if(list) list.innerHTML='<div class="opacity-60 text-center py-3">No elements yet</div>';
   } else {
     if(list) list.innerHTML=canvasElements.slice().reverse().map(o=>`
-      <div class="flex items-center gap-2 bg-white text-black rounded-full px-3 py-1.5 border border-black">
+      <div class="flex items-center gap-2 bg-zinc-800 text-white rounded-full px-3 py-1 border border-white/20">
         <span class="truncate flex-1">${o.label}</span>
-        <button onclick="removeElement('${o.uid}')" class="w-6 h-6 bg-black text-white rounded-full grid place-items-center text-[10px]"><i class="fa-solid fa-xmark"></i></button>
+        <button onclick="removeElement('${o.uid}')" class="w-5 h-5 bg-black text-white rounded-full grid place-items-center text-[10px]"><i class="fa-solid fa-xmark"></i></button>
       </div>
     `).join('');
   }
@@ -1205,7 +1276,7 @@ function renderCanvas(){
     div.style.zIndex=10;
     div.ondblclick=()=>removeElement(obj.uid);
     if(obj.burst){
-      div.innerHTML=`<div class="font-display text-[22px] md:text-[30px] leading-none px-4 py-2 rounded-xl border-[3px] border-black comic-shadow-sm whitespace-nowrap" style="background:${obj.bg}; color:${obj.text}; font-family:'Archivo Black'; transform:rotate(-2deg)">${obj.burst}</div>`;
+      div.innerHTML=`<div class="font-display text-[20px] md:text-[28px] leading-none px-3.5 py-1.5 rounded-xl border-2 border-black comic-shadow-sm whitespace-nowrap" style="background:${obj.bg}; color:${obj.text}; font-family:'Archivo Black'; transform:rotate(-2deg)">${obj.burst}</div>`;
     } else {
       div.innerHTML=`<span style="${obj.style}; font-size:${obj.cat==='arrows'? '64px':'48px'}; display:inline-block; filter:drop-shadow(3px 3px 0 #000)">${obj.icon}</span>`;
     }
@@ -1264,7 +1335,7 @@ document.getElementById('bgSelect').onchange=(e)=>{
   };
   canvas.style.background=map[v];
 };
-document.getElementById('downloadMock').onclick=()=>showToast('Exported Mockup — order full pack or custom THumbnaL for 4K source PNGs!');
+document.getElementById('downloadMock').onclick=()=>showToast('Mockup exported — Order custom THumbnaL for 4K source PNGs!');
 document.getElementById('thumbTitle').oninput=(e)=>{
   const t=canvas.querySelector('.font-display');
   if(t) t.childNodes[0].textContent=e.target.value.toUpperCase()+' ';
