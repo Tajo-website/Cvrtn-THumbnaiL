@@ -180,6 +180,9 @@ button { white-space: nowrap; }
 
     <!-- Actions & Buttons -->
     <div class="flex items-center gap-2 md:gap-3">
+      <a href="https://instagram.com/cvrtncreates_" target="_blank" class="w-10 h-10 bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] border-2 border-black rounded-full grid place-items-center text-white hover:scale-110 transition comic-shadow-sm" title="@cvrtncreates_ on Instagram">
+        <i class="fa-brands fa-instagram text-[15px]"></i>
+      </a>
       <button onclick="openProjectsModal()" class="hidden md:inline-flex bg-zinc-900 hover:bg-zinc-800 border border-white/20 text-zinc-300 hover:text-white rounded-full px-3.5 h-10 items-center font-bold text-[12px] gap-1.5 transition" title="Saved Projects">
         <i class="fa-solid fa-folder-open text-[#FFD600]"></i> <span id="navProjectsCount">My Projects (0)</span>
       </button>
@@ -588,7 +591,7 @@ button { white-space: nowrap; }
           <div class="w-10 h-10 bg-[#FF2A2A] text-white rounded-xl grid place-items-center comic-shadow-sm"><i class="fa-solid fa-paintbrush"></i></div>
           <div>
             <div class="font-display text-[18px] md:text-[20px] leading-none">CVRTN CANVAS STUDIO <span class="text-[#FFD600] text-xs font-mono font-bold ml-1">1280×720 16:9</span></div>
-            <div class="text-[11px] font-bold text-zinc-400 mt-1">Design for free &bull; Unlock clean 1280×720 unwatermarked export for ₹49.</div>
+            <div class="text-[11px] font-bold text-zinc-400 mt-1">Edit your photos &amp; thumbnails for free &bull; Clean export for just ₹20</div>
           </div>
         </div>
 
@@ -634,6 +637,7 @@ button { white-space: nowrap; }
               <button onclick="switchStudioAssetCategory('money')" id="studioCat-money" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Money</button>
               <button onclick="switchStudioAssetCategory('effects')" id="studioCat-effects" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">VFX</button>
               <button onclick="switchStudioAssetCategory('gaming')" id="studioCat-gaming" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Gaming</button>
+              <button onclick="switchStudioAssetCategory('memes')" id="studioCat-memes" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Memes</button>
             </div>
 
             <!-- Dynamic Asset Tray Grid -->
@@ -949,6 +953,7 @@ button { white-space: nowrap; }
         <button onclick="setAssetBrowserFilter('money')" class="asset-tab-btn bg-zinc-900 text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Money</button>
         <button onclick="setAssetBrowserFilter('effects')" class="asset-tab-btn bg-zinc-900 text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Effects</button>
         <button onclick="setAssetBrowserFilter('gaming')" class="asset-tab-btn bg-zinc-900 text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Gaming HUD</button>
+        <button onclick="setAssetBrowserFilter('memes')" class="asset-tab-btn bg-zinc-900 text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Memes</button>
       </div>
     </div>
   </div>
@@ -1305,17 +1310,17 @@ button { white-space: nowrap; }
     <div class="glass-card rounded-[26px] p-5 comic-shadow flex flex-col justify-between border-2 border-[#FFD600]/40">
       <div>
         <div class="text-[11px] font-black tracking-widest text-[#FFD600] uppercase">STUDIO EXPORT</div>
-        <div class="font-display text-[32px] text-white leading-none mt-2">₹49 <span class="text-[13px] font-sans font-bold text-zinc-400">/ export</span></div>
-        <div class="text-[12px] font-bold text-[#FFD600] mt-1">Clean 1280×720 Canvas PNG</div>
+        <div class="font-display text-[32px] text-white leading-none mt-2">₹20 <span class="text-[13px] font-sans font-bold text-zinc-400">/ export</span></div>
+        <div class="text-[12px] font-bold text-[#FFD600] mt-1">Edit Free &bull; Buy Clean PNG</div>
         <ul class="mt-4 space-y-2 text-[12px] text-zinc-300 font-medium">
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Clean 1280×720 Native PNG</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Upload &amp; edit your photos FREE</li>
+          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Clean 1280×720 PNG export</li>
           <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> No Watermarks</li>
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> Custom Layers &amp; Text Included</li>
           <li class="flex gap-2"><i class="fa-solid fa-check text-[#00F562] mt-0.5"></i> YouTube Upload Ready</li>
         </ul>
       </div>
-      <button onclick="openPaymentModal('Studio 1280x720 Clean PNG Export', 49)" class="w-full mt-6 bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full py-3 font-black text-xs shadow-[0_0_12px_rgba(255,214,0,0.4)] transition">
-        BUY STUDIO EXPORT — ₹49
+      <button onclick="openPaymentModal('Studio 1280x720 Clean PNG Export', 20)" class="w-full mt-6 bg-[#FFD600] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full py-3 font-black text-xs shadow-[0_0_12px_rgba(255,214,0,0.4)] transition">
+        BUY STUDIO EXPORT — ₹20
       </button>
     </div>
 
@@ -1380,7 +1385,7 @@ button { white-space: nowrap; }
         <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
       </summary>
       <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
-        Designing and saving drafts in the Canvas Studio is free. Clean unwatermarked 1280×720 Ultra HD PNG exports are available at just <b>₹49</b> per export, or included with the <b>₹200 Elements Pack</b>.
+        Editing your photos and thumbnails in the Canvas Studio is completely free. Clean unwatermarked 1280×720 PNG exports are available at just <b>₹20</b> per export, or included with the <b>₹200 Elements Pack</b>.
       </div>
     </details>
     <details class="group open:bg-white/5">
@@ -1466,13 +1471,13 @@ button { white-space: nowrap; }
     </p>
 
     <div class="space-y-3">
-      <!-- Option 1: Clean 4K/1280x720 Export (₹49) -->
+      <!-- Option 1: Clean 1280x720 Export (₹20) -->
       <button onclick="buyCleanStudioExport()" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-2xl p-4 text-left border-2 border-black comic-shadow-sm transition hover:scale-[1.02] flex items-center justify-between group">
         <div>
           <div class="font-black text-sm flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-900"></i> Clean HD PNG (No Watermark)</div>
-          <div class="text-[11px] font-bold text-black/80 mt-0.5">High quality 1280×720 native YouTube ready</div>
+          <div class="text-[11px] font-bold text-black/80 mt-0.5">1280×720 YouTube ready export</div>
         </div>
-        <div class="font-display text-xl text-black shrink-0">₹49</div>
+        <div class="font-display text-xl text-black shrink-0">₹20</div>
       </button>
 
       <!-- Option 2: Free Watermarked Sample -->
@@ -1763,12 +1768,28 @@ const elementsData = [
   {id:27, cat:'gaming', label:'Warning Sign', icon:'⚠️', style:'font-size:36px;'},
   {id:28, cat:'gaming', label:'Profit Chart Up', icon:'📈', style:'font-size:36px;'},
   {id:29, cat:'arrows', label:'Straight Red Arrow', color:'#FF2A2A', icon:'➜', style:'font-size:44px; color:#FF2A2A; -webkit-text-stroke:2px #000;'},
-  {id:30, cat:'gaming', label:'Hand Point', icon:'👉', style:'font-size:38px; filter:drop-shadow(1px 1px 0 #000)'}
+  {id:30, cat:'gaming', label:'Hand Point', icon:'👉', style:'font-size:38px; filter:drop-shadow(1px 1px 0 #000)'},
+  // Meme Assets
+  {id:31, cat:'memes', label:'Shocked Face', icon:'😱', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:32, cat:'memes', label:'Crying Laughing', icon:'😂', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:33, cat:'memes', label:'Skull Dead', icon:'💀', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:34, cat:'memes', label:'Clown', icon:'🤡', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:35, cat:'memes', label:'Brain Explode', icon:'🤯', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:36, cat:'memes', label:'Sussy Eyes', icon:'👀', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:37, cat:'memes', label:'Cap / No Cap', burst:'NO CAP', bg:'#0EA5E9', text:'white'},
+  {id:38, cat:'memes', label:'W / Dub', burst:'HUGE W', bg:'#00F562', text:'black'},
+  {id:39, cat:'memes', label:'L / Ratio', burst:'BIG L', bg:'#FF2A2A', text:'white'},
+  {id:40, cat:'memes', label:'SUS Tag', burst:'SUS 📮', bg:'#FF2A2A', text:'#FFD600'},
+  {id:41, cat:'memes', label:'Moai Stone Face', icon:'🗿', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:42, cat:'memes', label:'Nerd Face', icon:'🤓', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:43, cat:'memes', label:'Cold Face', icon:'🥶', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:44, cat:'memes', label:'Money Mouth', icon:'🤑', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:45, cat:'memes', label:'Crying Sad', icon:'😭', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'}
 ];
 
 const products = {
   ai_visual: { name: 'AI 4K Visual Thumbnail (Clean Unlock)', price: 49, badge: '4K Clean PNG' },
-  studio_export: { name: 'Studio 1280x720 Clean PNG Export', price: 49, badge: '1280×720 UHD' },
+  studio_export: { name: 'Studio 1280x720 Clean PNG Export', price: 20, badge: '1280×720 UHD' },
   starter: { name: 'Starter Pack — 150 elements', price: 99, badge: '150 PNGs' },
   pro: { name: '500+ Viral Elements Pack', price: 200, badge: '500+ PNGs • 4K' },
   custom: { name: 'Custom "THumbnaiL" Commission', price: 150, badge: '1-on-1 Design' }
@@ -2313,7 +2334,7 @@ function closeExportChoiceModal() {
 
 function buyCleanStudioExport() {
   closeExportChoiceModal();
-  openPaymentModal('Studio 1280x720 Clean PNG Export', 49);
+  openPaymentModal('Studio 1280x720 Clean PNG Export', 20);
 }
 
 function downloadWatermarkedStudioSample() {
@@ -2345,7 +2366,7 @@ function downloadWatermarkedStudioSample() {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  showToast('Free watermarked sample exported! (Buy clean export for ₹49)');
+  showToast('Free watermarked sample exported! (Buy clean export for ₹20)');
 }
 
 function exportCleanCanvasPNG() {
