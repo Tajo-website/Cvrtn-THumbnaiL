@@ -2990,7 +2990,11 @@ async function handleSecurityVerification(e) {
     const isStudioExport = lower.includes('studio') || lower.includes('export');
     const deliveryAction = document.getElementById('productDeliveryAction');
 
-    const waText = encodeURIComponent(`*NEW ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${currentPaymentItem}\n💰 *Amount:* ₹${currentPaymentAmount}\n🧾 *Order ID:* ${orderId}\n📧 *Email:* ${email}\n${notes ? `📝 *Notes:* ${notes}\n` : ''}✅ *Payment Sent to:* nayeetanish@oksbi\n\n_Payment screenshot submitted on website._`);
+    const waText = encodeURIComponent(`*NEW ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${currentPaymentItem}\n💰 *Amount:* ₹${currentPaymentAmount}\n🧾 *Order ID:* ${orderId}\n📧 *Customer Email:* ${email}\n${notes ? `📝 *Notes:* ${notes}\n` : ''}📸 *Screenshot Attached:* ${uploadedScreenshotData ? 'YES (Submitted on website)' : 'NO'}\n✅ *UPI Payment Sent to:* nayeetanish@oksbi\n\n_Hey Tanish! I just paid on CVRTN website. Here is my order details & receipt screenshot._`);
+    const waUrl = `https://wa.me/919725920066?text=${waText}`;
+
+    // Auto-open WhatsApp to Tanish's number (919725920066)
+    try { window.open(waUrl, '_blank'); } catch(e) {}
 
     if (isPack) {
       deliveryAction.innerHTML = `
@@ -3001,8 +3005,8 @@ async function handleSecurityVerification(e) {
         <a href="CVRTNS_THumbnaiL.zip" download="CVRTNS_THumbnaiL_500_Pack.zip" class="block w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition">
           <i class="fa-solid fa-cloud-arrow-down"></i> DOWNLOAD 500+ PACK NOW (.ZIP)
         </a>
-        <a href="https://wa.me/?text=${waText}" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-bold text-xs border border-white/10 transition">
-          <i class="fa-brands fa-whatsapp text-[#25D366]"></i> Send Receipt Confirmation on WhatsApp
+        <a href="${waUrl}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-2.5 font-bold text-xs border border-white/10 transition flex items-center justify-center gap-1.5">
+          <i class="fa-brands fa-whatsapp text-sm"></i> Send Receipt to Tanish on WhatsApp (+91 9725920066)
         </a>
       `;
       showToast('Payment verified & download unlocked!');
@@ -3015,8 +3019,8 @@ async function handleSecurityVerification(e) {
         <a href="${currentAiResultUrl}" target="_blank" download="CVRTN_AI_Clean_4K_${Date.now()}.png" class="block w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition">
           <i class="fa-solid fa-cloud-arrow-down"></i> DOWNLOAD CLEAN 4K VISUAL (PNG)
         </a>
-        <a href="https://wa.me/?text=${waText}" target="_blank" class="block w-full bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-bold text-xs border border-white/10 transition">
-          <i class="fa-brands fa-whatsapp text-[#25D366]"></i> Send Receipt on WhatsApp
+        <a href="${waUrl}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-2.5 font-bold text-xs border border-white/10 transition flex items-center justify-center gap-1.5">
+          <i class="fa-brands fa-whatsapp text-sm"></i> Send Receipt to Tanish on WhatsApp (+91 9725920066)
         </a>
       `;
       showToast('Clean 4K visual unlocked!');
@@ -3030,6 +3034,9 @@ async function handleSecurityVerification(e) {
         <button onclick="exportCleanCanvasPNG()" class="w-full bg-[#00F562] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition">
           <i class="fa-solid fa-rotate-right"></i> DOWNLOAD AGAIN
         </button>
+        <a href="${waUrl}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-2.5 font-bold text-xs transition flex items-center justify-center gap-1.5">
+          <i class="fa-brands fa-whatsapp text-sm"></i> Send Receipt to Tanish on WhatsApp (+91 9725920066)
+        </a>
       `;
       showToast('Clean 1280×720 PNG downloaded!');
     } else {
@@ -3038,8 +3045,8 @@ async function handleSecurityVerification(e) {
           <div class="text-[11px] font-black text-[#FFD600] uppercase flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> 24H CUSTOM "THUMBNAIL" IN PRODUCTION</div>
           <div class="text-[12px] text-zinc-300 mt-1">Your order is registered! Delivery will be dispatched to <b>${email}</b> within 24 hours.</div>
         </div>
-        <a href="https://wa.me/?text=${waText}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-3.5 font-black text-xs transition flex items-center justify-center gap-2">
-          <i class="fa-brands fa-whatsapp text-base"></i> Send Order Details &amp; Proof to Tanish on WhatsApp
+        <a href="${waUrl}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-3.5 font-black text-xs transition flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-base"></i> Send Order Details &amp; Proof to Tanish (+91 9725920066)
         </a>
       `;
     }
