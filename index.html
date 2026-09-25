@@ -2775,43 +2775,47 @@ async function triggerAiThumbnailGeneration() {
 
   overlay.classList.remove('hidden');
   genBtn.disabled = true;
-  genBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Generating Visual (Free)...';
+  genBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Generating via fal.ai...';
 
-  stepText.textContent = 'Formulating 16:9 Thumbnail Prompt...';
+  stepText.textContent = 'Calling fal.ai FLUX.1 Engine (1280×720)...';
 
   try {
     const response = await fetch('/api/generate-thumbnail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        userPrompt: promptInput,
         prompt: promptInput,
-        hookText: hookInput,
-        genre,
-        style
+        style: style,
+        aspectRatio: '16:9',
+        genre: genre,
+        hookText: hookInput
       })
     });
 
     stepText.textContent = 'Rendering 4K Visual Lighting & Details...';
 
     if (!response.ok) {
-      throw new Error(`Server returned status ${response.status}`);
+      const errorPayload = await response.json().catch(() => ({}));
+      throw new Error(errorPayload.error || `Server error (${response.status})`);
     }
 
     const data = await response.json();
+    const generatedUrl = data.image_url || data.imageUrl;
 
-    if (data.success && data.imageUrl) {
-      currentAiResultUrl = data.imageUrl;
+    if (data.success && generatedUrl) {
+      currentAiResultUrl = generatedUrl;
       currentAiHeadline = hookInput;
 
-      // Update Preview Image
+      // Update Preview Image with Real fal.ai Generated Image
       const img = document.getElementById('aiResultImage');
-      img.src = data.imageUrl;
+      img.src = generatedUrl;
 
       // Update Dynamic Overlay Hook
       document.getElementById('aiHeadlineText').innerHTML = `${hookInput.substring(0, 16)}<br><span class="text-[#FFD600] bg-black/90 px-2 py-0.5 border-2 border-white/20 inline-block rotate-[-1deg] mt-1">${hookInput.substring(16, 32) || 'OUT NOW!'}</span>`;
-      document.getElementById('aiTagCategory').textContent = `${genre.toUpperCase()} &bull; 16:9`;
+      document.getElementById('aiTagCategory').textContent = `${genre.toUpperCase()} &bull; 16:9 (${data.provider || 'fal.ai FLUX'})`;
 
-      // Update Strategy Panel
+      // Update Strategy & Analysis Panel
       if (data.metadata) {
         document.getElementById('aiColorTheme').textContent = data.metadata.colorPalette;
         document.getElementById('aiComposition').textContent = data.metadata.compositionStrategy;
@@ -2824,16 +2828,13 @@ async function triggerAiThumbnailGeneration() {
         }
       }
 
-      showToast('AI Visual Preview Rendered! (Free) ✓');
+      showToast(`AI Visual Generated via ${data.provider || 'fal.ai'}! ✓`);
+    } else {
+      throw new Error(data.error || 'Failed to generate image URL');
     }
   } catch (err) {
-    console.warn('AI Generation fallback:', err.message);
-    const seed = Math.floor(Math.random() * 10000);
-    currentAiResultUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(promptInput + ' youtube thumbnail 16:9 cinematic lighting')}?width=1280&height=720&seed=${seed}&nologo=true`;
-    currentAiHeadline = hookInput;
-    document.getElementById('aiResultImage').src = currentAiResultUrl;
-    document.getElementById('aiHeadlineText').innerHTML = `${hookInput.substring(0, 16)}<br><span class="text-[#FFD600] bg-black/90 px-2 py-0.5 border-2 border-white/20 inline-block rotate-[-1deg] mt-1">${hookInput.substring(16, 32) || 'OUT NOW!'}</span>`;
-    showToast('AI Thumbnail Preview Rendered! (Free) ✓');
+    console.error('AI Generation Error:', err);
+    showToast(`AI Generation Alert: ${err.message}`);
   } finally {
     overlay.classList.add('hidden');
     genBtn.disabled = false;
