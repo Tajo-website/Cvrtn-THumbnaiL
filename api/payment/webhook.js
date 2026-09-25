@@ -61,7 +61,60 @@ export default async function handler(req, res) {
       const amount = (paymentEntity.amount || orderEntity.amount || 0) / 100;
       const email = paymentEntity.email || orderEntity.notes?.customerEmail || '';
 
-      console.log(`ORDER PAID VERIFIED VIA WEBHOOK: Order ${razorpayOrderId}, Payment ${razorpayPaymentId}, Amount ₹${amount}, Email ${email}`);
+      const notes = paymentEntity.notes || orderEntity.notes || {};
+      const productType = notes.productType || notes.productId || 'asset_pack';
+      const userId = notes.userId || 'guest';
+
+      console.log(`ORDER PAID VERIFIED VIA WEBHOOK: Order ${razorpayOrderId}, Payment ${razorpayPaymentId}, Amount ₹${amount}, Email ${email}, ProductType ${productType}, User ${userId}`);
+
+      // Route fulfillment logic based on product tier
+      let downloadToken = null;
+
+      switch (productType) {
+        case '4k_unlock':
+        case 'ai_visual':
+        case 'ai-visual': {
+          const imageId = notes.imageId || '4k_artwork';
+          console.log(`Unlocking 4K resolution for image: ${imageId} (User: ${userId})`);
+          downloadToken = Buffer.from(JSON.stringify({
+            orderId: razorpayOrderId,
+            productType: '4k_unlock',
+            imageId,
+            exp: Date.now() + 86400000
+          })).toString('base64url');
+          break;
+        }
+
+        case 'custom_commission':
+        case 'custom-thumbnail': {
+          const discordTag = notes.discordTag || notes.customerEmail || email || 'Client';
+          console.log(`New ₹150 Custom Commission request from: ${discordTag} (User: ${userId})`);
+          break;
+        }
+
+        case 'asset_pack':
+        case 'elements-pack': {
+          const customerEmail = notes.email || notes.customerEmail || email;
+          console.log(`Delivering ₹200 500+ Asset Pack to: ${customerEmail}`);
+          downloadToken = Buffer.from(JSON.stringify({
+            orderId: razorpayOrderId,
+            productType: 'asset_pack',
+            exp: Date.now() + 7 * 86400000
+          })).toString('base64url');
+          break;
+        }
+
+        case 'studio_export':
+        case 'studio-export': {
+          console.log(`Delivering 1280x720 Clean Studio PNG Export for Order: ${razorpayOrderId}`);
+          downloadToken = Buffer.from(JSON.stringify({
+            orderId: razorpayOrderId,
+            productType: 'studio_export',
+            exp: Date.now() + 86400000
+          })).toString('base64url');
+          break;
+        }
+      }
 
       // Server-side WhatsApp notification trigger if Meta API credentials exist
       if (process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID) {
@@ -90,9 +143,15 @@ export default async function handler(req, res) {
           console.warn('WhatsApp API webhook dispatch fallback:', waErr.message);
         }
       }
-    }
 
-    return res.status(200).json({ status: 'success', eventId, event: eventType });
+      return res.status(200).json({
+        status: 'success',
+        eventId,
+        event: eventType,
+        productType,
+        downloadToken: downloadToken || null
+      });
+    }
 
   } catch (error) {
     console.error('Error in /api/payment/webhook:', error);
