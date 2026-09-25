@@ -1784,7 +1784,18 @@ const elementsData = [
   {id:42, cat:'memes', label:'Nerd Face', icon:'🤓', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:43, cat:'memes', label:'Cold Face', icon:'🥶', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:44, cat:'memes', label:'Money Mouth', icon:'🤑', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:45, cat:'memes', label:'Crying Sad', icon:'😭', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'}
+  {id:45, cat:'memes', label:'Crying Sad', icon:'😭', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  // Pinterest Trending Meme Stickers
+  {id:46, cat:'memes', label:'Chill Guy Doge', burst:'CHILL GUY 🐶', bg:'#78350F', text:'#FFFFFF'},
+  {id:47, cat:'memes', label:'Soyjak Pointing', burst:'POINTING 👈', bg:'#FFD600', text:'#000000'},
+  {id:48, cat:'memes', label:'GigaChad Sigma', burst:'GIGACHAD 🗿', bg:'#111827', text:'#00F562'},
+  {id:49, cat:'memes', label:'Flork Puppet', burst:'FLORK 🎭', bg:'#FFFFFF', text:'#000000'},
+  {id:50, cat:'memes', label:'Staring Hamster', burst:'HAMSTER 🐹', bg:'#FF2A2A', text:'#FFFFFF'},
+  {id:51, cat:'memes', label:'Cooked Meme', burst:'COOKED 🍳', bg:'#FF7A00', text:'#FFFFFF'},
+  {id:52, cat:'memes', label:'Exposed Badge', burst:'EXPOSED 🚨', bg:'#FF2A2A', text:'#FFD600'},
+  {id:53, cat:'memes', label:'Rizzler Crown', burst:'RIZZ 👑', bg:'#8B5CF6', text:'#FFFFFF'},
+  {id:54, cat:'arrows', label:'Doodle Marker Arrow', icon:'➦', style:'font-size:46px; color:#FF2A2A; filter:drop-shadow(3px 3px 0 #000); font-weight:900;'},
+  {id:55, cat:'bursts', label:'Pinterest Sticker Tag', burst:'★ VIRAL', bg:'#FFD600', text:'#000000'}
 ];
 
 const products = {
@@ -2251,7 +2262,21 @@ function handleUserImageUpload(e) {
 
 // Add Element from Studio Tray
 function addElementToStudioCanvas(el) {
-  if (el.burst) {
+  if (el.imgUrl) {
+    fabric.Image.fromURL(el.imgUrl, function(img) {
+      if (!img) return;
+      img.scaleToWidth(240);
+      img.set({
+        left: 400 + Math.random() * 200,
+        top: 250 + Math.random() * 150,
+        angle: (Math.random() * 12 - 6)
+      });
+      canvas.add(img);
+      canvas.setActiveObject(img);
+      canvas.renderAll();
+      showToast(`${el.label} added to canvas ✓`);
+    }, { crossOrigin: 'anonymous' });
+  } else if (el.burst) {
     const burst = new fabric.IText(el.burst, {
       left: 400 + Math.random() * 200,
       top: 300 + Math.random() * 150,
@@ -2291,8 +2316,8 @@ function renderStudioTray() {
 
   const filtered = studioActiveCat === 'all' ? elementsData : elementsData.filter(e => e.cat === studioActiveCat);
   tray.innerHTML = filtered.map(el => `
-    <button onclick="addElementToStudioCanvas(${JSON.stringify(el).replace(/"/g, '&quot;')})" class="bg-zinc-900 hover:bg-zinc-800 border border-white/15 rounded-xl h-[58px] grid place-items-center active:scale-95 transition group" title="${el.label}">
-      ${el.burst ? `<span class="font-display text-[10px] px-1.5 py-0.5 rounded border border-black" style="background:${el.bg}; color:${el.text}">${el.burst}</span>` : `<span style="${el.style}; font-size:24px">${el.icon}</span>`}
+    <button onclick="addElementToStudioCanvas(${JSON.stringify(el).replace(/"/g, '&quot;')})" class="bg-zinc-900 hover:bg-zinc-800 border border-white/15 rounded-xl h-[58px] grid place-items-center active:scale-95 transition group overflow-hidden p-1" title="${el.label}">
+      ${el.imgUrl ? `<img src="${el.imgUrl}" class="max-h-[46px] object-contain drop-shadow-md group-hover:scale-110 transition" alt="${el.label}">` : (el.burst ? `<span class="font-display text-[10px] px-1.5 py-0.5 rounded border border-black" style="background:${el.bg}; color:${el.text}">${el.burst}</span>` : `<span style="${el.style}; font-size:24px">${el.icon}</span>`)}
     </button>
   `).join('');
 }
@@ -2739,7 +2764,7 @@ function renderAssetBrowser() {
   grid.innerHTML = filtered.map(el => `
     <div class="bg-zinc-900 border border-white/15 rounded-2xl p-3 text-center hover:border-[#FFD600] transition flex flex-col justify-between group">
       <div class="h-[60px] grid place-items-center cursor-pointer" onclick="addElementToStudioCanvas(${JSON.stringify(el).replace(/"/g, '&quot;')})">
-        ${el.burst ? `<div class="font-display text-[13px] px-2.5 py-1 rounded-xl border border-black rotate-[-2deg]" style="background:${el.bg}; color:${el.text}">${el.burst}</div>` : `<span style="${el.style}; font-size:32px">${el.icon}</span>`}
+        ${el.imgUrl ? `<img src="${el.imgUrl}" class="max-h-[52px] object-contain drop-shadow-md group-hover:scale-110 transition" alt="${el.label}">` : (el.burst ? `<div class="font-display text-[13px] px-2.5 py-1 rounded-xl border border-black rotate-[-2deg]" style="background:${el.bg}; color:${el.text}">${el.burst}</div>` : `<span style="${el.style}; font-size:32px">${el.icon}</span>`)}
       </div>
       <div>
         <div class="font-bold text-[11px] text-white truncate mt-1">${el.label}</div>
