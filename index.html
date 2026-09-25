@@ -20,6 +20,9 @@
 <!-- Fabric.js HTML5 Canvas Engine -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
 
+<!-- Razorpay Official Checkout SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <script>
 tailwind.config = {
   theme: {
@@ -233,7 +236,7 @@ button { white-space: nowrap; }
             <span class="w-2 h-2 bg-white rounded-full animate-ping"></span> PRODUCTION THUMBNAIL PLATFORM
           </span>
           <span class="bg-zinc-900/90 text-zinc-300 border border-white/20 rounded-full px-3 py-1 text-[11px] font-bold flex items-center gap-1.5">
-            <i class="fa-solid fa-star text-[#FFD600]"></i> 4.9/5 Rating &bull; 100+ Creators Boosted
+            <i class="fa-solid fa-wand-magic-sparkles text-[#FFD600]"></i> Built for YouTube Creators &amp; Esports Editors
           </span>
         </div>
 
@@ -1524,11 +1527,11 @@ button { white-space: nowrap; }
           <a href="#assets" class="block text-zinc-400 hover:text-white">500+ Elements (₹200)</a>
         </div>
         <div class="space-y-2">
-          <div class="font-black text-white">Direct Order</div>
-          <a href="#" onclick="openPaymentModal('Custom THumbnaiL Commission', 150); return false;" class="block text-zinc-400 hover:text-white">Order Custom (₹150)</a>
-          <a href="#pricing" class="block text-zinc-400 hover:text-white">Pricing</a>
-          <a href="#faq" class="block text-zinc-400 hover:text-white">FAQ</a>
-          <a href="https://instagram.com/cvrtncreates_" target="_blank" class="block text-zinc-400 hover:text-white flex items-center gap-1.5"><i class="fa-brands fa-instagram text-[#E1306C]"></i> @cvrtncreates_</a>
+          <div class="font-black text-white">Legal &amp; Trust</div>
+          <button onclick="openLegalModal('privacy')" class="block text-zinc-400 hover:text-white text-left">Privacy Policy</button>
+          <button onclick="openLegalModal('terms')" class="block text-zinc-400 hover:text-white text-left">Terms of Service</button>
+          <button onclick="openLegalModal('refunds')" class="block text-zinc-400 hover:text-white text-left">Refund Policy</button>
+          <button onclick="openAdminModal()" class="block text-xs font-mono text-[#00F562] hover:underline text-left mt-2"><i class="fa-solid fa-lock"></i> Admin Portal</button>
         </div>
       </div>
     </div>
@@ -3040,28 +3043,80 @@ document.getElementById('checkoutBtn')?.addEventListener('click', () => {
   openPaymentModal(cart.map(c => c.name).join(', '), total);
 });
 
-// Payment Modal
-function openPaymentModal(item, price) {
+// Payment Modal & Production Razorpay Gateway Integration
+async function openPaymentModal(item, price) {
   currentPaymentItem = item;
   currentPaymentAmount = price;
   updateUpiDetails(price);
   document.getElementById('payItemName').textContent = item;
   document.getElementById('payItemPrice').textContent = `₹${price}`;
+
   // Always reset to step 1
   document.getElementById('checkoutStep1').classList.remove('hidden');
   document.getElementById('checkoutStep2').classList.add('hidden');
-  // Reset screenshot upload
   uploadedScreenshotData = null;
+
   const uploadPrompt = document.getElementById('uploadPrompt');
   const previewContainer = document.getElementById('screenshotPreviewContainer');
   if (uploadPrompt) uploadPrompt.classList.remove('hidden');
   if (previewContainer) previewContainer.classList.add('hidden');
-  // Reset form
+
   const form = document.getElementById('verifyPaymentForm');
   if (form) form.reset();
-  // Show modal
+
+  // Show Modal
   document.getElementById('paymentModal').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
+
+  // Attempt server-side Razorpay Order Creation if SDK is loaded
+  try {
+    const res = await fetch('/api/payment/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId: item, customerEmail: '' })
+    });
+    const data = await res.json();
+
+    // If Razorpay API credentials are configured, initialize official Razorpay Checkout
+    if (data.success && data.razorpayConfigured && window.Razorpay) {
+      const options = {
+        key: data.order.keyId,
+        amount: data.order.amountInPaise,
+        currency: data.order.currency || 'INR',
+        name: "CVRTN'S THumbnaiL",
+        description: data.order.productName,
+        order_id: data.order.razorpayOrderId,
+        handler: async function (response) {
+          showToast('Verifying Razorpay signature...');
+          const verifyRes = await fetch('/api/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              productId: item,
+              customerEmail: 'customer@cvrtn.com'
+            })
+          });
+          const verifyData = await verifyRes.json();
+          if (verifyData.verified) {
+            closePaymentModal();
+            document.getElementById('orderIdText').textContent = verifyData.receipt.orderId;
+            document.getElementById('paySuccessModal').classList.remove('hidden');
+            showToast('Razorpay payment verified & unlocked!');
+          } else {
+            alert('Payment signature verification failed.');
+          }
+        },
+        theme: { color: '#00F562' }
+      };
+      // Store rzpInstance for direct checkout button
+      window.currentRazorpayOptions = options;
+    }
+  } catch (err) {
+    console.warn('Razorpay order initialization notice:', err.message);
+  }
 }
 
 function closePaymentModal() {
@@ -3134,15 +3189,14 @@ async function handleSecurityVerification(e) {
   submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> VERIFYING PAYMENT PROOF...';
 
   try {
-    const response = await fetch('/api/verify-payment', {
+    const response = await fetch('/api/payment/upload-proof', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        productId: currentPaymentItem,
         customerEmail: email,
-        itemName: currentPaymentItem,
-        amount: currentPaymentAmount,
         notes: notes,
-        screenshotAttached: Boolean(uploadedScreenshotData)
+        screenshotData: uploadedScreenshotData
       })
     });
 
@@ -3290,6 +3344,101 @@ document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
 });
 
 
+// --- LEGAL & ADMIN MODAL JS HANDLERS ---
+function openLegalModal(type) {
+  const titles = {
+    privacy: 'PRIVACY POLICY',
+    terms: 'TERMS OF SERVICE',
+    refunds: 'REFUND & CANCELLATION POLICY'
+  };
+  const contents = {
+    privacy: `
+      <p class="mb-3">At CVRTN'S THumbnaiL, we respect your privacy. All customer data, email addresses, and payment transaction metadata are encrypted and used strictly for digital order fulfillment, receipt generation, and support communication.</p>
+      <p class="mb-3">We never sell, rent, or trade your contact information to third parties. Uploaded images and custom canvas assets remain your intellectual property.</p>
+    `,
+    terms: `
+      <p class="mb-3">By accessing CVRTN'S THumbnaiL, you agree to use our Canvas Studio, AI Generator, and 500+ Assets Pack for lawful content creation.</p>
+      <p class="mb-3">Purchased asset packs and 1280×720 exports include full commercial usage rights for YouTube videos, live streams, and personal branding.</p>
+    `,
+    refunds: `
+      <p class="mb-3">Digital products (500+ Asset Pack, AI 4K Unlocks, Studio Exports) are delivered instantly upon payment verification. Due to the digital nature of instant downloads, sales are final once digital files are accessed.</p>
+      <p class="mb-3">If you encounter any order issues or request custom revisions for 1-on-1 commission orders, contact Tanish on Instagram <b>@cvrtncreates_</b> or WhatsApp for instant resolution.</p>
+    `
+  };
+
+  document.getElementById('legalModalTitle').textContent = titles[type] || 'TERMS & POLICIES';
+  document.getElementById('legalModalBody').innerHTML = contents[type] || contents.privacy;
+  document.getElementById('legalModal').classList.remove('hidden');
+}
+
+function closeLegalModal() {
+  document.getElementById('legalModal').classList.add('hidden');
+}
+
+async function openAdminModal() {
+  const key = prompt('Enter Admin Secret Key to access Admin Portal:');
+  if (!key) return;
+
+  try {
+    const res = await fetch(`/api/admin/orders?adminKey=${encodeURIComponent(key)}`);
+    const data = await res.json();
+
+    if (!res.ok || !data.success) {
+      alert(data.error || 'Invalid Admin Secret Key.');
+      return;
+    }
+
+    const listEl = document.getElementById('adminOrdersList');
+    if (listEl) {
+      if (data.orders.length === 0) {
+        listEl.innerHTML = '<div class="text-center py-6 text-zinc-400 font-bold">No manual payment proofs pending review.</div>';
+      } else {
+        listEl.innerHTML = data.orders.map(o => `
+          <div class="bg-zinc-900 border border-white/15 rounded-xl p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div>
+              <div class="font-mono text-[#FFD600] font-black text-xs">${o.orderId} &bull; ₹${o.amount}</div>
+              <div class="text-white text-xs font-bold">${o.productName}</div>
+              <div class="text-zinc-400 text-[11px]">${o.customerEmail} &bull; ${o.status}</div>
+            </div>
+            ${o.status === 'PENDING_REVIEW' ? `
+              <div class="flex gap-2">
+                <button onclick="approveAdminOrder('${o.orderId}', '${key}')" class="bg-[#00F562] text-black px-3 py-1 rounded-full text-xs font-black">Approve</button>
+              </div>
+            ` : `<span class="text-[#00F562] font-black text-xs">APPROVED ✓</span>`}
+          </div>
+        `).join('');
+      }
+    }
+
+    document.getElementById('adminModal').classList.remove('hidden');
+  } catch (err) {
+    alert('Failed to connect to Admin API: ' + err.message);
+  }
+}
+
+async function approveAdminOrder(orderId, key) {
+  try {
+    const res = await fetch('/api/admin/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ adminKey: key, action: 'approve', orderId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Order ${orderId} approved!`);
+      openAdminModal();
+    } else {
+      alert(data.error || 'Failed to approve order.');
+    }
+  } catch (err) {
+    alert('Admin action error: ' + err.message);
+  }
+}
+
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.add('hidden');
+}
+
 // --- INITIALIZATION ON LOAD ---
 window.addEventListener('DOMContentLoaded', () => {
   initFabricCanvas();
@@ -3299,5 +3448,41 @@ window.addEventListener('DOMContentLoaded', () => {
   updateProjectsCountUI();
 });
 </script>
+
+<!-- MODAL: LEGAL & POLICIES -->
+<div id="legalModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-[#14151F] border-2 border-white/20 rounded-[28px] max-w-lg w-full p-6 text-white relative comic-shadow-lg">
+    <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+      <div class="font-display text-[18px] text-[#FFD600]" id="legalModalTitle">PRIVACY POLICY</div>
+      <button onclick="closeLegalModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="text-xs text-zinc-300 leading-relaxed font-medium space-y-2 max-h-[60vh] overflow-y-auto pr-2" id="legalModalBody">
+      <!-- Injected via JS -->
+    </div>
+    <button onclick="closeLegalModal()" class="w-full mt-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-black text-xs border border-white/20">
+      Close Policy Window
+    </button>
+  </div>
+</div>
+
+<!-- MODAL: ADMIN REVIEW PORTAL -->
+<div id="adminModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-[#12131A] border-2 border-[#00F562]/40 rounded-[28px] max-w-2xl w-full p-6 text-white relative comic-shadow-lg">
+    <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-user-shield text-[#00F562]"></i>
+        <span class="font-display text-[18px]">ADMIN ORDER &amp; PROOF REVIEW PORTAL</span>
+      </div>
+      <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1" id="adminOrdersList">
+      <!-- Rendered via JS -->
+    </div>
+    <button onclick="closeAdminModal()" class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-black text-xs border border-white/20">
+      Close Portal
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
