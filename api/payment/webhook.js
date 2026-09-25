@@ -1,10 +1,64 @@
 // Serverless Endpoint: POST /api/payment/webhook
 // Idempotent Razorpay Webhook Processor for order.paid and payment.captured events
+// Supports Instant Discord Server Webhook Rich Embed Sales Notifications
 
 import crypto from 'crypto';
 
 // In-memory processed event tracker for serverless warm instances
 const processedEvents = new Set();
+
+// Helper Function: Send Discord Rich Embed Alert for New Sales
+async function sendDiscordAlert(productName, amount, customerDetails) {
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  if (!webhookUrl) {
+    console.info('DISCORD_WEBHOOK_URL is not configured. Skipping Discord alert.');
+    return;
+  }
+
+  try {
+    const payload = {
+      username: 'CVRTN Studio Sales Bot',
+      avatar_url: 'https://cvrtn-t-humbnai-l-9ts9.vercel.app/assets/portfolio/portfolio-valorant.jpg',
+      embeds: [
+        {
+          title: '🎉 New CVRTN Studio Sale!',
+          color: 3066993, // Green color (#2ECC71)
+          fields: [
+            {
+              name: '📦 Product',
+              value: productName || 'CVRTN Digital Asset',
+              inline: true
+            },
+            {
+              name: '💰 Amount',
+              value: `₹${amount}`,
+              inline: true
+            },
+            {
+              name: '👤 Customer',
+              value: customerDetails || 'Anonymous Creator',
+              inline: false
+            }
+          ],
+          timestamp: new Date().toISOString(),
+          footer: {
+            text: 'CVRTN THumbnaiL SaaS • Automated Sales Alert'
+          }
+        }
+      ]
+    };
+
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    console.log(`Discord sales alert sent for: ${productName} (₹${amount})`);
+  } catch (err) {
+    console.warn('Failed to send Discord webhook alert:', err.message);
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -43,7 +97,6 @@ export default async function handler(req, res) {
     }
 
     processedEvents.add(eventId);
-    // Limit memory set size
     if (processedEvents.size > 1000) {
       const first = processedEvents.values().next().value;
       processedEvents.delete(first);
@@ -69,12 +122,16 @@ export default async function handler(req, res) {
 
       // Route fulfillment logic based on product tier
       let downloadToken = null;
+      let productName = 'CVRTN Studio Item';
+      let customerDetails = email || notes.customerEmail || userId || 'Anonymous Customer';
 
       switch (productType) {
         case '4k_unlock':
         case 'ai_visual':
         case 'ai-visual': {
           const imageId = notes.imageId || '4k_artwork';
+          productName = 'AI 4K Visual Thumbnail Unlock';
+          customerDetails = `Email: ${email || 'N/A'} | Image: ${imageId} | User: ${userId}`;
           console.log(`Unlocking 4K resolution for image: ${imageId} (User: ${userId})`);
           downloadToken = Buffer.from(JSON.stringify({
             orderId: razorpayOrderId,
@@ -88,6 +145,8 @@ export default async function handler(req, res) {
         case 'custom_commission':
         case 'custom-thumbnail': {
           const discordTag = notes.discordTag || notes.customerEmail || email || 'Client';
+          productName = 'Custom "THumbnaiL" Commission';
+          customerDetails = `Discord/Email: ${discordTag} | User: ${userId}`;
           console.log(`New ₹150 Custom Commission request from: ${discordTag} (User: ${userId})`);
           break;
         }
@@ -95,6 +154,8 @@ export default async function handler(req, res) {
         case 'asset_pack':
         case 'elements-pack': {
           const customerEmail = notes.email || notes.customerEmail || email;
+          productName = '500+ Viral Elements Pack';
+          customerDetails = `Email: ${customerEmail || 'N/A'} | User: ${userId}`;
           console.log(`Delivering ₹200 500+ Asset Pack to: ${customerEmail}`);
           downloadToken = Buffer.from(JSON.stringify({
             orderId: razorpayOrderId,
@@ -106,6 +167,8 @@ export default async function handler(req, res) {
 
         case 'studio_export':
         case 'studio-export': {
+          productName = 'Studio 1280x720 Clean PNG Export';
+          customerDetails = `Email: ${email || 'N/A'} | User: ${userId}`;
           console.log(`Delivering 1280x720 Clean Studio PNG Export for Order: ${razorpayOrderId}`);
           downloadToken = Buffer.from(JSON.stringify({
             orderId: razorpayOrderId,
@@ -115,6 +178,9 @@ export default async function handler(req, res) {
           break;
         }
       }
+
+      // Trigger Discord Rich Embed Sales Alert
+      await sendDiscordAlert(productName, amount, customerDetails);
 
       // Server-side WhatsApp notification trigger if Meta API credentials exist
       if (process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID) {
