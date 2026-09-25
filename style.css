@@ -1,10 +1,10 @@
 :root {
-  --bg-cream: #fbf9f1;
-  --accent-red: #ff3b3b;
-  --accent-blue: #3b82f6;
-  --accent-green: #27ae60;
-  --border-color: #111;
-  --shadow-color: #111;
+  --bg-cream: #F5EFE6;
+  --accent-red: #D97A7A;
+  --accent-blue: #7A9E9F;
+  --accent-green: #88B79A;
+  --border-color: #4A4A4A;
+  --shadow-color: #4A4A4A;
 }
 
 * {

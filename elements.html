@@ -5,6 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>CVRTN | Buy Elements</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .element-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      width: 100px;
+      height: 100px;
+      background: #e9e3d9;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      padding: 5px;
+      font-size: 1.5rem;
+      text-align: center;
+      line-height: 1;
+      align-items: center;
+      justify-items: center;
+      flex-shrink: 0;
+    }
+    .shop-item-content {
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+      align-items: center;
+      width: 100%;
+    }
+    .shop-item-details {
+      flex-grow: 1;
+    }
+    @media (max-width: 480px) {
+      .shop-item-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .element-preview {
+        width: 100%;
+        height: 60px;
+        grid-template-columns: repeat(6, 1fr);
+        font-size: 1.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <a href="index.html" class="back-btn">&larr; Back to Home</a>
@@ -15,39 +56,64 @@
   </header>
 
   <div class="container">
-    <div class="y2k-box" style="grid-column: 1 / -1;">
-      <h2>Thumbnail Element Packs</h2>
+    <div class="y2k-box" style="grid-column: 1 / -1; border-color: var(--accent-blue);">
+      <h2 style="color: var(--accent-blue);">Thumbnail Element Packs</h2>
+      <p style="margin-bottom: 20px; font-weight: normal;">Preview the elements included in each pack before you buy!</p>
       
+      <!-- Pack 1 -->
       <div class="shop-item">
-        <div>
-          <h3>Y2K 3D Render Pack</h3>
-          <p style="font-weight: normal; margin-top:5px;">Transparent PNGs (No quality limits). Includes bursts, arrows, and cash stacks.</p>
+        <div class="shop-item-content">
+          <div class="element-preview">
+            <span>🔥</span><span>💥</span><span>🌊</span>
+            <span>⚡</span><span>🌟</span><span>✨</span>
+            <span>💨</span><span>💫</span><span>☄️</span>
+          </div>
+          <div class="shop-item-details">
+            <h3>Y2K 3D Render Pack</h3>
+            <p style="font-weight: normal; margin-top:5px;">Transparent PNGs (No quality limits). Includes bursts, effects, and magic aura renders.</p>
+          </div>
         </div>
-        <div style="text-align: right; min-width: 120px;">
-          <div class="price-tag">₹100</div>
-          <button class="y2k-button" onclick="openModal('Y2K 3D Render Pack', 100)">Buy Now</button>
+        <div style="text-align: right; min-width: 120px; margin-top: 10px;">
+          <div class="price-tag" style="color: var(--accent-blue);">₹100</div>
+          <button class="y2k-button" style="background: var(--accent-blue);" onclick="openModal('Y2K 3D Render Pack', 100)">Buy Now</button>
         </div>
       </div>
 
+      <!-- Pack 2 -->
       <div class="shop-item">
-        <div>
-          <h3>Starter Pack (150 PNGs)</h3>
-          <p style="font-weight: normal; margin-top:5px;">Essential pack for beginners. Basic glows, memes, and UI overlays.</p>
+        <div class="shop-item-content">
+          <div class="element-preview" style="background: #eedfd8;">
+            <span>🤡</span><span>🐸</span><span>🐕</span>
+            <span>😱</span><span>😂</span><span>💀</span>
+            <span>🤓</span><span>🥶</span><span>🤑</span>
+          </div>
+          <div class="shop-item-details">
+            <h3>Starter Pack (150 PNGs)</h3>
+            <p style="font-weight: normal; margin-top:5px;">Essential pack for beginners. Basic glows, classic memes, and UI overlays.</p>
+          </div>
         </div>
-        <div style="text-align: right; min-width: 120px;">
-          <div class="price-tag">₹50</div>
-          <button class="y2k-button" onclick="openModal('Starter Pack', 50)">Buy Now</button>
+        <div style="text-align: right; min-width: 120px; margin-top: 10px;">
+          <div class="price-tag" style="color: var(--accent-blue);">₹50</div>
+          <button class="y2k-button" style="background: var(--accent-blue);" onclick="openModal('Starter Pack', 50)">Buy Now</button>
         </div>
       </div>
 
-      <div class="shop-item" style="border-color: var(--accent-blue); background: #f0f7ff;">
-        <div>
-          <h3 style="color: var(--accent-blue);">500+ Viral Elements Pack</h3>
-          <p style="font-weight: normal; margin-top:5px;">The ultimate creator bundle. 4K renders, anime effects, emojis, memes, and lighting.</p>
+      <!-- Pack 3 -->
+      <div class="shop-item" style="border-width: 4px;">
+        <div class="shop-item-content">
+          <div class="element-preview" style="background: #d8ead8;">
+            <span>💵</span><span>💰</span><span>🪙</span>
+            <span>💎</span><span>📈</span><span>👑</span>
+            <span>🏆</span><span>🎯</span><span>❤️</span>
+          </div>
+          <div class="shop-item-details">
+            <h3 style="color: var(--accent-green);">500+ Viral Elements Pack</h3>
+            <p style="font-weight: normal; margin-top:5px;">The ultimate creator bundle. 4K renders, anime effects, emojis, memes, lighting, and massive money stacks.</p>
+          </div>
         </div>
-        <div style="text-align: right; min-width: 120px;">
-          <div class="price-tag">₹200</div>
-          <button class="y2k-button" style="background: var(--accent-blue);" onclick="openModal('500+ Viral Elements Pack', 200)">Buy Now</button>
+        <div style="text-align: right; min-width: 120px; margin-top: 10px;">
+          <div class="price-tag" style="color: var(--accent-green);">₹200</div>
+          <button class="y2k-button" style="background: var(--accent-green);" onclick="openModal('500+ Viral Elements Pack', 200)">Buy Now</button>
         </div>
       </div>
     </div>
