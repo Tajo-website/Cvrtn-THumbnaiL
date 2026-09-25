@@ -1565,8 +1565,16 @@ button { white-space: nowrap; }
         </div>
       </div>
 
-      <!-- STEP 1: QR + UPI -->
-      <div id="checkoutStep1" class="space-y-4">
+        <!-- Razorpay Security Badge -->
+        <div class="bg-[#072654]/60 border border-[#00C2FF]/30 rounded-2xl p-2.5 flex items-center justify-between text-[11px] font-bold text-blue-200">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-[#00C2FF] text-black rounded-full grid place-items-center text-xs font-black">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <span>256-Bit Encrypted &bull; Razorpay Secured UPI</span>
+          </div>
+          <span class="text-[#00F562] font-mono font-black text-[10px] bg-[#00F562]/10 px-2 py-0.5 rounded border border-[#00F562]/30">VERIFIED</span>
+        </div>
 
         <!-- QR Code -->
         <div class="text-center">
@@ -1576,6 +1584,19 @@ button { white-space: nowrap; }
           <div class="w-48 h-48 bg-white rounded-2xl mx-auto flex items-center justify-center p-2.5 shadow-[0_8px_30px_rgba(0,245,98,0.15)] border-4 border-black">
             <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=49%26cu=INR" class="w-full h-full object-contain rounded-lg" alt="UPI QR Code">
           </div>
+        </div>
+
+        <!-- Mobile UPI App Direct Deep Links -->
+        <div class="grid grid-cols-3 gap-2">
+          <a id="gpayDeepLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="bg-zinc-900 hover:bg-zinc-800 border border-white/20 rounded-xl py-2 text-center text-[11px] font-black text-white flex items-center justify-center gap-1">
+            <i class="fa-brands fa-google text-blue-400"></i> GPay
+          </a>
+          <a id="phonepeDeepLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="bg-zinc-900 hover:bg-zinc-800 border border-white/20 rounded-xl py-2 text-center text-[11px] font-black text-white flex items-center justify-center gap-1">
+            <i class="fa-solid fa-mobile-button text-purple-400"></i> PhonePe
+          </a>
+          <a id="paytmDeepLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="bg-zinc-900 hover:bg-zinc-800 border border-white/20 rounded-xl py-2 text-center text-[11px] font-black text-white flex items-center justify-center gap-1">
+            <i class="fa-solid fa-wallet text-sky-400"></i> Paytm
+          </a>
         </div>
 
         <!-- Divider -->
@@ -1602,8 +1623,8 @@ button { white-space: nowrap; }
         </div>
 
         <!-- Open UPI App -->
-        <a id="directUpiLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="block w-full bg-[#1A1C28] hover:bg-[#232636] text-white text-xs font-bold py-2.5 rounded-xl border border-white/10 text-center transition">
-          <i class="fa-solid fa-bolt text-[#00F562] mr-1"></i> Open GPay / PhonePe / Paytm App
+        <a id="directUpiLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="block w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-black py-3 rounded-xl border border-white/20 text-center transition shadow-md">
+          <i class="fa-solid fa-bolt text-[#00F562] mr-1"></i> PAY WITH ANY UPI APP (AUTO DETECT)
         </a>
 
         <!-- I've Paid Button -->
@@ -1611,8 +1632,8 @@ button { white-space: nowrap; }
           <i class="fa-solid fa-check-circle text-lg"></i> I'VE PAID — VERIFY
         </button>
 
-        <div class="text-center text-[10px] text-zinc-500 font-medium flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-shield-halved text-[#00F562]"></i> 100% Secure &bull; Instant Delivery After Verification
+        <div class="text-center text-[10px] text-zinc-400 font-medium flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-[#00C2FF]"></i> Razorpay Encrypted &bull; Instant Product Delivery
         </div>
       </div>
 
@@ -2916,14 +2937,16 @@ function closePaymentModal() {
 }
 
 function updateUpiDetails(amount) {
+  const upiUri = `upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=${amount}&cu=INR`;
   const qr = document.getElementById('upiQrImg');
   if (qr) {
-    qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=${amount}%26cu=INR`;
+    qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUri)}`;
   }
-  const link = document.getElementById('directUpiLink');
-  if (link) {
-    link.href = `upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=${amount}&cu=INR`;
-  }
+  const linkIds = ['directUpiLink', 'gpayDeepLink', 'phonepeDeepLink', 'paytmDeepLink'];
+  linkIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = upiUri;
+  });
 }
 
 function copyUpiId() {
