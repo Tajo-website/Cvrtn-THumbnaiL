@@ -1631,9 +1631,9 @@ const elementsData = [
   {id:29, cat:'arrows', label:'Straight Red Arrow', color:'#FF8FA3', icon:'➜', style:'font-size:44px; color:#FF8FA3; -webkit-text-stroke:2px #000;'},
   {id:30, cat:'gaming', label:'Hand Point', icon:'👉', style:'font-size:38px; filter:drop-shadow(1px 1px 0 #000)'},
   // Original Visual Meme Stickers
-  {id:31, cat:'memes', label:'Original Trollface', imgUrl:'https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png', icon:'🤡', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:32, cat:'memes', label:'Original Pepe Frog', imgUrl:'https://upload.wikimedia.org/wikipedia/en/7/70/Pepe_the_Frog_%28export%29.png', icon:'🐸', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:33, cat:'memes', label:'Original Doge Meme', imgUrl:'https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme_photograph.png', icon:'🐕', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:31, cat:'memes', label:'Original Trollface', imgUrl:'https://api.allorigins.win/raw?url=https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png', icon:'🤡', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:32, cat:'memes', label:'Original Pepe Frog', imgUrl:'https://api.allorigins.win/raw?url=https://upload.wikimedia.org/wikipedia/en/7/70/Pepe_the_Frog_%28export%29.png', icon:'🐸', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
+  {id:33, cat:'memes', label:'Original Doge Meme', imgUrl:'https://api.allorigins.win/raw?url=https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme_photograph.png', icon:'🐕', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:34, cat:'memes', label:'Shocked Face Meme', icon:'😱', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:35, cat:'memes', label:'Crying Laughing Meme', icon:'😂', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
   {id:36, cat:'memes', label:'Skull Dead Meme', icon:'💀', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
@@ -1669,6 +1669,18 @@ let redoStack = [];
 let isUndoRedoAction = false;
 
 function initFabricCanvas() {
+  
+  // Canva-style controls
+  fabric.Object.prototype.transparentCorners = false;
+  fabric.Object.prototype.cornerColor = '#ffffff';
+  fabric.Object.prototype.cornerStrokeColor = '#FF8FA3';
+  fabric.Object.prototype.borderColor = '#FF8FA3';
+  fabric.Object.prototype.cornerSize = 14;
+  fabric.Object.prototype.padding = 6;
+  fabric.Object.prototype.cornerStyle = 'circle';
+  fabric.Object.prototype.borderDashArray = [4, 4];
+  fabric.Object.prototype.borderScaleFactor = 2;
+  
   canvas = new fabric.Canvas('fabricCanvas', {
     width: 1280,
     height: 720,
