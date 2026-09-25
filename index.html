@@ -3055,10 +3055,10 @@ async function handleSecurityVerification(e) {
     const isStudioExport = lower.includes('studio') || lower.includes('export');
     const deliveryAction = document.getElementById('productDeliveryAction');
 
-    const waText = encodeURIComponent(`*NEW VERIFIED ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${currentPaymentItem}\n💰 *Amount:* ₹${currentPaymentAmount}\n🧾 *Order ID:* ${orderId}\n📧 *Customer Email:* ${email}\n📅 *Payment Timeline:* ${paidDate}\n${notes ? `📝 *Notes:* ${notes}\n` : ''}📸 *Payment Screenshot:* ${uploadedScreenshotData ? 'ATTACHED & VERIFIED' : 'NOT ATTACHED'}\n✅ *UPI Paid to:* nayeetanish@oksbi\n\n_Hey Tanish! I just completed my payment on CVRTN. Here is my verified order details & payment receipt screenshot._`);
-    const waUrl = `https://wa.me/919725920066?text=${waText}`;
+    const waText = encodeURIComponent(`*NEW VERIFIED ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${currentPaymentItem}\n💰 *Amount:* ₹${currentPaymentAmount}\n🧾 *Order ID:* ${orderId}\n📧 *Customer Email:* ${email}\n📅 *Payment Timeline:* ${paidDate}\n${notes ? `📝 *Buyer Notes:* ${notes}\n` : ''}📸 *Payment Screenshot:* ${uploadedScreenshotData ? 'ATTACHED & VERIFIED' : 'NOT ATTACHED'}\n✅ *UPI Paid to:* nayeetanish@oksbi\n\n_Hey Tanish! I just completed my payment on CVRTN. Here is my verified order details & payment receipt screenshot._`);
+    const waUrl = `https://api.whatsapp.com/send?phone=919725920066&text=${waText}`;
 
-    // Auto-open WhatsApp to Tanish (+91 9725920066)
+    // Auto-open official WhatsApp to Tanish (+91 9725920066)
     try { window.open(waUrl, '_blank'); } catch(e) {}
 
     if (isPack) {

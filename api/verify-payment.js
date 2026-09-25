@@ -33,6 +33,8 @@ export default async function handler(req, res) {
     const isAiVisual = lowerItem.includes('ai') || lowerItem.includes('visual') || amount === 49;
     const isStudioExport = lowerItem.includes('studio') || lowerItem.includes('export');
 
+    const waMsg = `*NEW VERIFIED ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${itemName || 'CVRTN Service'}\n💰 *Amount:* ₹${amount}\n🧾 *Order ID:* ${verifiedOrderId}\n📧 *Customer Email:* ${customerEmail}\n📅 *Payment Timeline:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST\n${notes ? `📝 *Buyer Notes:* ${notes}\n` : ''}📸 *Screenshot Attached:* ${screenshotAttached ? 'YES (Submitted on website)' : 'NO'}\n✅ *UPI Paid to:* nayeetanish@oksbi`;
+
     return res.status(200).json({
       success: true,
       verified: true,
@@ -47,6 +49,7 @@ export default async function handler(req, res) {
         status: 'VERIFIED_ACTIVE',
         productType: isPack ? 'PACK' : (isAiVisual ? 'AI_VISUAL' : (isStudioExport ? 'STUDIO_EXPORT' : 'CUSTOM_ORDER')),
         downloadUrl: isPack ? '/CVRTNS_THumbnaiL.zip' : null,
+        whatsappNotificationUrl: `https://api.whatsapp.com/send?phone=919725920066&text=${encodeURIComponent(waMsg)}`,
         estimatedDeliveryTime: (isPack || isAiVisual || isStudioExport) ? 'INSTANT' : '24 Hours (Custom Designer Turnaround)'
       }
     });
