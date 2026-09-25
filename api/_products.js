@@ -58,10 +58,17 @@ export function getProductById(productId) {
   
   if (PRODUCTS[key]) return PRODUCTS[key];
   
+  // Explicit productType aliases
+  if (key === '4k_unlock' || key === '4k-unlock') return PRODUCTS['ai-visual'];
+  if (key === 'custom_commission' || key === 'custom-commission') return PRODUCTS['custom-thumbnail'];
+  if (key === 'asset_pack' || key === 'asset-pack' || key === 'pack_500') return PRODUCTS['elements-pack'];
+  if (key === 'studio_export' || key === 'studio-export') return PRODUCTS['studio-export'];
+  if (key === 'starter_pack' || key === 'starter-pack') return PRODUCTS['starter-pack'];
+
   // Fuzzy matching for product keys
   if (key.includes('studio') || key.includes('export')) return PRODUCTS['studio-export'];
-  if (key.includes('ai') || key.includes('visual')) return PRODUCTS['ai-visual'];
-  if (key.includes('500') || key.includes('elements') || key.includes('pack') || key.includes('pro')) return PRODUCTS['elements-pack'];
+  if (key.includes('ai') || key.includes('4k') || key.includes('visual')) return PRODUCTS['ai-visual'];
+  if (key.includes('500') || key.includes('elements') || key.includes('pack') || key.includes('asset')) return PRODUCTS['elements-pack'];
   if (key.includes('starter') || key.includes('150')) return PRODUCTS['starter-pack'];
   if (key.includes('custom') || key.includes('commission') || key.includes('valorant') || key.includes('scifi') || key.includes('game')) return PRODUCTS['custom-thumbnail'];
 

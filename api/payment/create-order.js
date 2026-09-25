@@ -21,17 +21,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { productId, customerEmail = '', notes = '' } = req.body || {};
+    const { productId, productType, metadata = {}, userId = 'guest', customerEmail = '', notes = '' } = req.body || {};
 
-    if (!productId) {
-      return res.status(400).json({ error: 'productId is required.' });
+    const targetProductKey = productId || productType;
+
+    if (!targetProductKey) {
+      return res.status(400).json({ error: 'productId or productType is required.' });
     }
 
     // Server-Side Price & Product Lookup — Never trust client-sent amounts!
-    const product = getProductById(productId);
+    const product = getProductById(targetProductKey);
 
     if (!product) {
-      return res.status(400).json({ error: `Invalid productId: "${productId}".` });
+      return res.status(400).json({ error: `Invalid product parameter: "${targetProductKey}".` });
     }
 
     const internalOrderId = `CVR-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
@@ -54,10 +56,13 @@ export default async function handler(req, res) {
           currency: product.currency || 'INR',
           receipt: internalOrderId,
           notes: {
+            productType: productType || product.id,
             productId: product.id,
             productName: product.name,
+            userId: userId || 'guest',
             customerEmail: customerEmail || '',
-            notes: notes || ''
+            notes: notes || '',
+            ...metadata
           }
         })
       });
@@ -75,6 +80,10 @@ export default async function handler(req, res) {
       return res.status(200).json({
         success: true,
         razorpayConfigured: true,
+        id: rzpOrder.id,
+        currency: rzpOrder.currency,
+        amount: rzpOrder.amount,
+        productType: productType || product.id,
         order: {
           internalOrderId,
           razorpayOrderId: rzpOrder.id,
