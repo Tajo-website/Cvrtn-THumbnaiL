@@ -2,25 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>CVRTN | Store</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVRTN STUDIO | 2026</title>
+  <style>
+    :root {
+      --bg-main: #0B0C10;
+      --bg-card: #15161A;
+      --accent: #FF007A;
+      --accent-glow: rgba(255, 0, 122, 0.4);
+      --text: #F2F2F2;
+      --text-muted: #8A8D98;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-main);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+    .glitch-text {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .glitch-text span { color: var(--accent); }
+    .subtitle {
+      color: var(--text-muted);
+      margin-bottom: 50px;
+      font-size: 1.1rem;
+    }
+    .grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid #2A2B32;
+      padding: 40px;
+      width: 300px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 25px var(--accent-glow);
+      transform: translateY(-5px);
+    }
+    .card h2 { margin: 0 0 10px 0; font-size: 1.5rem; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>CVRTN STORE</h1>
-    <p>Premium Thumbnails & Digital Assets</p>
-  </header>
 
-  <div class="container">
-    <a href="thumbnails.html" class="nav-card red">
+  <div class="glitch-text">CVRTN <span>STUDIO</span></div>
+  <div class="subtitle">PRODUCTION ASSETS • 2026 EDITION</div>
+
+  <div class="grid">
+    <!-- Link to Thumbnails Page -->
+    <a href="thumbnails.html" class="card">
       <h2>Thumbnails</h2>
-      <p>Buy high-quality premade thumbnails & order custom designs for your videos.</p>
+      <p>Premium templates, clean exports, and custom 1-on-1 esports designs.</p>
     </a>
-    <a href="elements.html" class="nav-card blue">
-      <h2>Elements</h2>
-      <p>Download 3D renders, VFX, meme assets, and 500+ viral elements pack.</p>
+
+    <!-- Link to Elements Page -->
+    <a href="elements.html" class="card">
+      <h2>500+ Elements</h2>
+      <p>VFX, 3D arrows, and transparent PNGs to build your own masterpieces.</p>
+    </a>
+    
+    <!-- Link to the Canvas Builder -->
+    <a href="canvas.html" class="card">
+      <h2>Canvas Builder</h2>
+      <p>Edit directly in our live 1280x720 studio environment.</p>
     </a>
   </div>
+
 </body>
 </html>
