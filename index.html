@@ -1,3136 +1,371 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CVRTN'S THumbnaiL — AI YouTube Thumbnail Studio, 1280x720 Canvas Builder & 500+ Assets Pack</title>
-<meta name="description" content="Professional YouTube thumbnail platform featuring free AI visual generation, interactive 1280x720 canvas editor, 500+ transparent 4K element pack, and clean 4K export downloads from ₹49.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVRTN | Thumbnails & Assets</title>
+  
+  <!-- Razorpay Official Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <style>
+    /* Y2K Cartoonish / Neo-Brutalist CSS */
+    :root {
+      --bg-cream: #fbf9f1;
+      --accent-red: #ff3b3b;
+      --border-color: #111;
+      --shadow-color: #111;
+    }
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<!-- Google Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Bangers&family=Bebas+Neue&family=Fredoka:wght@600;700;800&family=Montserrat:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    body {
+      background-color: var(--bg-cream);
+      color: var(--border-color);
+      padding: 20px;
+    }
 
-<!-- Font Awesome Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    h1, h2, h3 {
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
 
-<!-- Fabric.js HTML5 Canvas Engine -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    /* Chunky Y2K UI Elements */
+    .y2k-box {
+      background: #fff;
+      border: 3px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 6px 6px 0px var(--shadow-color);
+      padding: 20px;
+      margin-bottom: 25px;
+      transition: transform 0.1s ease;
+    }
 
-<!-- Razorpay Official Checkout SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    .y2k-button {
+      background-color: var(--accent-red);
+      color: white;
+      border: 3px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 4px 4px 0px var(--shadow-color);
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.1s;
+    }
 
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        display: ['Archivo Black', 'sans-serif'],
-        comic: ['Bangers', 'cursive'],
-        impact: ['Anton', 'Impact', 'sans-serif'],
-        bebas: ['Bebas Neue', 'sans-serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
-        fredoka: ['Fredoka', 'sans-serif'],
-        sans: ['Plus Jakarta Sans', 'sans-serif']
-      },
-      colors: {
-        brandRed: '#FF007A',
-        brandYellow: '#00E5FF',
-        brandGreen: '#39FF14',
-        brandBlue: '#0EA5E9',
-        darkBg: '#0B0C10',
-        darkSurface: '#15161A',
-        darkCard: '#1F2025',
-        darkBorder: 'rgba(255, 255, 255, 0.12)'
-      },
-      boxShadow: {
-        comic: '4px 4px 0px 0px rgba(0,0,0,0.4)',
-        comicSm: '2px 2px 0px 0px rgba(0,0,0,0.3)',
-        comicLg: '6px 6px 0px 0px rgba(0,0,0,0.5)',
-        glowRed: '0 0 25px rgba(255, 42, 42, 0.45)',
-        glowGold: '0 0 25px rgba(255, 214, 0, 0.45)',
-        glowGreen: '0 0 25px rgba(0, 245, 98, 0.45)',
-        glowBlue: '0 0 25px rgba(14, 165, 233, 0.45)'
+    .y2k-button:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px var(--shadow-color);
+    }
+    
+    .y2k-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Layout: 2 Columns */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
       }
     }
-  }
-}
-</script>
 
-<style>
-* { scroll-behavior: smooth; }
-body { background-color: #0B0C10; color: #F3F4F6; }
-.comic-shadow { box-shadow: 4px 4px 0px rgba(0,0,0,0.4); }
-.comic-shadow-sm { box-shadow: 2px 2px 0px rgba(0,0,0,0.3); }
-.comic-shadow-lg { box-shadow: 6px 6px 0px rgba(0,0,0,0.5); }
-.comic-shadow-yellow { box-shadow: 5px 5px 0px #00E5FF; }
-.comic-shadow-red { box-shadow: 5px 5px 0px #FF007A; }
-.rotate-slight { transform: rotate(-1.5deg); }
-.grid-pattern {
-  background-image: radial-gradient(rgba(255,255,255,0.12) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
-}
-.marquee { animation: marquee 20s linear infinite; }
-@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.shake:hover { animation: shake .35s ease; }
-@keyframes shake { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-1.2deg); } 75% { transform: rotate(1.2deg); } }
+    /* Portfolio Section */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
 
-::-webkit-scrollbar { width: 7px; height: 7px; }
-::-webkit-scrollbar-track { background: #0b0c10; }
-::-webkit-scrollbar-thumb { background: #2a2b33; border-radius: 999px; border: 1px solid #000; }
-::-webkit-scrollbar-thumb:hover { background: #FF007A; }
+    .portfolio-item {
+      width: 100%;
+      height: 120px;
+      background-color: #eee;
+      border: 3px solid var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      background-size: cover;
+      background-position: center;
+    }
 
-.tab-active { background: #FF007A !important; color: #fff !important; border-color: #000 !important; }
-.glass-card { background: rgba(20, 21, 28, 0.88); backdrop-filter: blur(16px); border: 2px solid rgba(255, 255, 255, 0.1); }
-@keyframes popIn { 0% { transform: scale(0.85); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    /* Shop Items */
+    .shop-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      border: 3px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      background: var(--bg-cream);
+    }
 
-/* Button text overflow protection */
-button, a.block, [class*="rounded-full"][class*="font-black"] {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-button { white-space: nowrap; }
+    .price-tag {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--accent-red);
+    }
 
-/* Canvas Container Styling */
-#canvasWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 860px;
-  aspect-ratio: 16/9;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 3px #000;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: #14151e;
-}
-.canvas-container {
-  width: 100% !important;
-  height: 100% !important;
-}
-#fabricCanvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-.safe-zone-badge {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.3);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 11px;
-  font-weight: bold;
-  pointer-events: none;
-  z-index: 30;
-}
-.rule-of-thirds-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 25;
-  background: 
-    linear-gradient(to right, transparent 33.1%, rgba(255,255,255,0.15) 33.3%, transparent 33.5%, transparent 66.4%, rgba(255,255,255,0.15) 66.6%, transparent 66.8%),
-    linear-gradient(to bottom, transparent 33.1%, rgba(255,255,255,0.15) 33.3%, transparent 33.5%, transparent 66.4%, rgba(255,255,255,0.15) 66.6%, transparent 66.8%);
-}
+    /* Custom Form */
+    textarea {
+      width: 100%;
+      height: 100px;
+      border: 3px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+      font-family: inherit;
+      resize: none;
+    }
 
-:root {
-  /* Backgrounds: Deep Obsidian & Carbon */
-  --bg-main: #0B0C10;
-  --bg-card: #15161A;
-  --bg-canvas-area: #1F2025;
+    input[type="file"] {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
 
-  /* Accents: Cyber Neon Pink & Tech Cyan */
-  --accent-primary: #FF007A; /* High-vis Y2K Pink */
-  --accent-secondary: #00E5FF; /* Cyan for hover states */
-  --accent-success: #39FF14; /* Neon Green for payment success */
+    /* Payment Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
 
-  /* Typography */
-  --text-primary: #F2F2F2;
-  --text-muted: #8A8D98;
-  --border-color: #2A2B32;
-}
+    .modal-content {
+      background: var(--bg-cream);
+      width: 90%;
+      max-width: 400px;
+      border: 4px solid var(--border-color);
+      box-shadow: 8px 8px 0px var(--shadow-color);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
 
-body {
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-}
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-/* Cyber Button styling */
-.btn-export {
-  background: var(--accent-primary) !important;
-  color: #fff !important;
-  border: 1px solid rgba(255, 0, 122, 0.5) !important;
-  box-shadow: 0 0 15px rgba(255, 0, 122, 0.3) !important;
-  transition: all 0.2s ease !important;
-}
-.btn-export:hover {
-  background: transparent !important;
-  border-color: var(--accent-secondary) !important;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.4) !important;
-}
-</style>
+    .step-2 { display: none; }
+    
+    .download-btn {
+      background-color: #27ae60;
+    }
+  </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden selection:bg-[#FF007A] selection:text-white">
+<body>
 
-<!-- TOP ANNOUNCEMENT BAR -->
-<div class="bg-gradient-to-r from-[#FF007A] via-[#FF7A00] to-[#00E5FF] text-black text-[12px] md:text-[13px] font-black tracking-wide py-2.5 px-4 flex items-center justify-center gap-3 md:gap-6 relative z-50 shadow-md">
-  <span class="bg-black text-white px-2.5 py-0.5 rounded-full text-[11px] tracking-widest border border-black/20">🔥 2026 EDITION</span>
-  <span class="hidden md:inline">UNLOCK CLEAN EXPORTS AT <b class="underline decoration-black decoration-2">₹49</b> &bull; 500+ PACK AT <b class="underline decoration-black decoration-2">₹200</b> &bull; CUSTOM AT <b class="underline decoration-black decoration-2">₹150</b></span>
-  <span class="md:hidden">CLEAN EXPORT ₹49 &bull; 500+ PACK ₹200</span>
-  
-</div>
+  <header style="margin-bottom: 30px; text-align: center;">
+    <h1 style="font-size: 3rem; color: var(--accent-red); -webkit-text-stroke: 2px var(--border-color);">CVRTN</h1>
+    <p style="font-weight: bold;">Premium Montages, Thumbnails & Assets</p>
+  </header>
 
-<!-- STICKY NAVBAR -->
-<nav class="sticky top-0 z-40 bg-[#12131A]/95 backdrop-blur-xl border-b-2 border-white/10">
-  <div class="max-w-[1340px] mx-auto px-4 md:px-6 h-[72px] flex items-center justify-between gap-4">
+  <div class="container">
     
-    <!-- Brand Logo -->
-    <a href="#" class="flex items-center gap-3 group">
-      <div class="w-11 h-11 bg-gradient-to-br from-[#FF007A] to-[#FF7A00] border-2 border-black rounded-xl flex items-center justify-center comic-shadow-sm rotate-[-3deg] group-hover:rotate-0 transition duration-300">
-        <span class="font-display text-white text-[19px] tracking-tighter leading-none">C×T</span>
+    <!-- LEFT COLUMN: PORTFOLIO -->
+    <div class="column">
+      <div class="y2k-box">
+        <h2>Portfolio / My Work</h2>
+        <p style="margin-top: 10px;">Check out my latest trending thumbnail designs.</p>
+        <div class="portfolio-grid">
+          <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-1.jpg');"></div>
+          <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-2.webp');"></div>
+          <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-3.webp');"></div>
+          <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-4.webp');"></div>
+        </div>
       </div>
-      <div class="leading-none">
-        <div class="font-display text-[19px] md:text-[21px] tracking-tight text-white">CVRTN'S <span class="text-[#FF007A]">THumbnaiL</span></div>
-        <div class="text-[10px] font-black tracking-[0.2em] text-[#00E5FF] mt-0.5">STUDIO &bull; AI &bull; 500+ ASSETS</div>
-      </div>
-    </a>
+    </div>
 
-    <!-- Desktop Navigation Links -->
-    <div class="hidden xl:flex items-center gap-1 font-bold text-[13px] text-zinc-300">
+    <!-- RIGHT COLUMN: SHOP & CUSTOM ORDERS -->
+    <div class="column">
       
-      <a href="#builder" class="px-3 py-1.5 hover:text-white hover:bg-white/10 rounded-full transition text-[#00E5FF] font-black flex items-center gap-1.5">
-        <i class="fa-solid fa-paintbrush text-xs"></i> Canvas Studio
-      </a>
-      <a href="#templates" class="px-3 py-1.5 hover:text-white hover:bg-white/10 rounded-full transition">Templates</a>
-      <a href="#assets" class="px-3 py-1.5 hover:text-white hover:bg-white/10 rounded-full transition">500+ Elements</a>
-      <a href="#portfolio" class="px-3 py-1.5 hover:text-white hover:bg-white/10 rounded-full transition">Portfolio</a>
-      <a href="#pricing" class="px-3 py-1.5 hover:text-white hover:bg-white/10 rounded-full transition">Pricing (₹49+)</a>
-      <a href="#custom-services" class="px-3 py-1.5 hover:text-white hover:bg-white/10 rounded-full transition text-zinc-200">Custom (₹150)</a>
-    </div>
-
-    <!-- Actions & Buttons -->
-    <div class="flex items-center gap-2 md:gap-3">
-      <a href="https://instagram.com/cvrtncreates_" target="_blank" class="w-10 h-10 bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#F77737] border-2 border-black rounded-full grid place-items-center text-white hover:scale-110 transition comic-shadow-sm" title="@cvrtncreates_ on Instagram">
-        <i class="fa-brands fa-instagram text-[15px]"></i>
-      </a>
-      <button onclick="openProjectsModal()" class="hidden md:inline-flex bg-[#15161A] hover:bg-zinc-800 border border-white/20 text-zinc-300 hover:text-white rounded-full px-3.5 h-10 items-center font-bold text-[12px] gap-1.5 transition" title="Saved Projects">
-        <i class="fa-solid fa-folder-open text-[#00E5FF]"></i> <span id="navProjectsCount">My Projects (0)</span>
-      </button>
-
-      <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="hidden sm:inline-flex bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 h-10 items-center font-black text-[13px] shadow-[0_0_15px_rgba(255,214,0,0.5)] hover:scale-105 transition gap-1.5">
-        <i class="fa-solid fa-bolt text-xs"></i> Custom — ₹150
-      </button>
-
-      <button id="cartBtn" class="relative w-10 h-10 md:w-auto md:px-3.5 md:h-10 bg-[#15161A] border-2 border-white/20 hover:border-white text-white rounded-full flex items-center justify-center gap-2 font-black transition">
-        <i class="fa-solid fa-bag-shopping text-sm"></i>
-        <span class="hidden md:inline text-[13px]">Cart</span>
-        <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-[#FF007A] text-white text-[11px] w-5 h-5 rounded-full grid place-items-center border-2 border-black font-bold">0</span>
-      </button>
-
-      <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="hidden lg:inline-flex bg-[#FF007A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full px-5 h-10 items-center font-black text-[13px] comic-shadow-sm hover:translate-y-[1px] hover:shadow-none transition">
-        GET PACK — ₹200
-      </button>
-
-      <button id="mobileMenuBtn" class="xl:hidden w-10 h-10 bg-zinc-800 text-white border border-white/20 rounded-full grid place-items-center">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile Dropdown Menu -->
-  <div id="mobileMenu" class="hidden xl:hidden border-t-2 border-white/10 bg-[#12131A] px-4 py-4 space-y-2 text-sm">
-    
-    <a href="#builder" class="block px-4 py-3 bg-[#00E5FF] text-black rounded-xl font-black flex items-center gap-2"><i class="fa-solid fa-paintbrush"></i> 1280x720 Canvas Studio</a>
-    <a href="#templates" class="block px-4 py-3 bg-[#15161A] text-white rounded-xl font-bold border border-white/10">Pre-Made Templates</a>
-    <a href="#assets" class="block px-4 py-3 bg-[#15161A] text-white rounded-xl font-bold border border-white/10">500+ Elements Pack (₹200)</a>
-    <a href="#portfolio" class="block px-4 py-3 bg-[#15161A] text-white rounded-xl font-bold border border-white/10">Thumbnail Portfolio</a>
-    <a href="#pricing" class="block px-4 py-3 bg-[#15161A] text-white rounded-xl font-bold border border-white/10">Pricing in Rupees (₹)</a>
-    <button onclick="openProjectsModal()" class="w-full text-left px-4 py-3 bg-[#15161A] text-white rounded-xl font-bold border border-white/10 flex items-center justify-between"><span>My Saved Projects</span> <span id="mobileProjectsCount" class="text-xs bg-zinc-800 px-2 py-0.5 rounded text-zinc-300">0</span></button>
-    <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="w-full text-center px-4 py-3 bg-[#FF007A] text-white rounded-xl font-black mt-2">Order Custom "THumbnaiL" (₹150)</button>
-  </div>
-</nav>
-
-<!-- HERO SECTION -->
-<section class="relative overflow-hidden pt-8 pb-14 md:pb-20">
-  <div class="absolute inset-0 grid-pattern opacity-40"></div>
-  <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-gradient-to-tr from-[#FF007A]/20 via-[#FF7A00]/20 to-[#00E5FF]/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-  <div class="max-w-[1340px] mx-auto px-4 md:px-6 relative">
-    <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 md:gap-12 items-center">
-      <div>
-        <div class="inline-flex flex-wrap items-center gap-2 mb-4">
-          <span class="bg-[#FF007A] text-white rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest flex items-center gap-2 shadow-glowRed">
-            <span class="w-2 h-2 bg-white rounded-full animate-ping"></span> PRODUCTION THUMBNAIL PLATFORM
-          </span>
-          <span class="bg-[#15161A]/90 text-zinc-300 border border-white/20 rounded-full px-3 py-1 text-[11px] font-bold flex items-center gap-1.5">
-            <i class="fa-solid fa-gamepad text-[#00E5FF]"></i> Built for YouTube Creators &amp; Esports Editors
-          </span>
-        </div>
-
-        <h1 class="font-display text-[42px] sm:text-[56px] md:text-[66px] leading-[0.92] tracking-tight text-white">
-          1280×720 <span class="relative inline-block text-black bg-[#00E5FF] px-3 py-0.5 border-[3px] border-black rotate-[1deg] comic-shadow">CANVAS</span>
-        </h1>
-
-        <p class="mt-5 text-[16px] md:text-[18px] leading-relaxed text-zinc-300 max-w-[580px] font-medium">
-          Design and edit in our live <b class="text-white font-bold">1280×720 Canvas Studio</b>. Unlock clean unwatermarked 4K exports for only <b class="text-[#00E5FF] font-black">₹49</b>, get the complete 500+ element pack for <b class="text-[#39FF14] font-black">₹200</b>, or commission bespoke 1-on-1 thumbnails at <b class="text-[#00E5FF] font-black">₹150</b>.
-        </p>
-
-        <div class="mt-6 flex flex-wrap gap-2 text-[12px] font-bold">
-          
-          <span class="bg-[#15161A] border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#39FF14]"></i> Clean Export ₹49</span>
-          <span class="bg-[#15161A] border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#39FF14]"></i> 500+ Elements Pack ₹200</span>
-          <span class="bg-[#15161A] border border-white/15 text-zinc-200 rounded-full px-3.5 py-1.5 flex items-center gap-2"><i class="fa-solid fa-check text-[#39FF14]"></i> Custom 1-on-1 ₹150</span>
-        </div>
-
-        <div class="mt-8 flex flex-col sm:flex-row gap-3.5">
-          
-          <a href="#builder" class="bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-[3px] border-black rounded-full h-[58px] px-7 font-black text-[15px] md:text-[16px] shadow-[0_0_20px_rgba(255,214,0,0.5)] flex items-center justify-center gap-2 transition hover:scale-105">
-            <i class="fa-solid fa-paintbrush text-sm"></i> CANVAS STUDIO
-          </a>
-          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="bg-[#FF007A] hover:bg-[#e01d1d] text-white border-[3px] border-black rounded-full h-[58px] px-6 font-black text-[14px] md:text-[15px] comic-shadow flex items-center justify-center gap-2 transition">
-            <i class="fa-solid fa-bolt"></i> 500+ PACK — ₹200
-          </button>
-        </div>
-
-        <div class="mt-6 flex items-center gap-3 text-[13px] text-zinc-400">
-          <div class="flex -space-x-2">
-            <img src="https://i.pravatar.cc/100?img=11" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]" alt="Creator">
-            <img src="https://i.pravatar.cc/100?img=12" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]" alt="Creator">
-            <img src="https://i.pravatar.cc/100?img=14" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]" alt="Creator">
-            <img src="https://i.pravatar.cc/100?img=15" class="w-8 h-8 rounded-full border-2 border-[#0B0C10]" alt="Creator">
-          </div>
+      <!-- Thumbnails to Buy -->
+      <div class="y2k-box">
+        <h2>Thumbnails To Buy</h2>
+        <div class="shop-item" style="margin-top: 15px;">
           <div>
-            <span class="font-bold text-white">Honest Monetization Architecture</span>
-            <span class="text-xs text-zinc-500 block">Pay Only When You Download or Export 4K</span>
+            <h3>Valorant Montage Style</h3>
+            <p>PSD + Fonts included</p>
+          </div>
+          <div style="text-align: right;">
+            <div class="price-tag">₹150</div>
+            <button class="y2k-button" onclick="startRazorpayCheckout('Valorant Montage Style', 150)">Buy Now</button>
           </div>
         </div>
       </div>
 
-      <!-- Hero Visual Card -->
-      <div class="relative">
-        <div class="glass-card p-3 rounded-[28px] comic-shadow-lg relative overflow-hidden group">
-          <div class="bg-[#151722] rounded-[20px] overflow-hidden border border-white/10">
-            <div class="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#FF007A] to-[#FF7A00] text-white">
-              <div class="flex items-center gap-2 font-black text-[12px] tracking-widest"><span class="w-2 h-2 bg-white rounded-full animate-pulse"></span> PORTFOLIO SHOWCASE &bull; 4K ULTRA HD</div>
-              <div class="flex items-center gap-1.5">
-                <span class="w-3 h-3 bg-white/30 rounded-full"></span><span class="w-3 h-3 bg-white/30 rounded-full"></span><span class="w-3 h-3 bg-white rounded-full"></span>
-              </div>
-            </div>
-
-            <div class="relative bg-zinc-950 p-2.5">
-              <img src="assets/portfolio/portfolio-valorant.jpg" alt="Featured Valorant Thumbnail" class="w-full rounded-xl border border-white/20 block hover:scale-[1.01] transition duration-500 cursor-zoom-in" onclick="openLightbox('assets/portfolio/portfolio-valorant.jpg')">
-              <button onclick="openLightbox('assets/portfolio/portfolio-valorant.jpg')" class="absolute bottom-5 right-5 bg-black/80 hover:bg-black text-white border-2 border-white/30 rounded-full px-4 py-2 text-[12px] font-black flex items-center gap-2 backdrop-blur-md">
-                <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> PREVIEW 4K
-              </button>
-              <div class="absolute top-5 left-5 bg-[#FF007A] text-white border-2 border-black rounded-full px-3 py-1 text-[11px] font-black flex items-center gap-1.5 comic-shadow-sm">
-                <i class="fa-solid fa-trophy"></i> FEATURED ARTWORK
-              </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 p-3 bg-[#15161A] border-t border-white/10">
-              <div class="bg-zinc-800/80 rounded-xl p-2.5 border border-white/10 text-center">
-                <div class="text-[10px] font-black tracking-widest text-zinc-400">CLEAN EXPORT</div>
-                <div class="font-display text-[15px] text-[#00E5FF]">₹49 ONLY</div>
-              </div>
-              <div class="bg-zinc-800/80 rounded-xl p-2.5 border border-white/10 text-center">
-                <div class="text-[10px] font-black tracking-widest text-zinc-400">500+ PACK</div>
-                <div class="font-display text-[15px] text-[#39FF14]">₹200 FLAT</div>
-              </div>
-              <div class="bg-zinc-800/80 rounded-xl p-2.5 border border-white/10 text-center">
-                <div class="text-[10px] font-black tracking-widest text-zinc-400">CUSTOM</div>
-                <div class="font-display text-[15px] text-white">₹150 (24H)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MARQUEE STRIP -->
-<div class="bg-[#00E5FF] text-black border-y-[3px] border-black overflow-hidden py-3 font-display text-[15px] tracking-wide">
-  <div class="flex whitespace-nowrap marquee">
-    <span class="mx-6"></span><span class="mx-6">★ CLEAN EXPORT AT ₹49</span><span class="mx-6">★ 1280×720 CANVAS STUDIO</span><span class="mx-6">★ 500+ PACK AT ₹200</span><span class="mx-6">&bull;</span><span class="mx-6">CUSTOM COMMISSIONS AT ₹150</span><span class="mx-6">&bull;</span><span class="mx-6">GAMING &amp; ESPORTS</span><span class="mx-6">&bull;</span><span class="mx-6">TRANSPARENT 4K PNGs</span><span class="mx-6">&bull;</span>
-    <span class="mx-6"></span><span class="mx-6">★ CLEAN EXPORT AT ₹49</span><span class="mx-6">★ 1280×720 CANVAS STUDIO</span><span class="mx-6">★ 500+ PACK AT ₹200</span><span class="mx-6">&bull;</span><span class="mx-6">CUSTOM COMMISSIONS AT ₹150</span><span class="mx-6">&bull;</span><span class="mx-6">GAMING &amp; ESPORTS</span><span class="mx-6">&bull;</span><span class="mx-6">TRANSPARENT 4K PNGs</span><span class="mx-6">&bull;</span>
-  </div>
-</div>
-
-
-
-<!-- ========================================== -->
-<!-- SECTION: 1280x720 CANVAS STUDIO            -->
-<!-- ========================================== -->
-<section id="builder" class="max-w-[1340px] mx-auto px-4 md:px-6 py-16">
-  <div class="bg-gradient-to-br from-[#FF007A] via-[#FF7A00] to-[#00E5FF] border-[3px] border-black rounded-[32px] p-2.5 md:p-3.5 comic-shadow-lg">
-    <div class="bg-[#12131A] rounded-[24px] border-2 border-black overflow-hidden text-white">
-      
-      <!-- Studio Header Bar -->
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 px-5 py-4 border-b-2 border-white/10 bg-[#15161A]/90">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-[#FF007A] text-white rounded-xl grid place-items-center comic-shadow-sm"><i class="fa-solid fa-paintbrush"></i></div>
+      <!-- Elements to Buy -->
+      <div class="y2k-box">
+        <h2>Thumbnail Elements</h2>
+        <div class="shop-item" style="margin-top: 15px;">
           <div>
-            <div class="font-display text-[18px] md:text-[20px] leading-none">CVRTN CANVAS STUDIO <span class="text-[#00E5FF] text-xs font-mono font-bold ml-1">1280×720 16:9</span></div>
-            <div class="text-[11px] font-bold text-zinc-400 mt-1">Edit your photos &amp; thumbnails for free &bull; Clean export for just ₹20</div>
+            <h3>Y2K 3D Render Pack</h3>
+            <p>Transparent PNGs (No quality limits)</p>
           </div>
-        </div>
-
-        <!-- Studio Quick Actions -->
-        <div class="flex flex-wrap items-center gap-2">
-          <button onclick="undoCanvas()" id="undoBtn" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-3 py-1.5 rounded-full text-xs font-bold border border-white/15 flex items-center gap-1.5 transition" title="Undo (Ctrl+Z)">
-            <i class="fa-solid fa-rotate-left"></i> Undo
-          </button>
-          <button onclick="redoCanvas()" id="redoBtn" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 px-3 py-1.5 rounded-full text-xs font-bold border border-white/15 flex items-center gap-1.5 transition" title="Redo (Ctrl+Y)">
-            <i class="fa-solid fa-rotate-right"></i> Redo
-          </button>
-          <button onclick="toggleSafeZone()" id="safeZoneToggleBtn" class="bg-zinc-800 hover:bg-zinc-700 text-[#39FF14] px-3 py-1.5 rounded-full text-xs font-bold border border-white/15 flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-border-none"></i> Grid Guides
-          </button>
-          <button onclick="saveProjectToStorage()" class="bg-zinc-800 hover:bg-zinc-700 text-white px-3.5 py-1.5 rounded-full text-xs font-black border border-white/20 flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-floppy-disk text-[#00E5FF]"></i> Save Draft
-          </button>
-          <button onclick="clearCanvasStudio()" class="bg-zinc-800 hover:bg-zinc-700 text-white px-3 py-1.5 rounded-full text-xs font-bold border border-white/15 transition">
-            Clear
-          </button>
-          <button onclick="openExportChoiceModal()" class="btn-export rounded-full px-4 py-1.5 text-xs font-black flex items-center gap-1.5 font-display">
-            <i class="fa-solid fa-file-image"></i> Export 1280×720 PNG
-          </button>
+          <div style="text-align: right;">
+            <div class="price-tag">₹100</div>
+            <button class="y2k-button" onclick="startRazorpayCheckout('Y2K 3D Render Pack', 100)">Buy Now</button>
+          </div>
         </div>
       </div>
 
-      <!-- Studio 3-Column Grid -->
-      <div class="grid xl:grid-cols-[290px_1fr_280px] gap-0">
+      <!-- Custom Thumbnails -->
+      <div class="y2k-box" style="border-color: var(--accent-red);">
+        <h2 style="color: var(--accent-red);">Custom Thumbnail Request</h2>
+        <p style="font-weight: bold; margin-top: 5px;">Price: ₹250</p>
         
-        <!-- LEFT PANEL: Asset Library & Sticker Tray -->
-        <div class="border-b xl:border-b-0 xl:border-r border-white/10 bg-[#1F2025] p-4 flex flex-col justify-between max-h-[660px] overflow-y-auto">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <span class="font-black text-[11px] tracking-widest text-[#00E5FF] flex items-center gap-2 uppercase"><i class="fa-solid fa-icons"></i> Add Elements</span>
-              <span class="text-[10px] text-zinc-400">Click to place</span>
-            </div>
-
-            <!-- Asset Category Pills -->
-            <div class="flex flex-wrap gap-1 mb-3">
-              <button onclick="switchStudioAssetCategory('all')" id="studioCat-all" class="studio-cat-btn active bg-white text-black px-2.5 py-1 rounded-full text-[10px] font-black">All</button>
-              <button onclick="switchStudioAssetCategory('arrows')" id="studioCat-arrows" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Arrows</button>
-              <button onclick="switchStudioAssetCategory('bursts')" id="studioCat-bursts" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Bursts</button>
-              <button onclick="switchStudioAssetCategory('money')" id="studioCat-money" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Money</button>
-              <button onclick="switchStudioAssetCategory('effects')" id="studioCat-effects" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">VFX</button>
-              <button onclick="switchStudioAssetCategory('gaming')" id="studioCat-gaming" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Gaming</button>
-              <button onclick="switchStudioAssetCategory('memes')" id="studioCat-memes" class="studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold">Memes</button>
-            </div>
-
-            <!-- Dynamic Asset Tray Grid -->
-            <div id="studioTray" class="grid grid-cols-3 gap-2">
-              <!-- Rendered via JS -->
-            </div>
-          </div>
-
-          <!-- Upload Custom Asset / Image -->
-          <div class="mt-4 pt-3 border-t border-white/10 space-y-2">
-            <input type="file" id="customImageUploader" accept="image/*" class="hidden" onchange="handleUserImageUpload(event)">
-            <button onclick="document.getElementById('customImageUploader').click()" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white rounded-xl py-2.5 font-bold text-xs border border-white/20 flex items-center justify-center gap-2 transition">
-              <i class="fa-solid fa-cloud-arrow-up text-[#0EA5E9]"></i> Upload Image / Cutout
-            </button>
-            <div class="text-[10px] text-zinc-400 text-center font-medium">Supports PNG (Transparent), JPG, WebP</div>
-          </div>
-        </div>
-
-        <!-- CENTER PANEL: 1280x720 Native HTML5 Canvas Editor -->
-        <div class="bg-zinc-950 p-4 md:p-6 flex flex-col items-center justify-center relative overflow-hidden min-h-[480px]">
-          
-          <div id="canvasWrapper">
-            <!-- Safe Zone Youtube Duration Stamp Simulation -->
-            <div class="safe-zone-badge" id="ytDurationBadge">12:42</div>
-            
-            <!-- Optional Rule of Thirds Guides -->
-            <div class="rule-of-thirds-grid hidden" id="ruleOfThirdsGuides"></div>
-
-            <!-- Fabric.js Canvas Element -->
-            <canvas id="fabricCanvas" width="1280" height="720"></canvas>
-          </div>
-
-          <!-- Canvas Hint & Toolbar -->
-          <div class="mt-4 flex flex-wrap items-center justify-between w-full max-w-[860px] text-xs text-zinc-400 px-1 gap-2">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 bg-[#39FF14] rounded-full animate-pulse"></span>
-              <span class="font-medium text-[11px]">Click element to select &bull; Drag handles to scale/rotate &bull; Press Delete to remove</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <button onclick="bringSelectedForward()" class="bg-[#15161A] hover:bg-zinc-800 text-zinc-300 px-2 py-1 rounded border border-white/15 text-[10px] font-bold" title="Bring Layer Forward">Forward &uarr;</button>
-              <button onclick="sendSelectedBackward()" class="bg-[#15161A] hover:bg-zinc-800 text-zinc-300 px-2 py-1 rounded border border-white/15 text-[10px] font-bold" title="Send Layer Backward">Backward &darr;</button>
-              <button onclick="deleteSelectedElement()" class="bg-[#15161A] hover:bg-red-950 text-red-400 px-2 py-1 rounded border border-red-900/50 text-[10px] font-bold" title="Delete Selected">Delete <i class="fa-solid fa-trash text-[9px]"></i></button>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT PANEL: Text Engine, Backgrounds & Layer Inspector -->
-        <div class="border-t xl:border-t-0 xl:border-l border-white/10 p-4 bg-[#1F2025] max-h-[660px] overflow-y-auto space-y-4">
-          
-          <!-- Text Tool Section -->
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="font-black text-[11px] tracking-widest text-[#00E5FF] uppercase"><i class="fa-solid fa-font"></i> High-CTR Text</span>
-              <button onclick="addCustomTextToCanvas()" class="bg-[#FF007A] hover:bg-[#e01d1d] text-white px-2.5 py-1 rounded-full text-[10px] font-black comic-shadow-sm">+ Add Text</button>
-            </div>
-
-            <div class="space-y-2 pt-1">
-              <div>
-                <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">Selected Text Content:</label>
-                <input type="text" id="textInputContent" placeholder="Select text or type here..." class="w-full bg-[#15161A] border border-white/20 rounded-lg px-2.5 py-1.5 text-xs font-bold text-white outline-none focus:border-[#00E5FF]">
-              </div>
-
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">Font Family:</label>
-                  <select id="textFontFamily" class="w-full bg-[#15161A] border border-white/20 rounded-lg px-2 py-1.5 text-[11px] font-bold text-white outline-none">
-                    <option value="Archivo Black" selected>Archivo Black</option>
-                    <option value="Bangers">Bangers Comic</option>
-                    <option value="Anton">Anton Impact</option>
-                    <option value="Bebas Neue">Bebas Neue</option>
-                    <option value="Montserrat">Montserrat Bold</option>
-                    <option value="Fredoka">Fredoka Pop</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">Text Color:</label>
-                  <div class="flex items-center gap-1 bg-[#15161A] border border-white/20 rounded-lg p-1">
-                    <input type="color" id="textColorPicker" value="#FFFFFF" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
-                    <span id="textColorHex" class="text-[10px] font-mono text-zinc-300 font-bold">#FFFFFF</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Outline / Stroke Controls -->
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">Stroke (Outline):</label>
-                  <div class="flex items-center gap-1 bg-[#15161A] border border-white/20 rounded-lg p-1">
-                    <input type="color" id="textStrokeColorPicker" value="#000000" class="w-6 h-6 rounded cursor-pointer bg-transparent border-0">
-                    <span id="textStrokeHex" class="text-[10px] font-mono text-zinc-300 font-bold">#000000</span>
-                  </div>
-                </div>
-                <div>
-                  <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">Stroke Width: <span id="strokeWidthVal" class="text-[#00E5FF]">4px</span></label>
-                  <input type="range" id="textStrokeWidth" min="0" max="16" value="4" class="w-full accent-[#FF007A] mt-1">
-                </div>
-              </div>
-
-              <!-- Text Shadow / 3D Drop Shadow -->
-              <div class="grid grid-cols-2 gap-2">
-                <div>
-                  <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">3D Shadow Blur:</label>
-                  <input type="range" id="textShadowBlur" min="0" max="25" value="6" class="w-full accent-[#00E5FF] mt-1">
-                </div>
-                <div>
-                  <label class="block text-[10px] font-bold text-zinc-400 mb-0.5">Text Background Pill:</label>
-                  <select id="textBgPreset" class="w-full bg-[#15161A] border border-white/20 rounded-lg px-2 py-1 text-[11px] font-bold text-white">
-                    <option value="none">None (Transparent)</option>
-                    <option value="#000000">Black Box</option>
-                    <option value="#FF007A">Red Box</option>
-                    <option value="#00E5FF">Yellow Box</option>
-                    <option value="#39FF14">Green Box</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Background Selection Section -->
-          <div class="pt-3 border-t border-white/10 space-y-2">
-            <span class="font-black text-[11px] tracking-widest text-zinc-400 uppercase block"><i class="fa-solid fa-panorama"></i> Canvas Background</span>
-            <div class="grid grid-cols-3 gap-1.5">
-              <button onclick="setStudioBackground('gradient_esports')" class="bg-gradient-to-br from-[#FF1A1A] via-[#8B0000] to-[#0A0A10] h-9 rounded-lg border border-white/20 text-[9px] font-bold flex items-center justify-center">Esports</button>
-              <button onclick="setStudioBackground('gradient_finance')" class="bg-gradient-to-br from-[#0A3A1A] via-[#39FF14] to-[#0A0B10] h-9 rounded-lg border border-white/20 text-[9px] font-bold flex items-center justify-center text-black">Wealth</button>
-              <button onclick="setStudioBackground('gradient_cyber')" class="bg-gradient-to-br from-[#1E1B4B] via-[#6366F1] to-[#0EA5E9] h-9 rounded-lg border border-white/20 text-[9px] font-bold flex items-center justify-center">Cyber</button>
-              <button onclick="setStudioBackground('gradient_beast')" class="bg-gradient-to-br from-[#7A0A0A] via-[#FF007A] to-[#00E5FF] h-9 rounded-lg border border-white/20 text-[9px] font-bold flex items-center justify-center text-black">Beast</button>
-              <button onclick="setStudioBackground('solid_dark')" class="bg-[#12131A] h-9 rounded-lg border border-white/20 text-[9px] font-bold flex items-center justify-center">Dark Void</button>
-              <button onclick="setStudioBackground('solid_studio')" class="bg-[#242630] h-9 rounded-lg border border-white/20 text-[9px] font-bold flex items-center justify-center">Studio Grey</button>
-            </div>
-          </div>
-
-          <!-- Layers Stack List -->
-          <div class="pt-3 border-t border-white/10 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="font-black text-[11px] tracking-widest text-zinc-400 uppercase"><i class="fa-solid fa-layer-group"></i> Canvas Layers</span>
-              <span id="layerCount" class="text-[10px] text-zinc-500 font-bold">0 layers</span>
-            </div>
-            <div id="studioLayerList" class="space-y-1 max-h-[140px] overflow-y-auto pr-1">
-              <div class="text-[11px] text-zinc-500 text-center py-4">No layers yet</div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ========================================== -->
-<!-- SECTION: READY-TO-USE EDITABLE TEMPLATES   -->
-<!-- ========================================== -->
-<section id="templates" class="max-w-[1340px] mx-auto px-4 md:px-6 py-16">
-  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-    <div>
-      <div class="inline-flex items-center gap-2 bg-[#00E5FF] text-black rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest shadow-glowGold">
-        <i class="fa-solid fa-layer-group"></i> 1-CLICK EDITABLE TEMPLATES
-      </div>
-      <h2 class="font-display text-[32px] md:text-[46px] leading-tight mt-2 text-white">
-        VIRAL THUMBNAIL <span class="text-[#00E5FF]">TEMPLATES</span>
-      </h2>
-      <p class="text-zinc-400 font-medium text-[15px] mt-1 max-w-[620px]">
-        Click any pre-composed template to load its full layered layout directly into the Canvas Builder for instant customization!
-      </p>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    
-    <!-- Template 1: Valorant 1v5 Radiant Clutch -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/15">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-valorant.jpg" alt="Valorant Template" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#FF007A] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowRed">ESPORTS / GAMING</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">1v5 RADIANT CLUTCH ACE</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">High-contrast esports template with Prime Vandal glow, soul orbs, 3D rank crest and yellow arrow.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('valorant')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 2: Finance & Cash Flow -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/15">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-2.webp" alt="Finance Template" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#39FF14] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowGreen">FINANCE / WEALTH</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">₹50,000 IN 7 DAYS BLUEPRINT</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">Emerald wealth gradient, upward green trendline, floating banknotes, and shock text badge.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('finance')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 3: 100 AI Tools Tested -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/15">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-1.jpg" alt="AI Tech Template" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#0EA5E9] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowBlue">AI / TECH</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">100 AI TOOLS TESTED FOR 24H</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">Holographic cyber cyan lighting, glowing AI robot icon, neon sparkles, and tech pill badges.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('tech')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 4: 100 Days Hardcore Survival -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/15">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-4.webp" alt="Hardcore Challenge Template" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#FF7A00] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black">SURVIVAL CHALLENGE</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">SURVIVED 100 DAYS ON 1 HP</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">Fire flame overlay, explosion burst, danger warning icon, and bold comic warning text.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('challenge')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 5: 3D Typography Masterpiece -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/15">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-5.webp" alt="3D Glass Typography" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#8B5CF6] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black">3D GLASS ART</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">THE LAST SURVIVOR — 3D "X"</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">Realistic 3D glass refraction, chromatic aberration, and modern streetwear aesthetic.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('glass')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 6: Aesthetic Cyber Reality 2077 -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-cyan-500/30">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-1.jpg" alt="Cyber Reality 2077" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#0EA5E9] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowBlue">AESTHETIC CYBER</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">CYBER REALITY 2077 — 3D HOLOGRAM</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">Cyan &amp; magenta holographic glass refraction, cyber lighting, and futuristic 3D typography.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('aesthetic_cyber')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 7: Neon Overdrive Aesthetic -->
-    <div class="glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-fuchsia-500/30">
-      <div class="relative bg-zinc-950 aspect-video overflow-hidden">
-        <img src="assets/portfolio/portfolio-5.webp" alt="Neon Overdrive Aesthetic" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-        <span class="absolute top-3 left-3 bg-[#EC4899] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black">NEON STREETWEAR</span>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 class="font-display text-[18px] text-white leading-snug">NEON OVERDRIVE — 3D GLASS ART</h3>
-          <p class="text-zinc-400 text-[12px] mt-1">High-contrast neon pink &amp; dark obsidian glass art with streetwear graphic elements.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="loadTemplateIntoBuilder('aesthetic_street')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-2.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-            <i class="fa-solid fa-paintbrush"></i> Load in Studio &rarr;
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Template 6: Elements Pack Showcase -->
-    <div class="bg-gradient-to-br from-[#1E202E] to-[#12131A] rounded-[24px] p-6 border-2 border-[#00E5FF]/40 comic-shadow flex flex-col justify-between">
-      <div>
-        <span class="bg-[#00E5FF] text-black text-[10px] font-black px-2.5 py-1 rounded-full">ALL ASSETS INCLUDED</span>
-        <h3 class="font-display text-[22px] text-white mt-3 leading-tight">BUILD ANY THUMBNAIL FROM SCRATCH</h3>
-        <p class="text-zinc-300 text-xs mt-2 leading-relaxed">Combine our 500+ isolated 4K elements with custom background colors, custom images, and high-impact 3D fonts.</p>
-      </div>
-      <div class="mt-5 pt-3 border-t border-white/10 space-y-2">
-        <button onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" class="w-full bg-[#00E5FF] hover:bg-[#ffcd00] text-black rounded-full py-3 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-          <i class="fa-solid fa-paintbrush"></i> Open Blank Canvas
-        </button>
-        <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#FF007A] hover:bg-[#e01d1d] text-white rounded-full py-3 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition">
-          <i class="fa-solid fa-download"></i> Unlock 500+ Pack — ₹200
-        </button>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ========================================== -->
-<!-- SECTION: 500+ ASSET PACK BROWSER           -->
-<!-- ========================================== -->
-<section id="assets" class="max-w-[1340px] mx-auto px-4 md:px-6 py-16">
-  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-    <div>
-      <div class="inline-flex items-center gap-2 bg-[#39FF14] text-black rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest shadow-glowGreen">
-        <i class="fa-solid fa-shapes"></i> 500+ VIRAL ELEMENTS PACK
-      </div>
-      <h2 class="font-display text-[32px] md:text-[46px] leading-tight mt-2 text-white">
-        VIRAL ASSET LIBRARY &bull; <span class="text-[#39FF14]">₹200 ONLY</span>
-      </h2>
-      <p class="text-zinc-400 font-medium text-[15px] mt-1 max-w-[620px]">
-        Thick 3D arrows, comic bursts, money stacks, energy lightning, fire flames, and gaming HUD overlays — all 4K UHD transparent PNGs.
-      </p>
-    </div>
-
-    <!-- Live Search & Category Filter -->
-    <div class="flex flex-wrap items-center gap-2">
-      <div class="relative">
-        <input type="text" id="assetSearchInput" oninput="filterAssetBrowser()" placeholder="Search 500+ assets..." class="bg-[#15161A] border border-white/20 rounded-full px-4 py-2 text-xs font-bold text-white pl-9 outline-none focus:border-[#00E5FF]">
-        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 text-xs"></i>
-      </div>
-      <div class="flex flex-wrap gap-1.5" id="assetFilterTabs">
-        <button onclick="setAssetBrowserFilter('all')" class="asset-tab-btn active bg-white text-black px-3.5 py-1.5 rounded-full text-xs font-black border-2 border-black">All</button>
-        <button onclick="setAssetBrowserFilter('arrows')" class="asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Arrows</button>
-        <button onclick="setAssetBrowserFilter('bursts')" class="asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Bursts</button>
-        <button onclick="setAssetBrowserFilter('money')" class="asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Money</button>
-        <button onclick="setAssetBrowserFilter('effects')" class="asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Effects</button>
-        <button onclick="setAssetBrowserFilter('gaming')" class="asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Gaming HUD</button>
-        <button onclick="setAssetBrowserFilter('memes')" class="asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800">Memes</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="glass-card rounded-[28px] overflow-hidden comic-shadow">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
-      
-      <!-- Left: Featured Pack Preview -->
-      <div class="lg:col-span-5 bg-zinc-950 p-5 md:p-6 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between">
-        <div>
-          <div class="bg-[#15161A] rounded-2xl overflow-hidden border border-white/20 relative group">
-            <img src="assets/portfolio/portfolio-3.webp" class="w-full block" alt="500+ Elements Sheet">
-            <span class="absolute top-3 left-3 bg-[#39FF14] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowGreen">500+ ASSETS PACK</span>
-            <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-              <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-            </button>
-          </div>
-          
-          <div class="mt-4 grid grid-cols-3 gap-2 text-center text-[11px] font-black">
-            <div class="bg-[#00E5FF] text-black rounded-xl py-2.5 border-2 border-black">48 ARROWS<br><span class="text-[10px] font-bold opacity-75">3D &amp; Neon</span></div>
-            <div class="bg-[#FF007A] text-white rounded-xl py-2.5 border-2 border-black">52 BURSTS<br><span class="text-[10px] font-bold opacity-85">Comic &amp; Badges</span></div>
-            <div class="bg-[#39FF14] text-black rounded-xl py-2.5 border-2 border-black">72 VFX<br><span class="text-[10px] font-bold opacity-75">Fire &amp; Lightning</span></div>
-          </div>
-        </div>
-
-        <div class="mt-5 space-y-2.5">
-          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-4 font-black text-[15px] flex items-center justify-center gap-2 comic-shadow-sm transition hover:scale-[1.02]">
-            <i class="fa-solid fa-download"></i> UNLOCK 500+ ASSETS — ₹200
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="w-full bg-[#15161A] hover:bg-zinc-800 text-white border border-white/20 rounded-full py-2.5 font-bold text-xs flex items-center justify-center gap-2 transition">
-            <i class="fa-solid fa-eye"></i> Full-Resolution Sheet Preview
-          </button>
-        </div>
-      </div>
-
-      <!-- Right: Searchable Asset Cards Grid -->
-      <div class="lg:col-span-7 p-4 md:p-6 bg-[#0E0F14]">
-        <div id="assetGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[540px] overflow-y-auto pr-1">
-          <!-- Populated dynamically via JS -->
-        </div>
-
-        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between bg-[#15161A] border border-white/10 text-white rounded-2xl px-4 py-3 gap-2">
-          <span class="text-[12px] font-bold text-zinc-300"><span id="visibleAssetCount" class="font-black text-[#00E5FF]">24</span> ELEMENTS SHOWN &bull; CLICK ANY TO ADD TO CANVAS</span>
-          <button onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" class="bg-[#FF007A] hover:bg-[#e01d1d] text-white rounded-full px-4 py-1.5 text-[12px] font-black border border-black comic-shadow-sm">GO TO BUILDER &rarr;</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ========================================== -->
-<!-- SECTION: PORTFOLIO SHOWCASE (4K LIGHTBOX)  -->
-<!-- ========================================== -->
-<section id="portfolio" class="max-w-[1340px] mx-auto px-4 md:px-6 py-16">
-  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-    <div>
-      <div class="inline-flex items-center gap-2 bg-[#FF007A] text-white rounded-full px-3.5 py-1 text-[11px] font-black tracking-widest shadow-glowRed">
-        <i class="fa-solid fa-palette"></i> 4K ULTRA HD SHOWCASE
-      </div>
-      <h2 class="font-display text-[34px] md:text-[50px] leading-tight mt-2 text-white">
-        THUMBNAIL <span class="text-black bg-[#00E5FF] px-3 py-0.5 border-[3px] border-black rotate-[-1deg] inline-block comic-shadow">PORTFOLIO</span>
-      </h2>
-      <p class="text-zinc-400 font-medium text-[15px] mt-2 max-w-[620px]">
-        High-CTR YouTube thumbnails crafted by me. Click on any thumbnail to preview in full 4K high resolution!
-      </p>
-    </div>
-
-    <div class="flex flex-wrap items-center gap-2">
-      <button onclick="filterPortfolioGallery('all')" class="port-filter-btn active bg-[#FF007A] text-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black transition">All Work</button>
-      <button onclick="filterPortfolioGallery('gaming')" class="port-filter-btn bg-[#15161A] text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition">Gaming FPS</button>
-      <button onclick="filterPortfolioGallery('scifi')" class="port-filter-btn bg-[#15161A] text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition">Sci-Fi &amp; 3D</button>
-      <button onclick="filterPortfolioGallery('elements')" class="port-filter-btn bg-[#15161A] text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition">Elements Pack</button>
-    </div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid">
-    
-    <!-- Thumbnail: Valorant 1v5 Radiant Clutch -->
-    <div class="port-card gaming glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/10">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-valorant.jpg" alt="Valorant 1v5 Radiant Clutch" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-valorant.jpg')">
-        <span class="absolute top-3 left-3 bg-[#FF007A] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowRed">VALORANT PRO</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-valorant.jpg')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#FF007A]/30 text-[#FFA4A4] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#FF007A]/40">VALORANT / ESPORTS</span>
-            <span class="text-[12px] font-black text-[#39FF14]"><i class="fa-solid fa-fire"></i> Featured Work</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">1v5 RADIANT CLUTCH! — JETT &amp; REYNA ACE</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">High-energy esports composition with glowing Prime Vandal muzzle flare, soul orbs, and 3D Radiant rank crest.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: Valorant Style', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-valorant.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 1: Sci-Fi Legendary Release -->
-    <div class="port-card scifi glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/10">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-1.jpg" alt="New Game Available Now" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-1.jpg')">
-        <span class="absolute top-3 left-3 bg-[#8B5CF6] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowBlue">SCI-FI 3D</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#8B5CF6]/30 text-[#C4B5FD] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#8B5CF6]/40">CYBERPUNK / TECH</span>
-            <span class="text-[12px] font-black text-zinc-300">4K Ultra HD</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">NEW GAME — LEGENDARY RELEASE</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">Neon futuristic character art, high-contrast gaming level badges, and cyber circuit background.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: Sci-Fi Style', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-1.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 2: Insane Gameplay -->
-    <div class="port-card gaming glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/10">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-2.webp" alt="Insane Gameplay" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-2.webp')">
-        <span class="absolute top-3 left-3 bg-[#FF007A] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowRed">VIRAL ACTION</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#FF007A]/30 text-[#FFA4A4] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#FF007A]/40">WARFARE / FPS</span>
-            <span class="text-[12px] font-black text-[#39FF14]">Pop Comic Style</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">INSANE GAME PLAY — VICTORY IS OURS!</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">High-impact warfare composition, comic text bursts, diamond battle emblems, and lightning effects.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: Insane Gameplay FPS', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-2.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 3: Gaming Elements Pack -->
-    <div class="port-card elements glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/10">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-3.webp" alt="Gaming Thumbnail Elements Pack" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-3.webp')">
-        <span class="absolute top-3 left-3 bg-[#39FF14] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowGreen">PACK PREVIEW</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#39FF14]/30 text-[#86EFAC] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#39FF14]/40">ELEMENTS SUITE</span>
-            <span class="text-[12px] font-black text-zinc-300">500+ PACK</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">GAMING THUMBNAIL ELEMENTS PACK</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">Special ops character cutout, victory crown banners, subscribe buttons, and HUD next level indicators.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="text-[12px] font-black bg-[#39FF14] text-black border-2 border-black rounded-full px-4 py-1.5 hover:bg-[#00d655] transition comic-shadow-sm">
-            Get Pack — ₹200
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-3.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 4: Cyber Warrior Season 1 -->
-    <div class="port-card gaming glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/10">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-4.webp" alt="Season 1 Epic Win" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-4.webp')">
-        <span class="absolute top-3 left-3 bg-[#FF7A00] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black">CYBER WARRIOR</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#FF7A00]/30 text-[#FED7AA] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#FF7A00]/40">ANIME / CYBER</span>
-            <span class="text-[12px] font-black text-[#00E5FF]">Epic Showdown</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">SEASON 1 — EPIC WIN SHOWDOWN</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">High-gloss 3D gold typography, energy sword glow trails, anime cyberpunk warrior lighting.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: Season 1 Style', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-4.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 5: The Last Survivor -->
-    <div class="port-card scifi glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-white/10">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-5.webp" alt="The Last Survivor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-5.webp')">
-        <span class="absolute top-3 left-3 bg-[#0EA5E9] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowBlue">3D GLASS</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#0EA5E9]/30 text-[#BAE6FD] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#0EA5E9]/40">3D TYPOGRAPHY</span>
-            <span class="text-[12px] font-black text-zinc-300">Streetwear Brand</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">THE LAST SURVIVOR — 3D GLASS "X"</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">Realistic 3D glass refraction, floating fluid spheres, clean bold streetwear branding typography.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: 3D Glass Typography', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-5.webp')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 6: Aesthetic Reality 3D Glass -->
-    <div class="port-card scifi glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-cyan-500/30">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-6.jpg" alt="Aesthetic Reality 3D Glass" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-6.jpg')">
-        <span class="absolute top-3 left-3 bg-[#0EA5E9] text-white text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowBlue">AESTHETIC 3D GLASS</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-6.jpg')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#0EA5E9]/30 text-[#BAE6FD] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#0EA5E9]/40">3D GLASS REFRACTION</span>
-            <span class="text-[12px] font-black text-zinc-300">Aesthetic Urban</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">AESTHETIC REALITY — 3D GLASS</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">Realistic 3D glass typography, floating chrome spheres, cyan and neon purple rim lighting.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: Aesthetic Reality 3D Glass', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-6.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Thumbnail 7: Silent Vision Aesthetic 3D Glass Sculpture -->
-    <div class="port-card scifi glass-card glass-card-hover rounded-[24px] overflow-hidden flex flex-col group transition duration-300 border border-emerald-500/30">
-      <div class="relative bg-zinc-950 overflow-hidden aspect-video border-b border-white/10">
-        <img src="assets/portfolio/portfolio-7.jpg" alt="Silent Vision Aesthetic 3D Glass" class="w-full h-full object-cover group-hover:scale-105 transition duration-500 cursor-pointer" onclick="openLightbox('assets/portfolio/portfolio-7.jpg')">
-        <span class="absolute top-3 left-3 bg-[#39FF14] text-black text-[10px] font-black px-2.5 py-1 rounded-full border border-black shadow-glowGreen">3D GLASS SCULPTURE</span>
-        <button onclick="openLightbox('assets/portfolio/portfolio-7.jpg')" class="absolute bottom-3 right-3 bg-black/80 hover:bg-black text-white border border-white/30 rounded-full px-3 py-1.5 text-[11px] font-black flex items-center gap-1.5 backdrop-blur-md">
-          <i class="fa-solid fa-magnifying-glass-plus text-[#00E5FF]"></i> 4K Zoom
-        </button>
-      </div>
-      <div class="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-2">
-            <span class="bg-[#39FF14]/20 text-[#39FF14] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#39FF14]/30">LIQUID GOLD &amp; GLASS</span>
-            <span class="text-[12px] font-black text-zinc-300">Streetwear Art</span>
-          </div>
-          <h3 class="font-display text-[18px] text-white leading-snug">SILENT VISION — 3D GLASS ART</h3>
-          <p class="text-zinc-400 text-[13px] font-medium mt-1">Chromatic glass dispersion, liquid metallic gold accents, emerald dark background studio art.</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-          <button onclick="openPaymentModal('Custom THumbnaiL: Silent Vision 3D Glass', 150)" class="text-[12px] md:text-[13px] font-black bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full px-4 py-2 transition shadow-[0_0_12px_rgba(255,214,0,0.4)] hover:scale-105 flex items-center gap-1.5">
-            Order This — ₹150
-          </button>
-          <button onclick="openLightbox('assets/portfolio/portfolio-7.jpg')" class="text-[12px] font-black text-zinc-400 hover:text-white">
-            Full 4K <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-xs"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ========================================== -->
-<!-- SECTION: CUSTOM COMMISSION 1-ON-1 SERVICE  -->
-<!-- ========================================== -->
-<section id="custom-services" class="max-w-[1340px] mx-auto px-4 md:px-6 pb-16">
-  <div class="bg-gradient-to-br from-[#161722] to-[#0F1018] border-2 border-white/20 rounded-[32px] p-7 md:p-12 comic-shadow-lg relative overflow-hidden">
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-[#FF007A]/20 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="grid lg:grid-cols-12 gap-8 items-center relative z-10">
-      <div class="lg:col-span-8">
-        <div class="inline-flex items-center gap-2 bg-[#00E5FF] text-black rounded-full px-4 py-1 text-[12px] font-black tracking-widest shadow-glowGold">
-          <i class="fa-solid fa-sparkles"></i> 1-ON-1 DESIGN SERVICE
-        </div>
+        <label style="display:block; margin-top: 15px; font-weight: bold;">Describe your vision:</label>
+        <textarea id="customPrompt" placeholder="I need a thumbnail for a new video..."></textarea>
         
-        <h2 class="font-display text-[32px] md:text-[50px] leading-[0.94] mt-4 text-white">
-          I CAN MAKE <span class="text-[#FF007A]">CUSTOM THUMBNAILS</span><br>
-          AND <span class="text-[#00E5FF]">THUMBNAIL ELEMENTS</span>.
-        </h2>
+        <label style="display:block; margin-top: 10px; font-weight: bold;">Attach Reference Files (Max Quality):</label>
+        <input type="file" multiple>
+        
+        <button class="y2k-button" style="width: 100%;" onclick="startRazorpayCheckout('Custom Thumbnail Request', 250)">Submit & Pay ₹250</button>
+      </div>
 
-        <div class="inline-block mt-3 bg-white text-black px-4 py-1.5 rounded-xl border-[3px] border-black font-display text-[18px] md:text-[24px] rotate-[-1deg] comic-shadow-sm">
-          In this Order:- <span class="text-[#FF007A] font-black">"THumbnaiL" (₹150)</span>
-        </div>
+    </div>
+  </div>
 
-        <p class="text-zinc-300 font-medium text-[15px] md:text-[16px] mt-4 max-w-[660px] leading-relaxed">
-          Need bespoke YouTube thumbnails, personalized arrows, fire burst badges, or 3D weapon cutouts for your channel? Commission under <b class="text-[#00E5FF]">"THumbnaiL"</b> and get custom 4K graphics crafted directly for you!
-        </p>
-
-        <div class="grid sm:grid-cols-3 gap-3.5 mt-6">
-          <div class="bg-[#15161A]/90 border border-white/10 rounded-2xl p-4">
-            <div class="text-[#39FF14] text-xl font-black"><i class="fa-solid fa-bolt"></i> 24h Delivery</div>
-            <div class="text-xs text-zinc-400 mt-1">Superfast express turnaround for upload deadlines</div>
-          </div>
-          <div class="bg-[#15161A]/90 border border-white/10 rounded-2xl p-4">
-            <div class="text-[#00E5FF] text-xl font-black"><i class="fa-solid fa-rotate-right"></i> Unlimited Revisions</div>
-            <div class="text-xs text-zinc-400 mt-1">Tweak text, color & layout until you 100% love it</div>
-          </div>
-          <div class="bg-[#15161A]/90 border border-white/10 rounded-2xl p-4">
-            <div class="text-[#0EA5E9] text-xl font-black"><i class="fa-solid fa-layer-group"></i> 4K + PSD File</div>
-            <div class="text-xs text-zinc-400 mt-1">Source files and clean isolated layers included</div>
-          </div>
+  <!-- SUCCESS MODAL (Replaces Payment Modal) -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">X</span>
+      
+      <div id="modalStep2">
+        <h2 style="color: #27ae60;">Payment Successful!</h2>
+        <p style="margin: 20px 0; font-weight: bold;">Your transaction was verified.</p>
+        
+        <div id="deliveryActionContainer">
+          <p>Processing delivery...</p>
         </div>
       </div>
 
-      <div class="lg:col-span-4 bg-[#15161A]/90 border-2 border-white/20 rounded-[24px] p-6 text-center comic-shadow">
-        <div class="text-[12px] font-black text-[#00E5FF] tracking-widest uppercase">CUSTOM COMMISSION RATE</div>
-        <div class="font-display text-[44px] text-white mt-1">₹150 <span class="text-[15px] font-sans text-zinc-400 font-bold">/ thumbnail</span></div>
-        <p class="text-zinc-400 text-[13px] mt-1">Includes custom thumbnail + custom isolated element pack</p>
-
-        <div class="space-y-2 mt-5 text-[13px] text-left text-zinc-300">
-          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#39FF14]"></i> <span>High CTR tailored composition</span></div>
-          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#39FF14]"></i> <span>Custom isolated PNG elements</span></div>
-          <div class="flex items-center gap-2"><i class="fa-solid fa-check text-[#39FF14]"></i> <span>Full commercial rights & 4K PNG</span></div>
-        </div>
-
-        <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="w-full mt-6 bg-[#FF007A] hover:bg-[#e01d1d] text-white rounded-full py-4 font-black text-[15px] border-2 border-black comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-105">
-          <i class="fa-solid fa-bolt"></i> ORDER CUSTOM — ₹150
-        </button>
-      </div>
     </div>
   </div>
-</section>
 
-<!-- ========================================== -->
-<!-- SECTION: PRICING PACKAGES IN RUPEES (₹)    -->
-<!-- ========================================== -->
-<section id="pricing" class="max-w-[1340px] mx-auto px-4 md:px-6 pb-16">
-  <div class="text-center max-w-2xl mx-auto mb-10">
-    <div class="inline-flex bg-[#00E5FF] text-black border-2 border-black rounded-full px-4 py-1 text-[11px] font-black tracking-widest">
-      TRANSPARENT PRICING IN RUPEES (₹)
-    </div>
-    <h2 class="font-display text-[34px] md:text-[48px] leading-none mt-3 text-white">
-      CHOOSE YOUR PACKAGE
-    </h2>
-    <p class="text-zinc-400 font-medium mt-2">
-      Free Canvas Studio editing. Pay only when you unlock clean exports or custom commissions.
-    </p>
-  </div>
-
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+  <script>
+    const modal = document.getElementById('successModal');
     
-    <!-- Tier 2: Studio 1280x720 Export (₹49) -->
-    <div class="glass-card rounded-[26px] p-5 comic-shadow flex flex-col justify-between border-2 border-[#00E5FF]/40">
-      <div>
-        <div class="text-[11px] font-black tracking-widest text-[#00E5FF] uppercase">STUDIO EXPORT</div>
-        <div class="font-display text-[32px] text-white leading-none mt-2">₹20 <span class="text-[13px] font-sans font-bold text-zinc-400">/ export</span></div>
-        <div class="text-[12px] font-bold text-[#00E5FF] mt-1">Edit Free &bull; Buy Clean PNG</div>
-        <ul class="mt-4 space-y-2 text-[12px] text-zinc-300 font-medium">
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> Upload &amp; edit your photos FREE</li>
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> Clean 1280×720 PNG export</li>
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> No Watermarks</li>
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> YouTube Upload Ready</li>
-        </ul>
-      </div>
-      <button onclick="openPaymentModal('Studio 1280x720 Clean PNG Export', 20)" class="w-full mt-6 bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full py-3 font-black text-xs shadow-[0_0_12px_rgba(255,214,0,0.4)] transition">
-        BUY STUDIO EXPORT — ₹20
-      </button>
-    </div>
-
-    <!-- Tier 3: 500+ Elements Pack (Featured ₹200) -->
-    <div class="bg-gradient-to-b from-[#181924] to-[#101118] text-white border-[3px] border-[#FF007A] rounded-[26px] p-5 comic-shadow-lg relative overflow-hidden scale-[1.02]">
-      <div class="absolute -right-8 -top-8 bg-[#00E5FF] text-black font-black text-[10px] tracking-widest px-8 py-1.5 rotate-[25deg] border border-black">BEST VALUE</div>
-      <div class="text-[11px] font-black tracking-widest text-[#00E5FF]">COMPLETE 500+ PACK</div>
-      <div class="flex items-baseline gap-2 mt-2">
-        <span class="font-display text-[34px] leading-none text-white">₹200</span>
-        <span class="line-through text-zinc-500 text-xs font-bold">₹400</span>
-        <span class="bg-[#FF007A] rounded-full px-1.5 py-0.5 text-[9px] font-black">50% OFF</span>
-      </div>
-      <div class="text-[12px] font-bold text-zinc-300 mt-1">All 500+ 4K elements &amp; overlays</div>
-      <ul class="mt-4 space-y-2 text-[12px] font-bold">
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> All 48 arrows, 52 bursts, 72 VFX</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> Money, diamonds, HUD overlays</li>
-        <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> 4K Ultra HD &bull; Free Updates</li>
-      </ul>
-      <button onclick="openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full mt-6 bg-[#FF007A] hover:bg-[#e01d1d] text-white border-2 border-black rounded-full py-3.5 font-black text-xs comic-shadow-sm flex items-center justify-center gap-1.5 transition hover:scale-105">
-        <i class="fa-solid fa-bolt text-[#00E5FF]"></i> BUY 500+ PACK — ₹200
-      </button>
-    </div>
-
-    <!-- Tier 4: Custom "THumbnaiL" Commission (₹150) -->
-    <div class="glass-card rounded-[26px] p-5 comic-shadow flex flex-col justify-between border border-white/15">
-      <div>
-        <div class="text-[11px] font-black tracking-widest text-[#00E5FF]">CUSTOM COMMISSION</div>
-        <div class="font-display text-[32px] text-white leading-none mt-2">₹150 <span class="text-[13px] font-sans font-bold text-zinc-400">/ thumbnail</span></div>
-        <div class="text-[12px] font-bold text-[#39FF14] mt-1">1-on-1 "THumbnaiL" Service</div>
-        <ul class="mt-4 space-y-2 text-[12px] text-zinc-300 font-medium">
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> 1x Bespoke YouTube Thumbnail</li>
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> Tailored for your niche topic</li>
-          <li class="flex gap-2"><i class="fa-solid fa-check text-[#39FF14] mt-0.5"></i> 24h Express Delivery &bull; PSD</li>
-        </ul>
-      </div>
-      <button onclick="openPaymentModal('Custom THumbnaiL Commission', 150)" class="w-full mt-6 bg-[#00E5FF] hover:bg-[#ffcd00] text-black border-2 border-black rounded-full py-3 font-black text-xs shadow-[0_0_12px_rgba(255,214,0,0.4)] transition hover:scale-105">
-        ORDER CUSTOM — ₹150
-      </button>
-    </div>
-
-  </div>
-</section>
-
-<!-- ========================================== -->
-<!-- SECTION: FAQ                               -->
-<!-- ========================================== -->
-<section id="faq" class="max-w-[900px] mx-auto px-4 md:px-6 pb-16">
-  <h3 class="font-display text-[30px] text-center text-white">FREQUENTLY ASKED QUESTIONS</h3>
-  <div class="mt-6 glass-card rounded-[24px] overflow-hidden comic-shadow divide-y divide-white/10">
-    <details class="group open:bg-white/5" open>
-      <summary class="flex items-center justify-between p-5 cursor-pointer list-none text-white font-bold text-[15px]">
-        <span>Is generating thumbnails with AI free?</span>
-        <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
-      </summary>
-      <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
-        <b>Yes!</b> You can enter any prompt and generate visual thumbnail concepts and design strategy breakdowns completely for <b>FREE</b>. If you want to download the unwatermarked 4K Ultra HD visual artwork, you can unlock it for just <b>₹49</b>.
-      </div>
-    </details>
-    <details class="group open:bg-white/5">
-      <summary class="flex items-center justify-between p-5 cursor-pointer list-none text-white font-bold text-[15px]">
-        <span>How much does exporting from Canvas Studio cost?</span>
-        <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
-      </summary>
-      <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
-        Editing your photos and thumbnails in the Canvas Studio is completely free. Clean unwatermarked 1280×720 PNG exports are available at just <b>₹20</b> per export, or included with the <b>₹200 Elements Pack</b>.
-      </div>
-    </details>
-    <details class="group open:bg-white/5">
-      <summary class="flex items-center justify-between p-5 cursor-pointer list-none text-white font-bold text-[15px]">
-        <span>How much does a custom 1-on-1 thumbnail cost?</span>
-        <span class="w-7 h-7 rounded-full bg-zinc-800 text-white grid place-items-center shrink-0 group-open:rotate-45 transition"><i class="fa-solid fa-plus text-xs"></i></span>
-      </summary>
-      <div class="px-5 pb-5 text-[14px] text-zinc-400 leading-relaxed font-medium">
-        Custom thumbnails are priced at just <b>₹150</b> per thumbnail under our <b>"THumbnaiL"</b> commission service. It includes full 4K export, PSD layered source file, and unlimited revisions.
-      </div>
-    </details>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="border-t-2 border-white/10 bg-[#0E0F14] text-white">
-  <div class="max-w-[1340px] mx-auto px-4 md:px-6 py-10">
-    <div class="flex flex-col md:flex-row justify-between gap-6">
-      <div>
-        <div class="flex items-center gap-2">
-          <div class="w-9 h-9 bg-[#FF007A] text-white rounded-xl grid place-items-center font-display">C×T</div>
-          <span class="font-display text-[18px]">CVRTN'S THumbnaiL</span>
-          <span class="text-[11px] font-black bg-zinc-800 text-[#00E5FF] border border-white/20 rounded-full px-2.5 py-0.5">&copy; 2026</span>
-        </div>
-        <p class="text-[13px] font-medium text-zinc-400 mt-2 max-w-[420px]">
-          1280x720 canvas studio, 4K unlocks at ₹20, and high-converting 500+ elements pack.
-        </p>
-        <div class="flex items-center gap-3 mt-3">
-          <a href="https://instagram.com/cvrtncreates_" target="_blank" class="flex items-center gap-2 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] text-white px-3.5 py-1.5 rounded-full text-[12px] font-black hover:scale-105 transition">
-            <i class="fa-brands fa-instagram text-sm"></i> @cvrtncreates_
-          </a>
-        </div>
-      </div>
-      <div class="flex gap-8 text-[13px] font-bold">
-        <div class="space-y-2">
-          <div class="font-black text-white">Navigation</div>
-          
-          <a href="#builder" class="block text-zinc-400 hover:text-white">Canvas Studio</a>
-          <a href="#templates" class="block text-zinc-400 hover:text-white">Templates</a>
-          <a href="#assets" class="block text-zinc-400 hover:text-white">500+ Elements (₹200)</a>
-        </div>
-        <div class="space-y-2">
-          <div class="font-black text-white">Legal &amp; Trust</div>
-          <button onclick="openLegalModal('privacy')" class="block text-zinc-400 hover:text-white text-left">Privacy Policy</button>
-          <button onclick="openLegalModal('terms')" class="block text-zinc-400 hover:text-white text-left">Terms of Service</button>
-          <button onclick="openLegalModal('refunds')" class="block text-zinc-400 hover:text-white text-left">Refund Policy</button>
-          <button onclick="openAdminModal()" class="block text-xs font-mono text-[#39FF14] hover:underline text-left mt-2"><i class="fa-solid fa-lock"></i> Admin Portal</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- ========================================== -->
-<!-- MODAL: LIGHTBOX PREVIEW MODAL              -->
-<!-- ========================================== -->
-<div id="lightbox" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 hidden p-4 md:p-8 flex flex-col items-center justify-center">
-  <div class="relative max-w-5xl w-full flex flex-col items-center">
-    <button onclick="closeLightbox()" class="absolute -top-12 right-0 md:-right-4 w-10 h-10 bg-[#15161A] text-white rounded-full grid place-items-center border border-white/30 font-black hover:bg-zinc-800"><i class="fa-solid fa-xmark text-lg"></i></button>
-    <img id="lightboxImg" src="" class="max-w-full max-h-[82vh] object-contain rounded-2xl border-2 border-white/20 shadow-2xl" alt="Preview">
-    <div class="mt-4 flex gap-3">
-      <button onclick="closeLightbox()" class="bg-zinc-800 text-white px-5 py-2.5 rounded-full font-black border border-white/20 text-sm">Close Preview</button>
-      <button onclick="closeLightbox(); openPaymentModal('Custom THumbnaiL Design', 150)" class="bg-[#00E5FF] text-black px-5 py-2.5 rounded-full font-black border-2 border-black text-sm comic-shadow-sm">Order This — ₹150</button>
-    </div>
-  </div>
-</div>
-
-<!-- ========================================== -->
-<!-- MODAL: EXPORT CHOICE & MONETIZATION DIALOG -->
-<!-- ========================================== -->
-<div id="exportChoiceModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-[#15161A] border-2 border-white/20 rounded-[28px] comic-shadow-lg max-w-lg w-full p-6 text-white relative">
-    <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-file-image text-[#39FF14]"></i>
-        <span class="font-display text-[18px]">EXPORT 1280×720 THUMBNAIL</span>
-      </div>
-      <button onclick="closeExportChoiceModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-
-    <p class="text-xs text-zinc-300 mb-4">
-      Choose how you want to export your 1280×720 canvas creation:
-    </p>
-
-    <div class="space-y-3">
-      <!-- Option 1: Clean 1280x720 Export (₹20) -->
-      <button onclick="buyCleanStudioExport()" class="w-full btn-export rounded-2xl p-4 text-left transition flex items-center justify-between group">
-        <div>
-          <div class="font-black text-sm flex items-center gap-1.5"><i class="fa-solid fa-crown text-amber-900"></i> Clean HD PNG (No Watermark)</div>
-          <div class="text-[11px] font-bold text-black/80 mt-0.5">1280×720 YouTube ready export</div>
-        </div>
-        <div class="font-display text-xl text-black shrink-0">₹20</div>
-      </button>
-
-      <!-- Option 2: Free Watermarked Sample -->
-      <button onclick="downloadWatermarkedStudioSample()" class="w-full bg-[#15161A] hover:bg-zinc-800 text-white rounded-2xl p-3.5 text-left border border-white/20 transition flex items-center justify-between">
-        <div>
-          <div class="font-bold text-xs">Download Free Watermarked Sample</div>
-          <div class="text-[10px] text-zinc-400 mt-0.5">Standard export with small CVRTN sample watermark</div>
-        </div>
-        <div class="font-bold text-xs text-[#39FF14] bg-[#39FF14]/10 px-2 py-1 rounded">FREE</div>
-      </button>
-
-      <!-- Option 3: Full 500+ Pack (₹200) -->
-      <button onclick="closeExportChoiceModal(); openPaymentModal('500+ Viral Elements Pack', 200)" class="w-full bg-[#FF007A] hover:bg-[#e01d1d] text-white rounded-2xl p-3.5 text-left border-2 border-black transition flex items-center justify-between">
-        <div>
-          <div class="font-black text-xs">500+ Pack + Unlimited Exports</div>
-          <div class="text-[10px] text-white/80 mt-0.5">All 500+ 4K elements + unlimited clean exports</div>
-        </div>
-        <div class="font-display text-sm text-[#00E5FF]">₹200</div>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- ========================================== -->
-<!-- MODAL: MY SAVED PROJECTS MANAGER           -->
-<!-- ========================================== -->
-<div id="projectsModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-[#15161A] border-2 border-white/20 rounded-[28px] comic-shadow-lg max-w-2xl w-full overflow-hidden my-auto text-white">
-    <div class="bg-[#1C1E2A] px-6 py-4 flex items-center justify-between border-b border-white/10">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-folder-open text-[#00E5FF]"></i>
-        <span class="font-display text-[18px]">MY SAVED THUMBNAIL PROJECTS</span>
-      </div>
-      <button onclick="closeProjectsModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    
-    <div class="p-6">
-      <div id="projectsListContainer" class="space-y-3 max-h-[400px] overflow-y-auto">
-        <!-- Rendered via JS -->
-      </div>
-      <div class="mt-4 pt-3 border-t border-white/10 flex justify-between items-center">
-        <button onclick="saveProjectToStorage(); renderProjectsList();" class="bg-[#39FF14] text-black px-4 py-2 rounded-full font-black text-xs comic-shadow-sm flex items-center gap-1.5">
-          <i class="fa-solid fa-plus"></i> Save Current Canvas
-        </button>
-        <button onclick="closeProjectsModal()" class="bg-zinc-800 text-zinc-300 px-4 py-2 rounded-full font-bold text-xs">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ========================================== -->
-<!-- ========================================== -->
-<!-- MODAL: UPI PAYMENT POPUP (₹)              -->
-<!-- ========================================== -->
-<div id="paymentModal" class="fixed inset-0 bg-black/90 backdrop-blur-lg z-50 hidden flex items-center justify-center p-3 md:p-6 overflow-y-auto" onclick="if(event.target===this)closePaymentModal()">
-  <div class="bg-[#12131A] border-2 border-white/15 rounded-[24px] max-w-md w-full overflow-hidden my-auto relative text-white shadow-2xl" style="animation: popIn .3s cubic-bezier(.34,1.56,.64,1)">
-    
-    <!-- Header -->
-    <div class="bg-gradient-to-r from-[#1A1C28] to-[#15161A] px-5 py-4 flex items-center justify-between border-b border-white/10">
-      <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 bg-[#39FF14] text-black rounded-full grid place-items-center text-sm font-black border-2 border-black">
-          <i class="fa-solid fa-indian-rupee-sign"></i>
-        </div>
-        <div>
-          <div class="font-display text-[15px] tracking-wide">PAY VIA UPI</div>
-          <div class="text-[10px] text-zinc-400 font-bold">Scan QR or Copy UPI ID</div>
-        </div>
-      </div>
-      <button onclick="closePaymentModal()" class="w-8 h-8 rounded-full bg-zinc-800 hover:bg-red-600 text-white grid place-items-center transition"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-
-    <div class="p-5 space-y-4">
-
-      <!-- What you're buying -->
-      <div class="bg-[#15161A]/80 border border-white/10 rounded-2xl p-3.5 flex items-center justify-between gap-3">
-        <div class="flex-1 min-w-0">
-          <div class="text-[9px] font-black tracking-[0.15em] text-[#00E5FF] uppercase">YOU'RE BUYING</div>
-          <div class="font-display text-[16px] text-white truncate mt-0.5" id="payItemName">AI 4K Visual Thumbnail Unlock</div>
-        </div>
-        <div class="text-right shrink-0">
-          <div class="font-display text-[32px] text-[#39FF14] leading-none" id="payItemPrice">₹49</div>
-          <div class="text-[9px] text-zinc-500 font-bold mt-0.5">ONE-TIME</div>
-        </div>
-      <!-- STEP 1: QR + UPI -->
-      <div id="checkoutStep1" class="space-y-4">
-
-        <!-- Razorpay Security Badge -->
-        <div class="bg-[#072654]/60 border border-[#00C2FF]/30 rounded-2xl p-2.5 flex items-center justify-between text-[11px] font-bold text-blue-200">
-          <div class="flex items-center gap-2">
-            <div class="w-6 h-6 bg-[#00C2FF] text-black rounded-full grid place-items-center text-xs font-black">
-              <i class="fa-solid fa-lock"></i>
-            </div>
-            <span>256-Bit Encrypted &bull; Razorpay Secured UPI</span>
-          </div>
-          <span class="text-[#39FF14] font-mono font-black text-[10px] bg-[#39FF14]/10 px-2 py-0.5 rounded border border-[#39FF14]/30">VERIFIED</span>
-        </div>
-
-        <!-- QR Code -->
-        <div class="text-center">
-          <div class="inline-flex items-center gap-1.5 bg-[#00E5FF]/10 text-[#00E5FF] text-[10px] font-black px-3 py-1 rounded-full border border-[#00E5FF]/30 mb-3">
-            <i class="fa-solid fa-mobile-screen-button"></i> SCAN WITH ANY UPI APP
-          </div>
-          <div class="w-48 h-48 bg-white rounded-2xl mx-auto flex items-center justify-center p-2.5 shadow-[0_8px_30px_rgba(0,245,98,0.15)] border-4 border-black">
-            <img id="upiQrImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=nayeetanish@oksbi%26pn=Tanish%20CVRTN%26am=49%26cu=INR" class="w-full h-full object-contain rounded-lg" alt="UPI QR Code">
-          </div>
-        </div>
-
-        <!-- Mobile UPI App Direct Deep Links -->
-        <div class="grid grid-cols-3 gap-2">
-          <a id="gpayDeepLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="bg-[#15161A] hover:bg-zinc-800 border border-white/20 rounded-xl py-2 text-center text-[11px] font-black text-white flex items-center justify-center gap-1">
-            <i class="fa-brands fa-google text-blue-400"></i> GPay
-          </a>
-          <a id="phonepeDeepLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="bg-[#15161A] hover:bg-zinc-800 border border-white/20 rounded-xl py-2 text-center text-[11px] font-black text-white flex items-center justify-center gap-1">
-            <i class="fa-solid fa-mobile-button text-purple-400"></i> PhonePe
-          </a>
-          <a id="paytmDeepLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="bg-[#15161A] hover:bg-zinc-800 border border-white/20 rounded-xl py-2 text-center text-[11px] font-black text-white flex items-center justify-center gap-1">
-            <i class="fa-solid fa-wallet text-sky-400"></i> Paytm
-          </a>
-        </div>
-
-        <!-- Divider -->
-        <div class="flex items-center gap-3">
-          <div class="flex-1 h-px bg-white/10"></div>
-          <span class="text-[10px] font-black text-zinc-500">OR PAY USING UPI ID</span>
-          <div class="flex-1 h-px bg-white/10"></div>
-        </div>
-
-        <!-- UPI ID Copy Box -->
-        <div class="bg-[#15161A] border-2 border-dashed border-[#00E5FF]/40 rounded-2xl p-3.5 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <div class="w-8 h-8 bg-[#00E5FF]/10 text-[#00E5FF] rounded-lg grid place-items-center text-sm shrink-0">
-              <i class="fa-solid fa-at"></i>
-            </div>
-            <div class="min-w-0">
-              <div class="text-[9px] font-bold text-zinc-500 uppercase">UPI ID</div>
-              <div class="font-mono font-black text-[15px] text-[#00E5FF] truncate" id="upiIdDisplay">nayeetanish@oksbi</div>
-            </div>
-          </div>
-          <button type="button" onclick="copyUpiId()" class="bg-[#00E5FF] hover:bg-[#ffe033] text-black text-[11px] font-black px-3.5 py-2 rounded-xl border-2 border-black transition flex items-center gap-1.5 shrink-0">
-            <i class="fa-regular fa-copy"></i> <span id="copyUpiBtnText">COPY</span>
-          </button>
-        </div>
-
-        <!-- Open UPI App -->
-        <a id="directUpiLink" href="upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=49&cu=INR" class="block w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-black py-3 rounded-xl border border-white/20 text-center transition shadow-md">
-          <i class="fa-solid fa-bolt text-[#39FF14] mr-1"></i> PAY WITH ANY UPI APP (AUTO DETECT)
-        </a>
-
-        <!-- I've Paid Button -->
-        <button onclick="goToVerificationStep('UPI')" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-4 font-black text-[14px] comic-shadow-sm flex items-center justify-center gap-2 transition hover:scale-[1.02]">
-          <i class="fa-solid fa-check-circle text-lg"></i> I'VE PAID — VERIFY
-        </button>
-
-        <div class="text-center text-[10px] text-zinc-400 font-medium flex items-center justify-center gap-1.5">
-          <i class="fa-solid fa-shield-halved text-[#00C2FF]"></i> Razorpay Encrypted &bull; Instant Product Delivery
-        </div>
-      </div>
-
-      <!-- STEP 2: VERIFICATION -->
-      <div id="checkoutStep2" class="hidden space-y-4">
-        <div class="bg-[#191B26] border-2 border-[#39FF14]/40 rounded-2xl p-4">
-          <div class="flex items-center gap-2 text-[#39FF14] font-black text-sm mb-1">
-            <i class="fa-solid fa-shield-halved"></i> VERIFY PAYMENT &amp; GET YOUR PRODUCT
-          </div>
-          <p class="text-xs text-zinc-300">
-            Upload your payment screenshot so we can verify and instantly deliver your product.
-          </p>
-        </div>
-
-        <form id="verifyPaymentForm" onsubmit="handleSecurityVerification(event)" class="space-y-3.5">
-          
-          <!-- Email Input -->
-          <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Your Email <span class="text-[#FF007A]">*</span></label>
-            <input type="email" id="buyerEmail" required placeholder="yourname@gmail.com" class="w-full border border-white/20 rounded-xl px-3.5 py-2.5 text-sm font-bold bg-[#15161A] text-white focus:border-[#39FF14] outline-none transition">
-          </div>
-
-          <!-- Screenshot Upload -->
-          <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Payment Screenshot <span class="text-[#FF007A]">*</span></label>
-            <div id="screenshotDropzone" onclick="document.getElementById('screenshotFileInput').click()" class="border-2 border-dashed border-white/25 hover:border-[#39FF14] bg-[#15161A]/80 rounded-2xl p-4 text-center cursor-pointer transition group">
-              <input type="file" id="screenshotFileInput" accept="image/*" class="hidden" onchange="handleScreenshotUpload(event)">
-              <div id="uploadPrompt" class="space-y-1.5">
-                <div class="w-10 h-10 bg-zinc-800 text-[#39FF14] rounded-full grid place-items-center mx-auto text-lg group-hover:scale-110 transition border border-white/10">
-                  <i class="fa-solid fa-cloud-arrow-up"></i>
-                </div>
-                <div class="text-xs font-bold text-white">Tap to Upload Payment Screenshot</div>
-                <div class="text-[10px] text-zinc-400">GPay &bull; PhonePe &bull; Paytm &bull; Bank (PNG/JPG)</div>
-              </div>
-              <div id="screenshotPreviewContainer" class="hidden space-y-2">
-                <img id="screenshotPreviewImg" src="" class="max-h-32 mx-auto rounded-lg border-2 border-[#39FF14] shadow-lg object-contain" alt="Screenshot">
-                <div class="inline-flex items-center gap-1.5 bg-[#39FF14]/20 text-[#39FF14] text-[11px] font-black px-3 py-1 rounded-full border border-[#39FF14]/40">
-                  <i class="fa-solid fa-circle-check"></i> Attached &bull; Tap to Change
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Notes -->
-          <div>
-            <label class="block text-xs font-black mb-1 text-zinc-300">Notes <span class="text-zinc-500">(optional)</span></label>
-            <textarea id="buyerNotes" rows="2" placeholder="Any special requirements..." class="w-full border border-white/20 rounded-xl px-3 py-2 text-xs font-medium bg-[#15161A] text-white focus:border-[#39FF14] outline-none transition"></textarea>
-          </div>
-
-          <div class="flex gap-2 pt-1">
-            <button type="button" onclick="backToStep1()" class="w-1/3 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-3.5 font-black text-xs border border-white/10">
-              &larr; BACK
-            </button>
-            <button type="submit" id="verifySubmitBtn" class="w-2/3 bg-[#39FF14] hover:bg-[#00d655] text-black border-2 border-black rounded-full py-3.5 font-black text-sm comic-shadow-sm flex items-center justify-center gap-2">
-              <i class="fa-solid fa-circle-check"></i> SUBMIT &amp; UNLOCK
-            </button>
-          </div>
-        </form>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- ========================================== -->
-<!-- MODAL: PAYMENT SUCCESS & PRODUCT DELIVERY  -->
-<!-- ========================================== -->
-<div id="paySuccessModal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-[#151722] border-2 border-white/20 rounded-[28px] comic-shadow-lg max-w-lg w-full p-6 text-center text-white relative overflow-hidden">
-    
-    <div class="w-16 h-16 bg-[#39FF14] text-black border-2 border-black rounded-full grid place-items-center mx-auto text-2xl comic-shadow-sm animate-bounce">
-      <i class="fa-solid fa-check"></i>
-    </div>
-    
-    <h3 class="font-display text-[24px] mt-3 text-white">PAYMENT VERIFIED &amp; UNLOCKED!</h3>
-    <p class="text-zinc-300 text-xs mt-1" id="successDetails">Your payment was verified. Your product package and confirmation details are ready below.</p>
-    
-    <!-- Receipt Box -->
-    <div class="bg-[#15161A] border border-white/15 rounded-2xl p-4 my-4 text-left text-xs space-y-2 font-bold">
-      <div class="flex justify-between"><span class="text-zinc-400">Order ID:</span><span class="font-mono text-[#00E5FF]" id="orderIdText">#CVR-THUMB-9481</span></div>
-      <div class="flex justify-between"><span class="text-zinc-400">Customer Email:</span><span class="font-mono text-white" id="orderEmailText">user@gmail.com</span></div>
-      <div class="flex justify-between"><span class="text-zinc-400">Paid Timeline Date:</span><span class="font-mono text-[#39FF14]" id="orderPaymentDateText">Today, 11:46 AM IST</span></div>
-      <div class="flex justify-between"><span class="text-zinc-400">Payment Status:</span><span class="text-[#39FF14] bg-[#39FF14]/10 px-2 py-0.5 rounded border border-[#39FF14]/30">VERIFIED &bull; PAID VIA UPI</span></div>
-    </div>
-
-    <!-- Screenshot & Date Proof Preview Box -->
-    <div id="receiptScreenshotContainer" class="hidden bg-zinc-950 border-2 border-[#39FF14]/40 rounded-2xl p-3 mb-4 text-left space-y-2">
-      <div class="flex items-center justify-between text-[11px] font-black text-[#39FF14]">
-        <span><i class="fa-solid fa-file-invoice flex-shrink-0"></i> PAYMENT SCREENSHOT REVIEW</span>
-        <span class="text-[10px] text-zinc-400 font-mono" id="receiptScreenshotTime">IST Timeline Verified</span>
-      </div>
-      <div class="relative max-h-48 overflow-hidden rounded-xl border border-white/10 bg-black flex items-center justify-center">
-        <img id="receiptScreenshotImg" src="" class="max-h-48 w-auto object-contain block mx-auto" alt="Payment Screenshot Proof">
-      </div>
-    </div>
-
-    <!-- Dynamic Action Section based on Product Type -->
-    <div id="productDeliveryAction" class="space-y-2.5">
-      <!-- Injected via JS -->
-    </div>
-
-    <button onclick="closeSuccessModal()" class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-3 font-black text-xs border border-white/10">
-      CLOSE &amp; RETURN TO HOME
-    </button>
-  </div>
-</div>
-
-<!-- ========================================== -->
-<!-- DRAWER: SHOPPING CART DRAWER               -->
-<!-- ========================================== -->
-<div id="cartOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden"></div>
-<div id="cartDrawer" class="fixed top-0 right-0 h-full w-[92%] max-w-[420px] bg-[#15161A] text-white z-50 translate-x-full transition-transform duration-300 border-l-2 border-white/20 flex flex-col">
-  <div class="p-5 border-b border-white/10 flex items-center justify-between bg-[#15161A]">
-    <div class="font-display text-[18px]">YOUR CART</div>
-    <button id="closeCart" class="w-9 h-9 bg-zinc-800 text-white rounded-full grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
-  </div>
-  <div id="cartItems" class="flex-1 overflow-auto p-4 space-y-3">
-    <!-- Populated via JS -->
-  </div>
-  <div class="p-4 border-t border-white/10 bg-[#15161A] space-y-3">
-    <div class="flex justify-between text-sm font-black"><span>Subtotal</span><span id="cartTotal" class="text-[#39FF14]">₹0</span></div>
-    <button id="checkoutBtn" class="w-full bg-[#39FF14] text-black rounded-full py-3.5 font-black flex items-center justify-center gap-2"><i class="fa-solid fa-lock"></i> PROCEED TO PAYMENT (₹)</button>
-    <div class="text-center text-[11px] font-bold text-zinc-400">Pay via UPI QR Code or UPI ID</div>
-  </div>
-</div>
-
-<!-- TOAST NOTIFICATION -->
-<div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-[#12131A] text-white px-5 py-3 rounded-full font-black text-[13px] flex items-center gap-3 border border-white/20 z-50 hidden shadow-2xl">
-  <span class="w-7 h-7 bg-[#39FF14] rounded-full grid place-items-center text-black"><i class="fa-solid fa-check text-xs"></i></span>
-  <span id="toastMsg">Notification message</span>
-</div>
-
-<!-- ========================================== -->
-<!-- CORE APPLICATION JAVASCRIPT ENGINE         -->
-<!-- ========================================== -->
-<script>
-// --- ASSET DATA REGISTRY ---
-const elementsData = [
-  {id:1, cat:'arrows', label:'Red Curved Arrow', color:'#FF007A', icon:'↷', style:'font-size:42px; color:#FF007A; filter:drop-shadow(2px 2px 0 #000); font-weight:900;'},
-  {id:2, cat:'arrows', label:'Yellow Boost Arrow', color:'#00E5FF', icon:'↗', style:'font-size:44px; color:#00E5FF; -webkit-text-stroke:2px #000; font-weight:900;'},
-  {id:3, cat:'arrows', label:'Green Up Arrow', color:'#39FF14', icon:'⬆', style:'font-size:40px; color:#39FF14; -webkit-text-stroke:2px #000;'},
-  {id:4, cat:'arrows', label:'Blue Loop Arrow', color:'#0EA5E9', icon:'↻', style:'font-size:42px; color:#0EA5E9; -webkit-text-stroke:2px #000;'},
-  {id:5, cat:'bursts', label:'WOW! Burst', burst:'WOW!', bg:'#FF007A', text:'#00E5FF'},
-  {id:6, cat:'bursts', label:'OMG! Burst', burst:'OMG!', bg:'#FF007A', text:'white'},
-  {id:7, cat:'bursts', label:'NEW! Burst', burst:'NEW!', bg:'#FF007A', text:'#00E5FF'},
-  {id:8, cat:'bursts', label:'1v5 ACE! Burst', burst:'1v5 ACE!', bg:'#0EA5E9', text:'white'},
-  {id:9, cat:'bursts', label:'!! Shock Tag', icon:'‼️', style:'font-size:38px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:10, cat:'bursts', label:'??? Mystery', icon:'⁇?', style:'font-size:36px; color:#FF007A; -webkit-text-stroke:1.5px #000; font-weight:900'},
-  {id:11, cat:'money', label:'Cash Stack', icon:'💵', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:12, cat:'money', label:'Money Bag', icon:'💰', style:'font-size:42px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:13, cat:'money', label:'Gold Coins', icon:'🪙', style:'font-size:40px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:14, cat:'money', label:'Diamond Gem', icon:'💎', style:'font-size:40px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:15, cat:'money', label:'Bitcoin Token', icon:'🪙', style:'font-size:42px; color:#00E5FF; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:16, cat:'effects', label:'Fire Flame', icon:'🔥', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:17, cat:'effects', label:'Blue Energy Aura', icon:'🌊', style:'font-size:42px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:18, cat:'effects', label:'Explosion VFX', icon:'💥', style:'font-size:42px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:19, cat:'effects', label:'Smoke Cloud', icon:'💨', style:'font-size:40px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:20, cat:'effects', label:'Lightning Bolt', icon:'⚡', style:'font-size:44px; color:#00BFFF; -webkit-text-stroke:1.5px #000;'},
-  {id:21, cat:'effects', label:'Glow Starburst', icon:'🌟', style:'font-size:40px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:22, cat:'gaming', label:'Victory Crown', icon:'👑', style:'font-size:38px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:23, cat:'gaming', label:'Crosshair Target', icon:'🎯', style:'font-size:36px;'},
-  {id:24, cat:'gaming', label:'Skull Danger', icon:'💀', style:'font-size:36px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:25, cat:'gaming', label:'HP Red Heart', icon:'❤️', style:'font-size:36px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:26, cat:'gaming', label:'Trophy Cup', icon:'🏆', style:'font-size:36px;'},
-  {id:27, cat:'gaming', label:'Warning Sign', icon:'⚠️', style:'font-size:36px;'},
-  {id:28, cat:'gaming', label:'Profit Chart Up', icon:'📈', style:'font-size:36px;'},
-  {id:29, cat:'arrows', label:'Straight Red Arrow', color:'#FF007A', icon:'➜', style:'font-size:44px; color:#FF007A; -webkit-text-stroke:2px #000;'},
-  {id:30, cat:'gaming', label:'Hand Point', icon:'👉', style:'font-size:38px; filter:drop-shadow(1px 1px 0 #000)'},
-  // Original Visual Meme Stickers
-  {id:31, cat:'memes', label:'Original Trollface', imgUrl:'https://api.allorigins.win/raw?url=https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png', icon:'🤡', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:32, cat:'memes', label:'Original Pepe Frog', imgUrl:'https://api.allorigins.win/raw?url=https://upload.wikimedia.org/wikipedia/en/7/70/Pepe_the_Frog_%28export%29.png', icon:'🐸', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:33, cat:'memes', label:'Original Doge Meme', imgUrl:'https://api.allorigins.win/raw?url=https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme_photograph.png', icon:'🐕', style:'font-size:44px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:34, cat:'memes', label:'Shocked Face Meme', icon:'😱', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:35, cat:'memes', label:'Crying Laughing Meme', icon:'😂', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:36, cat:'memes', label:'Skull Dead Meme', icon:'💀', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:37, cat:'memes', label:'Clown Meme Face', icon:'🤡', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:38, cat:'memes', label:'Brain Explode Meme', icon:'🤯', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:39, cat:'memes', label:'Sussy Eyes Meme', icon:'👀', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:40, cat:'memes', label:'Moai Stone Meme', icon:'🗿', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:41, cat:'memes', label:'Nerd Face Meme', icon:'🤓', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:42, cat:'memes', label:'Cold Freeze Face', icon:'🥶', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:43, cat:'memes', label:'Money Mouth Meme', icon:'🤑', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'},
-  {id:44, cat:'memes', label:'Crying Sad Meme', icon:'😭', style:'font-size:48px; filter:drop-shadow(2px 2px 0 #000)'}
-];
-
-const products = {
-  ai_visual: { name: 'AI 4K Visual Thumbnail (Clean Unlock)', price: 49, badge: '4K Clean PNG' },
-  studio_export: { name: 'Studio 1280x720 Clean PNG Export', price: 20, badge: '1280×720 UHD' },
-  starter: { name: 'Starter Pack — 150 elements', price: 99, badge: '150 PNGs' },
-  pro: { name: '500+ Viral Elements Pack', price: 200, badge: '500+ PNGs • 4K' },
-  custom: { name: 'Custom "THumbnaiL" Commission', price: 150, badge: '1-on-1 Design' }
-};
-
-let cart = [];
-let activeAssetFilter = 'all';
-let studioActiveCat = 'all';
-let currentPaymentAmount = 49;
-let currentPaymentItem = 'AI 4K Visual Thumbnail Unlock';
-let uploadedScreenshotData = null;
-
-// --- FABRIC.JS 1280x720 CANVAS ENGINE ---
-let canvas = null;
-let undoStack = [];
-let redoStack = [];
-let isUndoRedoAction = false;
-
-function initFabricCanvas() {
-  
-  // Canva-style controls
-  fabric.Object.prototype.transparentCorners = false;
-  fabric.Object.prototype.cornerColor = '#ffffff';
-  fabric.Object.prototype.cornerStrokeColor = '#FF007A';
-  fabric.Object.prototype.borderColor = '#FF007A';
-  fabric.Object.prototype.cornerSize = 14;
-  fabric.Object.prototype.padding = 6;
-  fabric.Object.prototype.cornerStyle = 'circle';
-  fabric.Object.prototype.borderDashArray = [4, 4];
-  fabric.Object.prototype.borderScaleFactor = 2;
-  
-  canvas = new fabric.Canvas('fabricCanvas', {
-    width: 1280,
-    height: 720,
-    backgroundColor: '#0F1018',
-    preserveObjectStacking: true
-  });
-
-  // Responsive scaling
-  resizeCanvasView();
-  window.addEventListener('resize', resizeCanvasView);
-
-  // Set default background gradient
-  setStudioBackground('gradient_esports');
-
-  // Object selection listeners for inspector synchronization
-  canvas.on('selection:created', onCanvasObjectSelected);
-  canvas.on('selection:updated', onCanvasObjectSelected);
-  canvas.on('selection:cleared', onCanvasObjectDeselected);
-  canvas.on('object:modified', saveCanvasState);
-  canvas.on('object:added', () => { updateLayerListUI(); if(!isUndoRedoAction) saveCanvasState(); });
-  canvas.on('object:removed', () => { updateLayerListUI(); if(!isUndoRedoAction) saveCanvasState(); });
-
-  // Initial demo state
-  loadDefaultDemoCanvas();
-}
-
-function resizeCanvasView() {
-  if (!canvas) return;
-  const wrapper = document.getElementById('canvasWrapper');
-  if (!wrapper) return;
-  const rect = wrapper.getBoundingClientRect();
-  const scale = rect.width / 1280;
-  canvas.setDimensions({ width: rect.width, height: rect.height });
-  canvas.setZoom(scale);
-  canvas.renderAll();
-}
-
-function loadDefaultDemoCanvas() {
-  canvas.clear();
-  setStudioBackground('gradient_esports');
-
-  // Headline Text
-  const titleText = new fabric.IText('1v5 RADIANT', {
-    left: 80,
-    top: 240,
-    fontFamily: 'Archivo Black',
-    fontSize: 90,
-    fontWeight: '900',
-    fill: '#FFFFFF',
-    stroke: '#000000',
-    strokeWidth: 6,
-    shadow: new fabric.Shadow({ color: '#000000', blur: 10, offsetX: 5, offsetY: 5 })
-  });
-
-  const subText = new fabric.IText('CLUTCH ACE!', {
-    left: 80,
-    top: 360,
-    fontFamily: 'Archivo Black',
-    fontSize: 96,
-    fontWeight: '900',
-    fill: '#00E5FF',
-    stroke: '#000000',
-    strokeWidth: 6,
-    backgroundColor: '#000000',
-    padding: 10,
-    shadow: new fabric.Shadow({ color: '#000000', blur: 10, offsetX: 5, offsetY: 5 })
-  });
-
-  // Arrow sticker
-  const arrowText = new fabric.IText('➜', {
-    left: 880,
-    top: 200,
-    fontFamily: 'Arial',
-    fontSize: 160,
-    fill: '#00E5FF',
-    stroke: '#000000',
-    strokeWidth: 6,
-    angle: 35
-  });
-
-  // WOW Burst
-  const burstText = new fabric.IText('1v5 ACE!', {
-    left: 920,
-    top: 480,
-    fontFamily: 'Archivo Black',
-    fontSize: 54,
-    fill: '#FFFFFF',
-    backgroundColor: '#FF007A',
-    padding: 12,
-    stroke: '#000000',
-    strokeWidth: 3,
-    angle: -8
-  });
-
-  canvas.add(titleText, subText, arrowText, burstText);
-  canvas.renderAll();
-  saveCanvasState();
-}
-
-// History & State Persistence
-function saveCanvasState() {
-  if (isUndoRedoAction) return;
-  const json = JSON.stringify(canvas.toJSON());
-  undoStack.push(json);
-  if (undoStack.length > 25) undoStack.shift();
-  redoStack = [];
-}
-
-function undoCanvas() {
-  if (undoStack.length <= 1) return;
-  isUndoRedoAction = true;
-  const currentState = undoStack.pop();
-  redoStack.push(currentState);
-  const prevState = undoStack[undoStack.length - 1];
-  canvas.loadFromJSON(prevState, () => {
-    canvas.renderAll();
-    resizeCanvasView();
-    updateLayerListUI();
-    isUndoRedoAction = false;
-    showToast('Undo performed');
-  });
-}
-
-function redoCanvas() {
-  if (redoStack.length === 0) return;
-  isUndoRedoAction = true;
-  const nextState = redoStack.pop();
-  undoStack.push(nextState);
-  canvas.loadFromJSON(nextState, () => {
-    canvas.renderAll();
-    resizeCanvasView();
-    updateLayerListUI();
-    isUndoRedoAction = false;
-    showToast('Redo performed');
-  });
-}
-
-function clearCanvasStudio() {
-  if (confirm('Clear all layers on canvas?')) {
-    canvas.clear();
-    setStudioBackground('gradient_esports');
-    updateLayerListUI();
-    saveCanvasState();
-    showToast('Canvas cleared');
-  }
-}
-
-// Background Controls
-function setStudioBackground(bgType) {
-  if (!canvas) return;
-  const bgConfigs = {
-    gradient_esports: new fabric.Gradient({
-      type: 'linear',
-      gradientUnits: 'pixels',
-      coords: { x1: 0, y1: 0, x2: 1280, y2: 720 },
-      colorStops: [
-        { offset: 0, color: '#990000' },
-        { offset: 0.5, color: '#FF007A' },
-        { offset: 1, color: '#0A0A10' }
-      ]
-    }),
-    gradient_finance: new fabric.Gradient({
-      type: 'linear',
-      gradientUnits: 'pixels',
-      coords: { x1: 0, y1: 0, x2: 1280, y2: 720 },
-      colorStops: [
-        { offset: 0, color: '#0A3A1A' },
-        { offset: 0.6, color: '#39FF14' },
-        { offset: 1, color: '#0A0B10' }
-      ]
-    }),
-    gradient_cyber: new fabric.Gradient({
-      type: 'linear',
-      gradientUnits: 'pixels',
-      coords: { x1: 0, y1: 0, x2: 1280, y2: 720 },
-      colorStops: [
-        { offset: 0, color: '#1E1B4B' },
-        { offset: 0.5, color: '#6366F1' },
-        { offset: 1, color: '#0EA5E9' }
-      ]
-    }),
-    gradient_beast: new fabric.Gradient({
-      type: 'linear',
-      gradientUnits: 'pixels',
-      coords: { x1: 0, y1: 0, x2: 1280, y2: 720 },
-      colorStops: [
-        { offset: 0, color: '#7A0A0A' },
-        { offset: 0.6, color: '#FF007A' },
-        { offset: 1, color: '#00E5FF' }
-      ]
-    }),
-    solid_dark: '#0B0C10',
-    solid_studio: '#242630'
-  };
-
-  canvas.setBackgroundColor(bgConfigs[bgType] || '#0B0C10', canvas.renderAll.bind(canvas));
-  saveCanvasState();
-}
-
-function setCustomImageAsBackground(imgUrl) {
-  fabric.Image.fromURL(imgUrl, function(img) {
-    img.scaleToWidth(1280);
-    if (img.getScaledHeight() < 720) img.scaleToHeight(720);
-    img.set({ originX: 'center', originY: 'center', left: 640, top: 360 });
-    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
-    saveCanvasState();
-    showToast('Background artwork updated');
-  }, { crossOrigin: 'anonymous' });
-}
-
-// Text Engine Controls
-function addCustomTextToCanvas() {
-  const newText = new fabric.IText('NEW HOOK TEXT', {
-    left: 200 + Math.random() * 100,
-    top: 200 + Math.random() * 100,
-    fontFamily: 'Archivo Black',
-    fontSize: 72,
-    fontWeight: '900',
-    fill: '#FFFFFF',
-    stroke: '#000000',
-    strokeWidth: 4,
-    shadow: new fabric.Shadow({ color: '#000000', blur: 8, offsetX: 4, offsetY: 4 })
-  });
-  canvas.add(newText);
-  canvas.setActiveObject(newText);
-  canvas.renderAll();
-  showToast('Text layer added — double click to edit');
-}
-
-function onCanvasObjectSelected(e) {
-  const obj = e.selected?.[0];
-  if (!obj) return;
-
-  if (obj.type === 'i-text' || obj.type === 'text') {
-    const inputContent = document.getElementById('textInputContent');
-    if (inputContent) inputContent.value = obj.text || '';
-
-    const fontSelect = document.getElementById('textFontFamily');
-    if (fontSelect && obj.fontFamily) fontSelect.value = obj.fontFamily;
-
-    const colorPicker = document.getElementById('textColorPicker');
-    const colorHex = document.getElementById('textColorHex');
-    if (colorPicker && obj.fill) {
-      colorPicker.value = typeof obj.fill === 'string' && obj.fill.startsWith('#') ? obj.fill : '#FFFFFF';
-      if (colorHex) colorHex.textContent = obj.fill;
+    function closeModal() {
+      modal.style.display = 'none';
     }
 
-    const strokePicker = document.getElementById('textStrokeColorPicker');
-    const strokeHex = document.getElementById('textStrokeHex');
-    if (strokePicker && obj.stroke) {
-      strokePicker.value = typeof obj.stroke === 'string' && obj.stroke.startsWith('#') ? obj.stroke : '#000000';
-      if (strokeHex) strokeHex.textContent = obj.stroke;
-    }
-
-    const strokeWidthSlider = document.getElementById('textStrokeWidth');
-    const strokeWidthVal = document.getElementById('strokeWidthVal');
-    if (strokeWidthSlider && obj.strokeWidth !== undefined) {
-      strokeWidthSlider.value = obj.strokeWidth;
-      if (strokeWidthVal) strokeWidthVal.textContent = `${obj.strokeWidth}px`;
-    }
-  }
-}
-
-function onCanvasObjectDeselected() {
-  const inputContent = document.getElementById('textInputContent');
-  if (inputContent) inputContent.value = '';
-}
-
-// Synchronize Text Inspector Controls
-document.getElementById('textInputContent')?.addEventListener('input', (e) => {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    activeObj.set('text', e.target.value);
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-document.getElementById('textFontFamily')?.addEventListener('change', (e) => {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    activeObj.set('fontFamily', e.target.value);
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-document.getElementById('textColorPicker')?.addEventListener('input', (e) => {
-  const activeObj = canvas.getActiveObject();
-  document.getElementById('textColorHex').textContent = e.target.value;
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    activeObj.set('fill', e.target.value);
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-document.getElementById('textStrokeColorPicker')?.addEventListener('input', (e) => {
-  const activeObj = canvas.getActiveObject();
-  document.getElementById('textStrokeHex').textContent = e.target.value;
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    activeObj.set('stroke', e.target.value);
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-document.getElementById('textStrokeWidth')?.addEventListener('input', (e) => {
-  const activeObj = canvas.getActiveObject();
-  document.getElementById('strokeWidthVal').textContent = `${e.target.value}px`;
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    activeObj.set('strokeWidth', parseFloat(e.target.value));
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-document.getElementById('textShadowBlur')?.addEventListener('input', (e) => {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    activeObj.set('shadow', new fabric.Shadow({ color: '#000000', blur: parseFloat(e.target.value), offsetX: 4, offsetY: 4 }));
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-document.getElementById('textBgPreset')?.addEventListener('change', (e) => {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj && (activeObj.type === 'i-text' || activeObj.type === 'text')) {
-    const val = e.target.value === 'none' ? null : e.target.value;
-    activeObj.set('backgroundColor', val);
-    activeObj.set('padding', val ? 10 : 0);
-    canvas.renderAll();
-    saveCanvasState();
-  }
-});
-
-// Layer Ordering & Management
-function bringSelectedForward() {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj) {
-    canvas.bringForward(activeObj);
-    canvas.renderAll();
-    updateLayerListUI();
-    saveCanvasState();
-  }
-}
-
-function sendSelectedBackward() {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj) {
-    canvas.sendBackwards(activeObj);
-    canvas.renderAll();
-    updateLayerListUI();
-    saveCanvasState();
-  }
-}
-
-function deleteSelectedElement() {
-  const activeObj = canvas.getActiveObject();
-  if (activeObj) {
-    canvas.remove(activeObj);
-    canvas.renderAll();
-    updateLayerListUI();
-    saveCanvasState();
-    showToast('Layer deleted');
-  }
-}
-
-function updateLayerListUI() {
-  const list = document.getElementById('studioLayerList');
-  const countEl = document.getElementById('layerCount');
-  if (!list || !canvas) return;
-
-  const objects = canvas.getObjects();
-  if (countEl) countEl.textContent = `${objects.length} layers`;
-
-  if (objects.length === 0) {
-    list.innerHTML = '<div class="text-[11px] text-zinc-500 text-center py-4">No layers yet</div>';
-    return;
-  }
-
-  list.innerHTML = objects.slice().reverse().map((obj, revIdx) => {
-    const actualIdx = objects.length - 1 - revIdx;
-    let label = obj.type;
-    if (obj.text) label = `"${obj.text.substring(0, 16)}"`;
-    else if (obj.type === 'image') label = 'Image Layer';
-
-    return `
-      <div class="flex items-center justify-between bg-[#15161A] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-zinc-300 hover:border-white/30 transition">
-        <span class="truncate max-w-[140px] font-bold text-[11px]">${label}</span>
-        <div class="flex items-center gap-1">
-          <button onclick="selectLayerByIndex(${actualIdx})" class="w-6 h-6 bg-zinc-800 hover:bg-zinc-700 rounded text-zinc-300 grid place-items-center text-[10px]" title="Select"><i class="fa-solid fa-arrow-pointer"></i></button>
-          <button onclick="removeLayerByIndex(${actualIdx})" class="w-6 h-6 bg-zinc-800 hover:bg-red-950 text-red-400 rounded-full grid place-items-center text-[10px]" title="Delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function selectLayerByIndex(idx) {
-  const objects = canvas.getObjects();
-  if (objects[idx]) {
-    canvas.setActiveObject(objects[idx]);
-    canvas.renderAll();
-  }
-}
-
-function removeLayerByIndex(idx) {
-  const objects = canvas.getObjects();
-  if (objects[idx]) {
-    canvas.remove(objects[idx]);
-    canvas.renderAll();
-    updateLayerListUI();
-    saveCanvasState();
-  }
-}
-
-// User Image Upload
-function handleUserImageUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    fabric.Image.fromURL(event.target.result, function(img) {
-      img.scaleToWidth(400);
-      img.set({
-        left: 640 - (img.getScaledWidth() / 2),
-        top: 360 - (img.getScaledHeight() / 2)
-      });
-      canvas.add(img);
-      canvas.setActiveObject(img);
-      canvas.renderAll();
-      showToast('Custom image added to canvas ✓');
-    });
-  };
-  reader.readAsDataURL(file);
-}
-
-// Add Element from Studio Tray
-function addElementToStudioCanvas(el) {
-  if (el.imgUrl) {
-    fabric.Image.fromURL(el.imgUrl, function(img) {
-      if (!img) return;
-      img.scaleToWidth(240);
-      img.set({
-        left: 400 + Math.random() * 200,
-        top: 250 + Math.random() * 150,
-        angle: (Math.random() * 12 - 6)
-      });
-      canvas.add(img);
-      canvas.setActiveObject(img);
-      canvas.renderAll();
-      showToast(`${el.label} added to canvas ✓`);
-    }, { crossOrigin: 'anonymous' });
-  } else if (el.burst) {
-    const burst = new fabric.IText(el.burst, {
-      left: 400 + Math.random() * 200,
-      top: 300 + Math.random() * 150,
-      fontFamily: 'Archivo Black',
-      fontSize: 54,
-      fill: el.text || '#FFFFFF',
-      backgroundColor: el.bg || '#FF007A',
-      padding: 12,
-      stroke: '#000000',
-      strokeWidth: 3,
-      angle: (Math.random() * 16 - 8)
-    });
-    canvas.add(burst);
-    canvas.setActiveObject(burst);
-  } else {
-    const iconObj = new fabric.IText(el.icon, {
-      left: 400 + Math.random() * 200,
-      top: 300 + Math.random() * 150,
-      fontFamily: 'Arial',
-      fontSize: 100,
-      fill: el.color || '#FFFFFF',
-      stroke: '#000000',
-      strokeWidth: 3,
-      shadow: new fabric.Shadow({ color: '#000000', blur: 6, offsetX: 3, offsetY: 3 })
-    });
-    canvas.add(iconObj);
-    canvas.setActiveObject(iconObj);
-  }
-  canvas.renderAll();
-  showToast(`${el.label} added to canvas`);
-}
-
-// Render Studio Tray
-function renderStudioTray() {
-  const tray = document.getElementById('studioTray');
-  if (!tray) return;
-
-  const filtered = studioActiveCat === 'all' ? elementsData : elementsData.filter(e => e.cat === studioActiveCat);
-  tray.innerHTML = filtered.map(el => `
-    <button onclick="addElementToStudioCanvas(${JSON.stringify(el).replace(/"/g, '&quot;')})" class="bg-[#15161A] hover:bg-zinc-800 border border-white/15 rounded-xl h-[58px] grid place-items-center active:scale-95 transition group overflow-hidden p-1" title="${el.label}">
-      ${el.imgUrl ? `<img src="${el.imgUrl}" class="max-h-[46px] object-contain drop-shadow-md group-hover:scale-110 transition" alt="${el.label}">` : (el.burst ? `<span class="font-display text-[10px] px-1.5 py-0.5 rounded border border-black" style="background:${el.bg}; color:${el.text}">${el.burst}</span>` : `<span style="${el.style}; font-size:24px">${el.icon}</span>`)}
-    </button>
-  `).join('');
-}
-
-function switchStudioAssetCategory(cat) {
-  studioActiveCat = cat;
-  document.querySelectorAll('.studio-cat-btn').forEach(btn => btn.className = 'studio-cat-btn bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-full text-[10px] font-bold');
-  const activeBtn = document.getElementById(`studioCat-${cat}`);
-  if (activeBtn) activeBtn.className = 'studio-cat-btn active bg-white text-black px-2.5 py-1 rounded-full text-[10px] font-black';
-  renderStudioTray();
-}
-
-// Safe Zone Guide Toggle
-let safeZoneVisible = false;
-function toggleSafeZone() {
-  safeZoneVisible = !safeZoneVisible;
-  const grid = document.getElementById('ruleOfThirdsGuides');
-  const btn = document.getElementById('safeZoneToggleBtn');
-  if (grid) grid.classList.toggle('hidden', !safeZoneVisible);
-  if (btn) {
-    if (safeZoneVisible) {
-      btn.className = 'bg-[#39FF14] text-black px-3 py-1.5 rounded-full text-xs font-black border border-black flex items-center gap-1.5 transition';
-      showToast('Grid guides enabled (Rule of Thirds & YouTube safe zones)');
-    } else {
-      btn.className = 'bg-zinc-800 hover:bg-zinc-700 text-[#39FF14] px-3 py-1.5 rounded-full text-xs font-bold border border-white/15 flex items-center gap-1.5 transition';
-      showToast('Grid guides hidden');
-    }
-  }
-}
-
-// Export Choice Modal & Monetization
-function openExportChoiceModal() {
-  document.getElementById('exportChoiceModal').classList.remove('hidden');
-}
-
-function closeExportChoiceModal() {
-  document.getElementById('exportChoiceModal').classList.add('hidden');
-}
-
-function buyCleanStudioExport() {
-  closeExportChoiceModal();
-  openPaymentModal('Studio 1280x720 Clean PNG Export', 20);
-}
-
-function downloadWatermarkedStudioSample() {
-  closeExportChoiceModal();
-  canvas.discardActiveObject();
-  
-  // Add temporary watermark
-  const watermark = new fabric.IText('CVRTN SAMPLE', {
-    left: 480,
-    top: 320,
-    fontFamily: 'Archivo Black',
-    fontSize: 54,
-    fill: 'rgba(255,255,255,0.4)',
-    stroke: 'rgba(0,0,0,0.6)',
-    strokeWidth: 2,
-    angle: -15
-  });
-  canvas.add(watermark);
-  canvas.renderAll();
-
-  const dataURL = canvas.toDataURL({ format: 'png', multiplier: 1280 / canvas.getWidth(), quality: 0.9 });
-  
-  canvas.remove(watermark);
-  canvas.renderAll();
-
-  const link = document.createElement('a');
-  link.download = `CVRTN_Sample_${Date.now()}.png`;
-  link.href = dataURL;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  showToast('Free watermarked sample exported! (Buy clean export for ₹20)');
-}
-
-function exportCleanCanvasPNG() {
-  canvas.discardActiveObject();
-  canvas.renderAll();
-
-  const dataURL = canvas.toDataURL({
-    format: 'png',
-    multiplier: 1280 / canvas.getWidth(),
-    quality: 1
-  });
-
-  const link = document.createElement('a');
-  link.download = `CVRTN_Studio_Thumbnail_${Date.now()}.png`;
-  link.href = dataURL;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  showToast('Clean 1280×720 Ultra HD PNG Exported! 🎉');
-}
-
-// --- PROJECT PERSISTENCE (LOCAL STORAGE) ---
-function getSavedProjects() {
-  try {
-    return JSON.parse(localStorage.getItem('cvrtn_saved_projects') || '[]');
-  } catch (e) {
-    return [];
-  }
-}
-
-function saveProjectToStorage() {
-  const projects = getSavedProjects();
-  const projectName = prompt('Enter a name for this thumbnail project:', `Project ${projects.length + 1}`) || `Project ${projects.length + 1}`;
-  
-  canvas.discardActiveObject();
-  canvas.renderAll();
-
-  const thumbPreview = canvas.toDataURL({ format: 'jpeg', quality: 0.5, multiplier: 320 / canvas.getWidth() });
-  const canvasJson = canvas.toJSON();
-
-  const newProj = {
-    id: 'proj_' + Date.now(),
-    name: projectName,
-    createdAt: new Date().toLocaleDateString(),
-    preview: thumbPreview,
-    data: canvasJson
-  };
-
-  projects.unshift(newProj);
-  localStorage.setItem('cvrtn_saved_projects', JSON.stringify(projects));
-  updateProjectsCountUI();
-  showToast(`Draft "${projectName}" saved locally!`);
-}
-
-function loadSavedProject(id) {
-  const projects = getSavedProjects();
-  const proj = projects.find(p => p.id === id);
-  if (!proj) return;
-
-  canvas.loadFromJSON(proj.data, () => {
-    canvas.renderAll();
-    resizeCanvasView();
-    updateLayerListUI();
-    saveCanvasState();
-    closeProjectsModal();
-    document.getElementById('builder').scrollIntoView({ behavior: 'smooth' });
-    showToast(`Loaded "${proj.name}"`);
-  });
-}
-
-function deleteSavedProject(id) {
-  let projects = getSavedProjects();
-  projects = projects.filter(p => p.id !== id);
-  localStorage.setItem('cvrtn_saved_projects', JSON.stringify(projects));
-  renderProjectsList();
-  updateProjectsCountUI();
-  showToast('Project deleted');
-}
-
-function updateProjectsCountUI() {
-  const count = getSavedProjects().length;
-  const navCount = document.getElementById('navProjectsCount');
-  const mobCount = document.getElementById('mobileProjectsCount');
-  if (navCount) navCount.textContent = `My Projects (${count})`;
-  if (mobCount) mobCount.textContent = count;
-}
-
-function openProjectsModal() {
-  renderProjectsList();
-  document.getElementById('projectsModal').classList.remove('hidden');
-}
-
-function closeProjectsModal() {
-  document.getElementById('projectsModal').classList.add('hidden');
-}
-
-function renderProjectsList() {
-  const container = document.getElementById('projectsListContainer');
-  if (!container) return;
-
-  const projects = getSavedProjects();
-  if (projects.length === 0) {
-    container.innerHTML = `
-      <div class="text-center py-10">
-        <i class="fa-solid fa-folder-open text-4xl text-zinc-600 mb-2"></i>
-        <div class="text-zinc-400 font-bold text-sm">No saved projects found</div>
-        <p class="text-zinc-500 text-xs mt-1">Design a thumbnail in Canvas Studio and click "Save Draft" to store it here.</p>
-      </div>
-    `;
-    return;
-  }
-
-  container.innerHTML = projects.map(p => `
-    <div class="bg-[#15161A] border border-white/15 rounded-2xl p-3 flex items-center gap-4 hover:border-[#00E5FF] transition">
-      <img src="${p.preview}" class="w-24 aspect-video object-cover rounded-lg border border-white/10 shrink-0" alt="Preview">
-      <div class="flex-1 min-w-0">
-        <div class="font-display text-white text-sm truncate">${p.name}</div>
-        <div class="text-[11px] text-zinc-400">Created: ${p.createdAt}</div>
-      </div>
-      <div class="flex items-center gap-2 shrink-0">
-        <button onclick="loadSavedProject('${p.id}')" class="bg-[#39FF14] hover:bg-[#00d655] text-black px-3.5 py-1.5 rounded-full font-black text-xs">Load</button>
-        <button onclick="deleteSavedProject('${p.id}')" class="w-8 h-8 bg-zinc-800 hover:bg-red-950 text-red-400 rounded-full grid place-items-center text-xs"><i class="fa-solid fa-trash"></i></button>
-      </div>
-    </div>
-  `).join('');
-}
-
-// --- TEMPLATES ENGINE ---
-function loadTemplateIntoBuilder(templateKey) {
-  canvas.clear();
-
-  if (templateKey === 'valorant') {
-    setCustomImageAsBackground('assets/portfolio/portfolio-valorant.jpg');
-    
-    const title = new fabric.IText('1v5 RADIANT', {
-      left: 80, top: 220, fontFamily: 'Archivo Black', fontSize: 92, fontWeight: '900',
-      fill: '#FFFFFF', stroke: '#000000', strokeWidth: 6,
-      shadow: new fabric.Shadow({ color: '#000000', blur: 10, offsetX: 5, offsetY: 5 })
-    });
-    const sub = new fabric.IText('CLUTCH ACE!', {
-      left: 80, top: 340, fontFamily: 'Archivo Black', fontSize: 96, fontWeight: '900',
-      fill: '#00E5FF', backgroundColor: '#000000', padding: 10, stroke: '#000000', strokeWidth: 6
-    });
-    const arrow = new fabric.IText('➜', {
-      left: 860, top: 200, fontFamily: 'Arial', fontSize: 160, fill: '#00E5FF',
-      stroke: '#000000', strokeWidth: 6, angle: 35
-    });
-    canvas.add(title, sub, arrow);
-
-  } else if (templateKey === 'finance') {
-    setStudioBackground('gradient_finance');
-
-    const title = new fabric.IText('₹50,000 IN 7 DAYS', {
-      left: 80, top: 240, fontFamily: 'Archivo Black', fontSize: 84, fontWeight: '900',
-      fill: '#FFFFFF', stroke: '#000000', strokeWidth: 6
-    });
-    const sub = new fabric.IText('PROVEN METHOD', {
-      left: 80, top: 350, fontFamily: 'Archivo Black', fontSize: 60, fontWeight: '900',
-      fill: '#000000', backgroundColor: '#39FF14', padding: 10
-    });
-    const cash = new fabric.IText('💵', { left: 900, top: 260, fontSize: 160 });
-    const trend = new fabric.IText('📈', { left: 820, top: 440, fontSize: 110 });
-    canvas.add(title, sub, cash, trend);
-
-  } else if (templateKey === 'tech') {
-    setStudioBackground('gradient_cyber');
-
-    const title = new fabric.IText('100 AI TOOLS', {
-      left: 80, top: 220, fontFamily: 'Archivo Black', fontSize: 88, fontWeight: '900',
-      fill: '#FFFFFF', stroke: '#000000', strokeWidth: 6
-    });
-    const sub = new fabric.IText('TESTED FOR 24H', {
-      left: 80, top: 330, fontFamily: 'Archivo Black', fontSize: 72, fontWeight: '900',
-      fill: '#38BDF8', backgroundColor: '#000000', padding: 10, stroke: '#000000', strokeWidth: 4
-    });
-    const robot = new fabric.IText('🤖', { left: 880, top: 260, fontSize: 150 });
-    const zap = new fabric.IText('⚡', { left: 800, top: 180, fontSize: 110, fill: '#00BFFF' });
-    canvas.add(title, sub, robot, zap);
-
-  } else if (templateKey === 'challenge') {
-    setStudioBackground('gradient_beast');
-
-    const title = new fabric.IText('SURVIVED 100 DAYS', {
-      left: 80, top: 220, fontFamily: 'Archivo Black', fontSize: 78, fontWeight: '900',
-      fill: '#FFFFFF', stroke: '#000000', strokeWidth: 6
-    });
-    const sub = new fabric.IText('ON 1 HP ONLY!', {
-      left: 80, top: 330, fontFamily: 'Archivo Black', fontSize: 84, fontWeight: '900',
-      fill: '#FF007A', backgroundColor: '#00E5FF', padding: 10, stroke: '#000000', strokeWidth: 5
-    });
-    const fire = new fabric.IText('🔥', { left: 880, top: 260, fontSize: 160 });
-    const warn = new fabric.IText('⚠️', { left: 820, top: 440, fontSize: 100 });
-    canvas.add(title, sub, fire, warn);
-
-  } else if (templateKey === 'glass') {
-    setCustomImageAsBackground('assets/portfolio/portfolio-5.webp');
-    const title = new fabric.IText('THE LAST SURVIVOR', {
-      left: 80, top: 260, fontFamily: 'Archivo Black', fontSize: 76, fontWeight: '900',
-      fill: '#FFFFFF', stroke: '#000000', strokeWidth: 6
-    });
-    canvas.add(title);
-  } else if (templateKey === 'aesthetic_cyber') {
-    setStudioBackground('gradient_cyber');
-    const title = new fabric.IText('CYBER REALITY 2077', {
-      left: 80, top: 240, fontFamily: 'Archivo Black', fontSize: 72, fontWeight: '900',
-      fill: '#38BDF8', stroke: '#000000', strokeWidth: 6,
-      shadow: new fabric.Shadow({ color: '#0EA5E9', blur: 15, offsetX: 3, offsetY: 3 })
-    });
-    const sub = new fabric.IText('3D HOLOGRAM', {
-      left: 80, top: 350, fontFamily: 'Archivo Black', fontSize: 64, fontWeight: '900',
-      fill: '#EC4899', backgroundColor: '#000000', padding: 10, stroke: '#000000', strokeWidth: 4
-    });
-    canvas.add(title, sub);
-  } else if (templateKey === 'aesthetic_street') {
-    setCustomImageAsBackground('assets/portfolio/portfolio-5.webp');
-    const title = new fabric.IText('NEON OVERDRIVE', {
-      left: 80, top: 240, fontFamily: 'Archivo Black', fontSize: 78, fontWeight: '900',
-      fill: '#00E5FF', stroke: '#000000', strokeWidth: 6,
-      shadow: new fabric.Shadow({ color: '#FF007A', blur: 15, offsetX: 4, offsetY: 4 })
-    });
-    const sub = new fabric.IText('3D GLASS ART', {
-      left: 80, top: 350, fontFamily: 'Archivo Black', fontSize: 58, fontWeight: '900',
-      fill: '#FFFFFF', backgroundColor: '#FF007A', padding: 10
-    });
-    canvas.add(title, sub);
-  }
-
-  canvas.renderAll();
-  saveCanvasState();
-  document.getElementById('builder').scrollIntoView({ behavior: 'smooth' });
-  showToast(`Loaded "${templateKey.toUpperCase()}" template into Canvas Studio!`);
-}
-
-// --- FREE AI GENERATOR & MONETIZATION BRIDGE ---
-let currentAiResultUrl = 'assets/portfolio/portfolio-valorant.jpg';
-let currentAiHeadline = '1v5 RADIANT CLUTCH!';
-
-
-
-
-
-
-
-
-
-function orderCurrentAiConcept() {
-  const prompt = document.getElementById('aiPromptInput').value.trim() || 'AI Concept Thumbnail';
-  openPaymentModal(`Custom THumbnaiL: "${prompt.substring(0, 28)}"`, 150);
-  if (document.getElementById('buyerNotes')) {
-    document.getElementById('buyerNotes').value = `Topic: ${prompt}\nHook Headline: ${currentAiHeadline}\nStyle: ${document.getElementById('aiStyleSelect').value}`;
-  }
-}
-
-// --- ASSET BROWSER ENGINE ---
-function renderAssetBrowser() {
-  const grid = document.getElementById('assetGrid');
-  if (!grid) return;
-
-  const searchVal = document.getElementById('assetSearchInput')?.value.toLowerCase() || '';
-
-  const filtered = elementsData.filter(e => {
-    const matchesCat = activeAssetFilter === 'all' || e.cat === activeAssetFilter;
-    const matchesSearch = !searchVal || e.label.toLowerCase().includes(searchVal) || (e.burst && e.burst.toLowerCase().includes(searchVal));
-    return matchesCat && matchesSearch;
-  });
-
-  const countEl = document.getElementById('visibleAssetCount');
-  if (countEl) countEl.textContent = filtered.length;
-
-  grid.innerHTML = filtered.map(el => `
-    <div class="bg-[#15161A] border border-white/15 rounded-2xl p-3 text-center hover:border-[#00E5FF] transition flex flex-col justify-between group">
-      <div class="h-[60px] grid place-items-center cursor-pointer" onclick="addElementToStudioCanvas(${JSON.stringify(el).replace(/"/g, '&quot;')})">
-        ${el.imgUrl ? `<img src="${el.imgUrl}" class="max-h-[52px] object-contain drop-shadow-md group-hover:scale-110 transition" alt="${el.label}">` : (el.burst ? `<div class="font-display text-[13px] px-2.5 py-1 rounded-xl border border-black rotate-[-2deg]" style="background:${el.bg}; color:${el.text}">${el.burst}</div>` : `<span style="${el.style}; font-size:32px">${el.icon}</span>`)}
-      </div>
-      <div>
-        <div class="font-bold text-[11px] text-white truncate mt-1">${el.label}</div>
-        <div class="text-[9px] font-semibold text-zinc-400 uppercase tracking-wider">${el.cat}</div>
-        <button onclick="addElementToStudioCanvas(${JSON.stringify(el).replace(/"/g, '&quot;')})" class="w-full mt-2 bg-black hover:bg-[#39FF14] hover:text-black text-[#00E5FF] border border-white/15 rounded-full py-1 text-[10px] font-black transition">
-          + Add to Canvas
-        </button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function setAssetBrowserFilter(cat) {
-  activeAssetFilter = cat;
-  document.querySelectorAll('.asset-tab-btn').forEach(b => b.className = 'asset-tab-btn bg-[#15161A] text-zinc-300 px-3.5 py-1.5 rounded-full text-xs font-bold border border-white/20 hover:bg-zinc-800');
-  event.target.className = 'asset-tab-btn active bg-white text-black px-3.5 py-1.5 rounded-full text-xs font-black border-2 border-black';
-  renderAssetBrowser();
-}
-
-function filterAssetBrowser() {
-  renderAssetBrowser();
-}
-
-// --- PORTFOLIO GALLERY ENGINE ---
-function filterPortfolioGallery(cat) {
-  document.querySelectorAll('.port-filter-btn').forEach(btn => btn.className = 'port-filter-btn bg-[#15161A] text-zinc-300 border border-white/20 rounded-full px-4 py-1.5 text-[12px] font-black hover:bg-zinc-800 transition');
-  event.target.className = 'port-filter-btn active bg-[#FF007A] text-white border-2 border-black rounded-full px-4 py-1.5 text-[12px] font-black transition';
-  
-  const cards = document.querySelectorAll('.port-card');
-  cards.forEach(card => {
-    if (cat === 'all' || card.classList.contains(cat)) {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-function openLightbox(src) {
-  const img = document.getElementById('lightboxImg');
-  if (img) img.src = src;
-  document.getElementById('lightbox').classList.remove('hidden');
-}
-
-function closeLightbox() {
-  document.getElementById('lightbox').classList.add('hidden');
-}
-
-document.getElementById('lightbox')?.addEventListener('click', (e) => {
-  if (e.target.id === 'lightbox') closeLightbox();
-});
-
-// --- SHOPPING CART & PAYMENT ENGINE ---
-function addToCart(key) {
-  const prod = products[key] || { name: key, price: 49, badge: 'Digital' };
-  const existing = cart.find(c => c.key === key);
-  if (existing) existing.qty++;
-  else cart.push({ key, ...prod, qty: 1 });
-  updateCartUI();
-  showToast(`${prod.name} added to cart`);
-  openCartDrawer();
-}
-
-function updateCartUI() {
-  const count = cart.reduce((a, c) => a + c.qty, 0);
-  const countEl = document.getElementById('cartCount');
-  if (countEl) countEl.textContent = count;
-
-  const itemsEl = document.getElementById('cartItems');
-  const total = cart.reduce((a, c) => a + c.price * c.qty, 0);
-  const totalEl = document.getElementById('cartTotal');
-  if (totalEl) totalEl.textContent = `₹${total}`;
-
-  if (!itemsEl) return;
-  if (cart.length === 0) {
-    itemsEl.innerHTML = `
-      <div class="text-center py-12">
-        <div class="w-16 h-16 bg-[#15161A] border border-white/10 rounded-full grid place-items-center mx-auto text-xl text-zinc-400"><i class="fa-solid fa-bag-shopping"></i></div>
-        <div class="font-black mt-3 text-white">Your cart is empty</div>
-        <div class="text-sm text-zinc-400 font-medium">Add a 4K AI Unlock (₹49) or the 500+ Pack (₹200)</div>
-        <button onclick="addToCart('pro')" class="mt-4 bg-[#FF007A] text-white border-2 border-black rounded-full px-6 py-2.5 font-black">ADD 500+ PACK — ₹200</button>
-      </div>
-    `;
-  } else {
-    itemsEl.innerHTML = cart.map(item => `
-      <div class="bg-[#15161A] border border-white/15 rounded-2xl p-3 flex gap-3 items-center">
-        <div class="w-12 h-12 bg-black border border-white/15 rounded-xl grid place-items-center text-lg shrink-0 text-[#00E5FF]"><i class="fa-solid fa-cube"></i></div>
-        <div class="flex-1 min-w-0">
-          <div class="font-black text-[13px] leading-tight truncate text-white">${item.name}</div>
-          <div class="text-[11px] font-bold text-zinc-400">${item.badge} &bull; Qty ${item.qty}</div>
-          <div class="font-black text-[14px] text-[#39FF14]">₹${item.price}</div>
-        </div>
-        <div class="flex flex-col gap-1">
-          <button onclick="changeQty('${item.key}', 1)" class="w-7 h-7 bg-zinc-800 text-white rounded-full grid place-items-center text-xs hover:bg-zinc-700"><i class="fa-solid fa-plus"></i></button>
-          <button onclick="changeQty('${item.key}', -1)" class="w-7 h-7 bg-zinc-800 text-white rounded-full grid place-items-center text-xs hover:bg-zinc-700"><i class="fa-solid fa-minus"></i></button>
-        </div>
-      </div>
-    `).join('');
-  }
-}
-
-function changeQty(key, delta) {
-  const item = cart.find(c => c.key === key);
-  if (!item) return;
-  item.qty += delta;
-  if (item.qty <= 0) cart = cart.filter(c => c.key !== key);
-  updateCartUI();
-}
-
-function openCartDrawer() {
-  document.getElementById('cartDrawer').style.transform = 'translateX(0)';
-  document.getElementById('cartOverlay').classList.remove('hidden');
-}
-
-function closeCartDrawer() {
-  document.getElementById('cartDrawer').style.transform = 'translateX(100%)';
-  document.getElementById('cartOverlay').classList.add('hidden');
-}
-
-document.getElementById('cartBtn')?.addEventListener('click', openCartDrawer);
-document.getElementById('closeCart')?.addEventListener('click', closeCartDrawer);
-document.getElementById('cartOverlay')?.addEventListener('click', closeCartDrawer);
-
-document.getElementById('checkoutBtn')?.addEventListener('click', () => {
-  if (cart.length === 0) {
-    showToast('Your cart is empty');
-    return;
-  }
-  closeCartDrawer();
-  const total = cart.reduce((a, c) => a + c.price * c.qty, 0);
-  openPaymentModal(cart.map(c => c.name).join(', '), total);
-});
-
-// Payment Modal & Production Razorpay Gateway Integration
-async function openPaymentModal(item, price) {
-  currentPaymentItem = item;
-  currentPaymentAmount = price;
-  updateUpiDetails(price);
-  document.getElementById('payItemName').textContent = item;
-  document.getElementById('payItemPrice').textContent = `₹${price}`;
-
-  // Always reset to step 1
-  document.getElementById('checkoutStep1').classList.remove('hidden');
-  document.getElementById('checkoutStep2').classList.add('hidden');
-  uploadedScreenshotData = null;
-
-  const uploadPrompt = document.getElementById('uploadPrompt');
-  const previewContainer = document.getElementById('screenshotPreviewContainer');
-  if (uploadPrompt) uploadPrompt.classList.remove('hidden');
-  if (previewContainer) previewContainer.classList.add('hidden');
-
-  const form = document.getElementById('verifyPaymentForm');
-  if (form) form.reset();
-
-  // Show Modal
-  document.getElementById('paymentModal').classList.remove('hidden');
-  document.body.style.overflow = 'hidden';
-
-  // Attempt server-side Razorpay Order Creation if SDK is loaded
-  try {
-    const res = await fetch('/api/payment/create-order', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productId: item, customerEmail: '' })
-    });
-    const data = await res.json();
-
-    // If Razorpay API credentials are configured, initialize official Razorpay Checkout
-    if (data.success && data.razorpayConfigured && window.Razorpay) {
-      const options = {
-        key: data.order.keyId,
-        amount: data.order.amountInPaise,
-        currency: data.order.currency || 'INR',
-        name: "CVRTN'S THumbnaiL",
-        description: data.order.productName,
-        order_id: data.order.razorpayOrderId,
-        handler: async function (response) {
-          showToast('Verifying Razorpay signature...');
-          const verifyRes = await fetch('/api/payment/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              productId: item,
-              customerEmail: 'customer@cvrtn.com'
-            })
-          });
-          const verifyData = await verifyRes.json();
-          if (verifyData.verified) {
-            closePaymentModal();
-            document.getElementById('orderIdText').textContent = verifyData.receipt.orderId;
-            document.getElementById('orderEmailText').textContent = verifyData.receipt.customerEmail;
+    async function startRazorpayCheckout(productName, price) {
+      try {
+        const productTypeMap = {
+          'Valorant Montage Style': 'valorant_montage',
+          'Y2K 3D Render Pack': 'y2k_pack',
+          'Custom Thumbnail Request': 'custom_thumbnail'
+        };
+        const mappedProductType = productTypeMap[productName] || 'custom_thumbnail';
+
+        const orderResp = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: price,
+            currency: 'INR',
+            productType: mappedProductType
+          })
+        });
+        
+        const orderData = await orderResp.json();
+        if (!orderData.success) {
+          alert('Failed to initialize payment.');
+          return;
+        }
+
+        const options = {
+          key: orderData.keyId,
+          amount: orderData.order.amount,
+          currency: orderData.order.currency,
+          name: 'CVRTN THumbnaiL',
+          description: productName,
+          order_id: orderData.order.id,
+          theme: { color: '#ff3b3b' },
+          handler: async function (response) {
+            // Payment successful, verify on backend
+            modal.style.display = 'flex';
+            document.getElementById('deliveryActionContainer').innerHTML = '<p>Verifying payment...</p>';
             
-            const pType = verifyData.receipt.productType;
-            const deliveryAction = document.getElementById('productDeliveryAction');
-            if (pType === 'PACK') {
-              deliveryAction.innerHTML = `
-                <div class="bg-[#39FF14]/10 border border-[#39FF14]/30 rounded-xl p-3 text-left">
-                  <div class="text-[11px] font-black text-[#39FF14] uppercase flex items-center gap-1.5"><i class="fa-solid fa-unlock"></i> ASSETS PACK UNLOCKED</div>
-                  <div class="text-[12px] text-zinc-300 mt-1">Your secure download link is ready!</div>
-                </div>
-                <a href="${verifyData.receipt.downloadUrl || 'CVRTNS_THumbnaiL.zip'}" target="_blank" class="block w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition mt-2">
-                  <i class="fa-solid fa-cloud-arrow-down"></i> SECURE DOWNLOAD NOW
-                </a>
-              `;
-            } else if (pType === 'AI_VISUAL') {
-              deliveryAction.innerHTML = `
-                <div class="bg-[#39FF14]/10 border border-[#39FF14]/30 rounded-xl p-3 text-left">
-                  <div class="text-[11px] font-black text-[#39FF14] uppercase flex items-center gap-1.5"><i class="fa-solid fa-unlock"></i> CLEAN 4K AI VISUAL UNLOCKED</div>
-                  <div class="text-[12px] text-zinc-300 mt-1">Your secure 4K visual is ready for download!</div>
-                </div>
-                <a href="${typeof currentAiResultUrl !== 'undefined' ? currentAiResultUrl : '#'}" download="CVRTN_AI_Clean_4K_${Date.now()}.png" class="block w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition mt-2">
-                  <i class="fa-solid fa-cloud-arrow-down"></i> DOWNLOAD SECURE 4K VISUAL
-                </a>
-              `;
-            } else if (pType === 'STUDIO_EXPORT') {
-              exportCleanCanvasPNG();
-              deliveryAction.innerHTML = `
-                <div class="bg-[#39FF14]/10 border border-[#39FF14]/30 rounded-xl p-3 text-left">
-                  <div class="text-[11px] font-black text-[#39FF14] uppercase flex items-center gap-1.5"><i class="fa-solid fa-unlock"></i> STUDIO 1280×720 PNG EXPORTED</div>
-                  <div class="text-[12px] text-zinc-300 mt-1">Your clean unwatermarked 1280×720 thumbnail has been downloaded to your computer!</div>
-                </div>
-                <button onclick="exportCleanCanvasPNG()" class="w-full bg-[#39FF14] hover:bg-[#00d655] text-black rounded-full py-3.5 font-black text-sm comic-shadow-sm transition mt-2">
-                  <i class="fa-solid fa-rotate-right"></i> DOWNLOAD AGAIN
-                </button>
-              `;
-            } else {
-              deliveryAction.innerHTML = `
-                <div class="bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl p-3 text-left">
-                  <div class="text-[11px] font-black text-[#00E5FF] uppercase flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> 24H CUSTOM "THUMBNAIL" IN PRODUCTION</div>
-                  <div class="text-[12px] text-zinc-300 mt-1">Your order is verified! Delivery will be dispatched to <b>${verifyData.receipt.customerEmail}</b> within 24 hours.</div>
-                </div>
-              `;
+            try {
+              const verifyResp = await fetch('/api/verify-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  customerEmail: 'customer@example.com',
+                  productType: mappedProductType
+                })
+              });
+              
+              const verifyData = await verifyResp.json();
+              if (verifyData.success) {
+                // Show download link
+                const pType = verifyData.receipt.productType;
+                let actionHtml = '';
+                if (pType === 'PACK' || pType === 'y2k_pack' || pType === 'valorant_montage') {
+                  const dlUrl = verifyData.receipt.downloadPath || '/CVRTNS_THumbnaiL.zip';
+                  actionHtml = `<a href="${dlUrl}" download><button class="y2k-button download-btn" style="width: 100%;">Download File</button></a>`;
+                } else {
+                  actionHtml = `<p>We have received your custom order request! Tanish will contact you shortly.</p>`;
+                }
+                document.getElementById('deliveryActionContainer').innerHTML = actionHtml;
+              } else {
+                document.getElementById('deliveryActionContainer').innerHTML = '<p style="color:red">Verification failed.</p>';
+              }
+            } catch (e) {
+              document.getElementById('deliveryActionContainer').innerHTML = '<p style="color:red">Verification error.</p>';
             }
-
-            document.getElementById('paySuccessModal').classList.remove('hidden');
-            showToast('Razorpay payment verified & unlocked!');
-          } else {
-            alert('Payment signature verification failed.');
           }
-        },
-        theme: { color: '#39FF14' }
-      };
-      // Store rzpInstance for direct checkout button
-      window.currentRazorpayOptions = options;
-    }
-  } catch (err) {
-    console.warn('Razorpay order initialization notice:', err.message);
-  }
-}
-
-function closePaymentModal() {
-  document.getElementById('paymentModal').classList.add('hidden');
-  document.body.style.overflow = '';
-}
-
-function updateUpiDetails(amount) {
-  const upiUri = `upi://pay?pa=nayeetanish@oksbi&pn=Tanish%20CVRTN&am=${amount}&cu=INR`;
-  const qr = document.getElementById('upiQrImg');
-  if (qr) {
-    qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUri)}`;
-  }
-  const linkIds = ['directUpiLink', 'gpayDeepLink', 'phonepeDeepLink', 'paytmDeepLink'];
-  linkIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.href = upiUri;
-  });
-}
-
-function copyUpiId() {
-  navigator.clipboard.writeText('nayeetanish@oksbi');
-  const btn = document.getElementById('copyUpiBtnText');
-  if (btn) {
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = 'Copy', 2000);
-  }
-  showToast('UPI ID copied: nayeetanish@oksbi');
-}
-
-
-function goToVerificationStep(method) {
-  document.getElementById('checkoutStep1').classList.add('hidden');
-  document.getElementById('checkoutStep2').classList.remove('hidden');
-}
-
-function backToStep1() {
-  document.getElementById('checkoutStep2').classList.add('hidden');
-  document.getElementById('checkoutStep1').classList.remove('hidden');
-}
-
-function handleScreenshotUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    uploadedScreenshotData = event.target.result;
-    document.getElementById('uploadPrompt').classList.add('hidden');
-    const previewImg = document.getElementById('screenshotPreviewImg');
-    previewImg.src = uploadedScreenshotData;
-    document.getElementById('screenshotPreviewContainer').classList.remove('hidden');
-    showToast('Payment screenshot attached ✓');
-  };
-  reader.readAsDataURL(file);
-}
-
-async function handleSecurityVerification(e) {
-  e.preventDefault();
-  const email = document.getElementById('buyerEmail').value.trim();
-  const notes = document.getElementById('buyerNotes').value.trim();
-
-  if (!email || !email.includes('@')) {
-    alert('Please enter a valid email address for delivery confirmation.');
-    return;
-  }
-
-  const submitBtn = document.getElementById('verifySubmitBtn');
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> VERIFYING PAYMENT PROOF...';
-
-  try {
-    const response = await fetch('/api/payment/upload-proof', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        productId: currentPaymentItem,
-        customerEmail: email,
-        notes: notes,
-        screenshotData: uploadedScreenshotData
-      })
-    });
-
-    const data = await response.json();
-    const orderId = data?.order?.orderId || ('#CVR-PROOF-' + Math.floor(100000 + Math.random() * 900000));
-
-    closePaymentModal();
-    const paidDate = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + ' IST';
-    
-    document.getElementById('orderIdText').textContent = orderId;
-    document.getElementById('orderEmailText').textContent = email;
-    if (document.getElementById('orderPaymentDateText')) {
-      document.getElementById('orderPaymentDateText').textContent = paidDate;
-    }
-
-    // Populate Payment Screenshot Review container
-    const screenshotContainer = document.getElementById('receiptScreenshotContainer');
-    const screenshotImg = document.getElementById('receiptScreenshotImg');
-    const screenshotTime = document.getElementById('receiptScreenshotTime');
-    if (uploadedScreenshotData && screenshotImg && screenshotContainer) {
-      screenshotImg.src = uploadedScreenshotData;
-      if (screenshotTime) screenshotTime.textContent = `Uploaded: ${paidDate}`;
-      screenshotContainer.classList.remove('hidden');
-    } else if (screenshotContainer) {
-      screenshotContainer.classList.add('hidden');
-    }
-
-    const deliveryAction = document.getElementById('productDeliveryAction');
-    const waUrl = data.whatsappNotificationUrl || `https://api.whatsapp.com/send?phone=919725920066&text=Manual+Payment+Proof+Submitted`;
-
-    // ONLY SHOW PENDING REVIEW (No Instant Unlock!)
-    deliveryAction.innerHTML = `
-      <div class="bg-[#00E5FF]/10 border border-[#00E5FF]/30 rounded-xl p-3 text-left">
-        <div class="text-[11px] font-black text-[#00E5FF] uppercase flex items-center gap-1.5"><i class="fa-solid fa-clock"></i> PAYMENT PENDING REVIEW</div>
-        <div class="text-[12px] text-zinc-300 mt-1">Your manual payment proof has been securely uploaded. Admin will review it shortly. Once approved, your product will be unlocked.</div>
-      </div>
-      <a href="${waUrl}" target="_blank" class="block w-full bg-[#25D366] hover:bg-[#20ba5a] text-black rounded-full py-3.5 font-black text-xs transition flex items-center justify-center gap-2 mt-2">
-        <i class="fa-brands fa-whatsapp text-base"></i> Expedite Review via WhatsApp (+91 9725920066)
-      </a>
-    `;
-    
-    // Auto-open WhatsApp
-    try { window.open(waUrl, '_blank'); } catch(e) {}
-    
-    showToast('Payment proof submitted for review.');
-
-    document.getElementById('paySuccessModal').classList.remove('hidden');
-    backToStep1();
-    cart = [];
-    updateCartUI();
-
-  } catch (error) {
-    console.warn('Verification fallback:', error);
-    const orderId = '#CVR-' + Math.floor(100000 + Math.random() * 900000);
-    const paidDate = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + ' IST';
-    closePaymentModal();
-    document.getElementById('orderIdText').textContent = orderId;
-    document.getElementById('orderEmailText').textContent = email;
-    if (document.getElementById('orderPaymentDateText')) {
-      document.getElementById('orderPaymentDateText').textContent = paidDate;
-    }
-    const screenshotContainer = document.getElementById('receiptScreenshotContainer');
-    const screenshotImg = document.getElementById('receiptScreenshotImg');
-    if (uploadedScreenshotData && screenshotImg && screenshotContainer) {
-      screenshotImg.src = uploadedScreenshotData;
-      screenshotContainer.classList.remove('hidden');
-    }
-    document.getElementById('paySuccessModal').classList.remove('hidden');
-    backToStep1();
-    cart = [];
-    updateCartUI();
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> SUBMIT PROOF &amp; UNLOCK';
-  }
-}
-
-function closeSuccessModal() {
-  document.getElementById('paySuccessModal').classList.add('hidden');
-  showToast('Order confirmed! 📩');
-}
-
-// Toast
-let toastTimer;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  if (!t) return;
-  document.getElementById('toastMsg').textContent = msg;
-  t.classList.remove('hidden');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.add('hidden'), 2800);
-}
-
-// Mobile Menu Toggle
-document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
-  document.getElementById('mobileMenu').classList.toggle('hidden');
-});
-
-
-// --- LEGAL & ADMIN MODAL JS HANDLERS ---
-function openLegalModal(type) {
-  const titles = {
-    privacy: 'PRIVACY POLICY',
-    terms: 'TERMS OF SERVICE',
-    refunds: 'REFUND & CANCELLATION POLICY'
-  };
-  const contents = {
-    privacy: `
-      <p class="mb-3">At CVRTN'S THumbnaiL, we respect your privacy. All customer data, email addresses, and payment transaction metadata are encrypted and used strictly for digital order fulfillment, receipt generation, and support communication.</p>
-      <p class="mb-3">We never sell, rent, or trade your contact information to third parties. Uploaded images and custom canvas assets remain your intellectual property.</p>
-    `,
-    terms: `
-      <p class="mb-3">By accessing CVRTN'S THumbnaiL, you agree to use our Canvas Studio, AI Generator, and 500+ Assets Pack for lawful content creation.</p>
-      <p class="mb-3">Purchased asset packs and 1280×720 exports include full commercial usage rights for YouTube videos, live streams, and personal branding.</p>
-    `,
-    refunds: `
-      <p class="mb-3">Digital products (500+ Asset Pack, AI Studio Exports) are delivered instantly upon payment verification. Due to the digital nature of instant downloads, sales are final once digital files are accessed.</p>
-      <p class="mb-3">If you encounter any order issues or request custom revisions for 1-on-1 commission orders, contact Tanish on Instagram <b>@cvrtncreates_</b> or WhatsApp for instant resolution.</p>
-    `
-  };
-
-  document.getElementById('legalModalTitle').textContent = titles[type] || 'TERMS & POLICIES';
-  document.getElementById('legalModalBody').innerHTML = contents[type] || contents.privacy;
-  document.getElementById('legalModal').classList.remove('hidden');
-}
-
-function closeLegalModal() {
-  document.getElementById('legalModal').classList.add('hidden');
-}
-
-async function openAdminModal() {
-  const key = prompt('Enter Admin Secret Key to access Admin Portal:');
-  if (!key) return;
-
-  try {
-    const res = await fetch(`/api/admin/orders?adminKey=${encodeURIComponent(key)}`);
-    const data = await res.json();
-
-    if (!res.ok || !data.success) {
-      alert(data.error || 'Invalid Admin Secret Key.');
-      return;
-    }
-
-    const listEl = document.getElementById('adminOrdersList');
-    if (listEl) {
-      if (data.orders.length === 0) {
-        listEl.innerHTML = '<div class="text-center py-6 text-zinc-400 font-bold">No manual payment proofs pending review.</div>';
-      } else {
-        listEl.innerHTML = data.orders.map(o => `
-          <div class="bg-[#15161A] border border-white/15 rounded-xl p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-            <div>
-              <div class="font-mono text-[#00E5FF] font-black text-xs">${o.orderId} &bull; ₹${o.amount}</div>
-              <div class="text-white text-xs font-bold">${o.productName}</div>
-              <div class="text-zinc-400 text-[11px]">${o.customerEmail} &bull; ${o.status}</div>
-            </div>
-            ${o.status === 'PENDING_REVIEW' ? `
-              <div class="flex gap-2">
-                <button onclick="approveAdminOrder('${o.orderId}', '${key}')" class="bg-[#39FF14] text-black px-3 py-1 rounded-full text-xs font-black">Approve</button>
-              </div>
-            ` : `<span class="text-[#39FF14] font-black text-xs">APPROVED ✓</span>`}
-          </div>
-        `).join('');
+        };
+        
+        const rzp = new Razorpay(options);
+        rzp.on('payment.failed', function (response) {
+          alert('Payment Failed: ' + response.error.description);
+        });
+        rzp.open();
+        
+      } catch (err) {
+        console.error(err);
+        alert('Error starting checkout.');
       }
     }
-
-    document.getElementById('adminModal').classList.remove('hidden');
-  } catch (err) {
-    alert('Failed to connect to Admin API: ' + err.message);
-  }
-}
-
-async function approveAdminOrder(orderId, key) {
-  try {
-    const res = await fetch('/api/admin/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ adminKey: key, action: 'approve', orderId })
-    });
-    const data = await res.json();
-    if (data.success) {
-      showToast(`Order ${orderId} approved!`);
-      openAdminModal();
-    } else {
-      alert(data.error || 'Failed to approve order.');
-    }
-  } catch (err) {
-    alert('Admin action error: ' + err.message);
-  }
-}
-
-function closeAdminModal() {
-  document.getElementById('adminModal').classList.add('hidden');
-}
-
-// --- INITIALIZATION ON LOAD ---
-window.addEventListener('DOMContentLoaded', () => {
-  initFabricCanvas();
-  renderStudioTray();
-  renderAssetBrowser();
-  updateCartUI();
-  updateProjectsCountUI();
-});
-</script>
-
-<!-- MODAL: LEGAL & POLICIES -->
-<div id="legalModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-[#15161A] border-2 border-white/20 rounded-[28px] max-w-lg w-full p-6 text-white relative comic-shadow-lg">
-    <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
-      <div class="font-display text-[18px] text-[#00E5FF]" id="legalModalTitle">PRIVACY POLICY</div>
-      <button onclick="closeLegalModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="text-xs text-zinc-300 leading-relaxed font-medium space-y-2 max-h-[60vh] overflow-y-auto pr-2" id="legalModalBody">
-      <!-- Injected via JS -->
-    </div>
-    <button onclick="closeLegalModal()" class="w-full mt-5 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-black text-xs border border-white/20">
-      Close Policy Window
-    </button>
-  </div>
-</div>
-
-<!-- MODAL: ADMIN REVIEW PORTAL -->
-<div id="adminModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-[#12131A] border-2 border-[#39FF14]/40 rounded-[28px] max-w-2xl w-full p-6 text-white relative comic-shadow-lg">
-    <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-user-shield text-[#39FF14]"></i>
-        <span class="font-display text-[18px]">ADMIN ORDER &amp; PROOF REVIEW PORTAL</span>
-      </div>
-      <button onclick="closeAdminModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-white grid place-items-center hover:bg-zinc-700"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1" id="adminOrdersList">
-      <!-- Rendered via JS -->
-    </div>
-    <button onclick="closeAdminModal()" class="w-full mt-4 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full py-2.5 font-black text-xs border border-white/20">
-      Close Portal
-    </button>
-  </div>
-</div>
-
+  </script>
 </body>
 </html>
