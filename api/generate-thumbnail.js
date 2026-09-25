@@ -97,8 +97,10 @@ export default async function handler(req, res) {
           body: JSON.stringify({
             prompt: enhancedPrompt,
             image_size: 'landscape_16_9',
+            num_inference_steps: 4,
+            guidance_scale: 3.5,
             num_images: 1,
-            enable_safety_checker: true
+            enable_safety_checker: false
           }),
           signal: controller.signal
         });
