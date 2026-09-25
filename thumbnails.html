@@ -19,16 +19,16 @@
       <h2>Premade Thumbnails</h2>
       <div class="portfolio-grid">
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-1.jpg');">
-          <button class="y2k-button" onclick="openModal('Valorant Montage', 150)">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('Valorant Montage', 150, '/CVRTNS_THumbnaiL.zip')">Buy ₹150</button>
         </div>
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-2.webp');">
-          <button class="y2k-button" onclick="openModal('Neon Cyber Style', 150)">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('Neon Cyber Style', 150, '/CVRTNS_THumbnaiL.zip')">Buy ₹150</button>
         </div>
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-3.webp');">
-          <button class="y2k-button" onclick="openModal('3D Glass Art', 150)">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('3D Glass Art', 150, '/CVRTNS_THumbnaiL.zip')">Buy ₹150</button>
         </div>
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-4.webp');">
-          <button class="y2k-button" onclick="openModal('Esports Championship', 150)">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('Esports Championship', 150, '/CVRTNS_THumbnaiL.zip')">Buy ₹150</button>
         </div>
       </div>
     </div>
@@ -37,42 +37,13 @@
       <h2 style="color: var(--accent-blue);">Custom Thumbnail Request</h2>
       <p style="margin-top: 5px;">Price: ₹250</p>
       <p style="font-weight: normal; font-size: 0.9rem; margin-top: 5px;">Need something completely custom? Pay the fee and Tanish will contact you to build your vision!</p>
-      <button class="y2k-button" style="width: 100%; margin-top: 15px; background: var(--accent-blue);" onclick="openModal('Custom Thumbnail Request', 250)">Submit Request & Pay ₹250</button>
+      <button class="y2k-button" style="width: 100%; margin-top: 15px; background: var(--accent-blue);" onclick="buyCustom('Custom Thumbnail Request', 250)">Submit Request & Pay ₹250</button>
     </div>
   </div>
 
-  <!-- PAYMENT MODAL -->
-  <div class="modal-overlay" id="paymentModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">X</span>
-      
-      <!-- Step 1: Pay -->
-      <div id="modalStep1">
-        <h2>PAY VIA UPI</h2>
-        <p style="margin-top:5px; font-weight:bold;">Buying: <span id="modalItemName" style="color: var(--accent-red);">Item</span></p>
-        <h1 id="modalPrice" style="font-size: 3rem; margin: 10px 0;">₹0</h1>
-        
-        <div class="qr-placeholder">
-          <img id="upiQrCode" src="" alt="UPI QR Code">
-        </div>
-        <p style="font-weight:bold; margin-bottom: 20px;">Scan QR or Copy UPI ID<br><span style="color:var(--accent-red); font-size:1.1rem; user-select:all;">nayeetanish@oksbi</span></p>
-        
-        <button class="y2k-button" style="width: 100%;" onclick="verifyPayment()">I've Paid — Verify</button>
-      </div>
+  
 
-      <!-- Step 2: Download -->
-      <div id="modalStep2" class="step-2">
-        <h2 style="color: var(--accent-green);">Payment Verified!</h2>
-        <p style="margin: 20px 0; font-weight: bold;">Your transaction was successful.</p>
-        
-        <a href="/CVRTNS_THumbnaiL.zip" download style="text-decoration: none;">
-          <button class="y2k-button download-btn" style="width: 100%; margin-bottom: 10px;">Download Thumbnail (PSD)</button>
-        </a>
-        <p style="font-size: 0.8rem; color: #555;">For custom requests, Tanish will DM you shortly.</p>
-      </div>
-    </div>
-  </div>
-
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="payment.js"></script>
 </body>
 </html>

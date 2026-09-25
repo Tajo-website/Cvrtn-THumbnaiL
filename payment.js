@@ -1,40 +1,48 @@
-const modal = document.getElementById('paymentModal');
-const step1 = document.getElementById('modalStep1');
-const step2 = document.getElementById('modalStep2');
-const qrImage = document.getElementById('upiQrCode');
+// Razorpay Checkout Logic
 
-function openModal(itemName, price) {
-  document.getElementById('modalItemName').innerText = itemName;
-  document.getElementById('modalPrice').innerText = '₹' + price;
+function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
+  const options = {
+    key: "rzp_live_YOUR_KEY_HERE", // Use rzp_test_... for testing
+    amount: priceInINR * 100, // Razorpay takes amounts in paise (₹49 = 4900)
+    currency: "INR",
+    name: "CVRTN Studio",
+    description: `Purchase: ${thumbnailName}`,
+    theme: { color: "#D97A7A" }, // Updated to match the new cream/beige theme accent
+    handler: function (response) {
+      // THIS ONLY RUNS IF PAYMENT IS SUCCESSFUL & VERIFIED
+      console.log("Payment Success ID: ", response.razorpay_payment_id);
+      
+      // Trigger the download for the specific file
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.download = `${thumbnailName.replace(/\s+/g, '_')}_Asset.zip`; // Using .zip since they are packs/psds
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      alert("Payment successful! Your file is downloading.");
+    }
+  };
   
-  // Generate UPI QR Code using Google API or QR Server API
-  // Format: upi://pay?pa=nayeetanish@oksbi&pn=Tanish&am=PRICE&cu=INR
-  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=CVRTN&am=${price}&cu=INR`;
-  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
-  qrImage.src = qrApiUrl;
-  
-  // Reset steps
-  step1.style.display = 'block';
-  step2.style.display = 'none';
-  
-  modal.style.display = 'flex';
+  const rzp = new window.Razorpay(options);
+  rzp.open();
 }
 
-function closeModal() {
-  modal.style.display = 'none';
-}
-
-function verifyPayment() {
-  const btn = step1.querySelector('button');
-  const originalText = btn.innerText;
-  btn.innerText = 'Verifying Payment...';
-  btn.disabled = true;
+// Fallback logic for custom requests where they don't immediately download a file
+function buyCustom(thumbnailName, priceInINR) {
+  const options = {
+    key: "rzp_live_YOUR_KEY_HERE", 
+    amount: priceInINR * 100, 
+    currency: "INR",
+    name: "CVRTN Studio",
+    description: `Purchase: ${thumbnailName}`,
+    theme: { color: "#7A9E9F" },
+    handler: function (response) {
+      console.log("Payment Success ID: ", response.razorpay_payment_id);
+      alert("Payment successful! Tanish will contact you shortly to begin the custom design.");
+    }
+  };
   
-  // Simulate network request delay (2.5 seconds)
-  setTimeout(() => {
-    step1.style.display = 'none';
-    step2.style.display = 'block';
-    btn.innerText = originalText;
-    btn.disabled = false;
-  }, 2500);
+  const rzp = new window.Razorpay(options);
+  rzp.open();
 }

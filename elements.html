@@ -75,7 +75,7 @@
         </div>
         <div style="text-align: right; min-width: 120px; margin-top: 10px;">
           <div class="price-tag" style="color: var(--accent-blue);">₹100</div>
-          <button class="y2k-button" style="background: var(--accent-blue);" onclick="openModal('Y2K 3D Render Pack', 100)">Buy Now</button>
+          <button class="y2k-button" style="background: var(--accent-blue);" onclick="buyThumbnail('Y2K 3D Render Pack', 100, '/CVRTNS_THumbnaiL.zip')">Buy Now</button>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
         </div>
         <div style="text-align: right; min-width: 120px; margin-top: 10px;">
           <div class="price-tag" style="color: var(--accent-blue);">₹50</div>
-          <button class="y2k-button" style="background: var(--accent-blue);" onclick="openModal('Starter Pack', 50)">Buy Now</button>
+          <button class="y2k-button" style="background: var(--accent-blue);" onclick="buyThumbnail('Starter Pack', 50, '/CVRTNS_THumbnaiL.zip')">Buy Now</button>
         </div>
       </div>
 
@@ -113,43 +113,15 @@
         </div>
         <div style="text-align: right; min-width: 120px; margin-top: 10px;">
           <div class="price-tag" style="color: var(--accent-green);">₹200</div>
-          <button class="y2k-button" style="background: var(--accent-green);" onclick="openModal('500+ Viral Elements Pack', 200)">Buy Now</button>
+          <button class="y2k-button" style="background: var(--accent-green);" onclick="buyThumbnail('500+ Viral Elements Pack', 200, '/CVRTNS_THumbnaiL.zip')">Buy Now</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PAYMENT MODAL -->
-  <div class="modal-overlay" id="paymentModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">X</span>
-      
-      <!-- Step 1: Pay -->
-      <div id="modalStep1">
-        <h2>PAY VIA UPI</h2>
-        <p style="margin-top:5px; font-weight:bold;">Buying: <span id="modalItemName" style="color: var(--accent-red);">Item</span></p>
-        <h1 id="modalPrice" style="font-size: 3rem; margin: 10px 0;">₹0</h1>
-        
-        <div class="qr-placeholder">
-          <img id="upiQrCode" src="" alt="UPI QR Code">
-        </div>
-        <p style="font-weight:bold; margin-bottom: 20px;">Scan QR or Copy UPI ID<br><span style="color:var(--accent-red); font-size:1.1rem; user-select:all;">nayeetanish@oksbi</span></p>
-        
-        <button class="y2k-button" style="width: 100%;" onclick="verifyPayment()">I've Paid — Verify</button>
-      </div>
+  
 
-      <!-- Step 2: Download -->
-      <div id="modalStep2" class="step-2">
-        <h2 style="color: var(--accent-green);">Payment Verified!</h2>
-        <p style="margin: 20px 0; font-weight: bold;">Your transaction was successful.</p>
-        
-        <a href="/CVRTNS_THumbnaiL.zip" download style="text-decoration: none;">
-          <button class="y2k-button download-btn" style="width: 100%;">Download Element Pack (ZIP)</button>
-        </a>
-      </div>
-    </div>
-  </div>
-
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="payment.js"></script>
 </body>
 </html>
