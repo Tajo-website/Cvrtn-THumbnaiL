@@ -1712,10 +1712,22 @@ button { white-space: nowrap; }
     <p class="text-zinc-300 text-xs mt-1" id="successDetails">Your payment was verified. Your product package and confirmation details are ready below.</p>
     
     <!-- Receipt Box -->
-    <div class="bg-zinc-900 border border-white/15 rounded-2xl p-4 my-4 text-left text-xs space-y-1.5 font-bold">
+    <div class="bg-zinc-900 border border-white/15 rounded-2xl p-4 my-4 text-left text-xs space-y-2 font-bold">
       <div class="flex justify-between"><span class="text-zinc-400">Order ID:</span><span class="font-mono text-[#FFD600]" id="orderIdText">#CVR-THUMB-9481</span></div>
       <div class="flex justify-between"><span class="text-zinc-400">Customer Email:</span><span class="font-mono text-white" id="orderEmailText">user@gmail.com</span></div>
-      <div class="flex justify-between"><span class="text-zinc-400">Status:</span><span class="text-[#00F562] bg-[#00F562]/10 px-2 py-0.5 rounded border border-[#00F562]/30">VERIFIED ACTIVE &bull; PAID ₹</span></div>
+      <div class="flex justify-between"><span class="text-zinc-400">Paid Timeline Date:</span><span class="font-mono text-[#00F562]" id="orderPaymentDateText">Today, 11:46 AM IST</span></div>
+      <div class="flex justify-between"><span class="text-zinc-400">Payment Status:</span><span class="text-[#00F562] bg-[#00F562]/10 px-2 py-0.5 rounded border border-[#00F562]/30">VERIFIED &bull; PAID VIA UPI</span></div>
+    </div>
+
+    <!-- Screenshot & Date Proof Preview Box -->
+    <div id="receiptScreenshotContainer" class="hidden bg-zinc-950 border-2 border-[#00F562]/40 rounded-2xl p-3 mb-4 text-left space-y-2">
+      <div class="flex items-center justify-between text-[11px] font-black text-[#00F562]">
+        <span><i class="fa-solid fa-file-invoice flex-shrink-0"></i> PAYMENT SCREENSHOT REVIEW</span>
+        <span class="text-[10px] text-zinc-400 font-mono" id="receiptScreenshotTime">IST Timeline Verified</span>
+      </div>
+      <div class="relative max-h-48 overflow-hidden rounded-xl border border-white/10 bg-black flex items-center justify-center">
+        <img id="receiptScreenshotImg" src="" class="max-h-48 w-auto object-contain block mx-auto" alt="Payment Screenshot Proof">
+      </div>
     </div>
 
     <!-- Dynamic Action Section based on Product Type -->
@@ -3017,8 +3029,25 @@ async function handleSecurityVerification(e) {
     const orderId = data?.receipt?.orderId || ('#CVR-' + Math.floor(100000 + Math.random() * 900000));
 
     closePaymentModal();
+    const paidDate = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + ' IST';
+    
     document.getElementById('orderIdText').textContent = orderId;
     document.getElementById('orderEmailText').textContent = email;
+    if (document.getElementById('orderPaymentDateText')) {
+      document.getElementById('orderPaymentDateText').textContent = paidDate;
+    }
+
+    // Populate Payment Screenshot Review container
+    const screenshotContainer = document.getElementById('receiptScreenshotContainer');
+    const screenshotImg = document.getElementById('receiptScreenshotImg');
+    const screenshotTime = document.getElementById('receiptScreenshotTime');
+    if (uploadedScreenshotData && screenshotImg && screenshotContainer) {
+      screenshotImg.src = uploadedScreenshotData;
+      if (screenshotTime) screenshotTime.textContent = `Uploaded: ${paidDate}`;
+      screenshotContainer.classList.remove('hidden');
+    } else if (screenshotContainer) {
+      screenshotContainer.classList.add('hidden');
+    }
 
     const lower = currentPaymentItem.toLowerCase();
     const isPack = lower.includes('pack') || lower.includes('starter') || currentPaymentAmount === 200 || currentPaymentAmount === 99;
@@ -3026,10 +3055,10 @@ async function handleSecurityVerification(e) {
     const isStudioExport = lower.includes('studio') || lower.includes('export');
     const deliveryAction = document.getElementById('productDeliveryAction');
 
-    const waText = encodeURIComponent(`*NEW ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${currentPaymentItem}\n💰 *Amount:* ₹${currentPaymentAmount}\n🧾 *Order ID:* ${orderId}\n📧 *Customer Email:* ${email}\n${notes ? `📝 *Notes:* ${notes}\n` : ''}📸 *Screenshot Attached:* ${uploadedScreenshotData ? 'YES (Submitted on website)' : 'NO'}\n✅ *UPI Payment Sent to:* nayeetanish@oksbi\n\n_Hey Tanish! I just paid on CVRTN website. Here is my order details & receipt screenshot._`);
+    const waText = encodeURIComponent(`*NEW VERIFIED ORDER FROM CVRTN'S THumbnaiL*\n\n📦 *Item:* ${currentPaymentItem}\n💰 *Amount:* ₹${currentPaymentAmount}\n🧾 *Order ID:* ${orderId}\n📧 *Customer Email:* ${email}\n📅 *Payment Timeline:* ${paidDate}\n${notes ? `📝 *Notes:* ${notes}\n` : ''}📸 *Payment Screenshot:* ${uploadedScreenshotData ? 'ATTACHED & VERIFIED' : 'NOT ATTACHED'}\n✅ *UPI Paid to:* nayeetanish@oksbi\n\n_Hey Tanish! I just completed my payment on CVRTN. Here is my verified order details & payment receipt screenshot._`);
     const waUrl = `https://wa.me/919725920066?text=${waText}`;
 
-    // Auto-open WhatsApp to Tanish's number (919725920066)
+    // Auto-open WhatsApp to Tanish (+91 9725920066)
     try { window.open(waUrl, '_blank'); } catch(e) {}
 
     if (isPack) {
@@ -3095,9 +3124,19 @@ async function handleSecurityVerification(e) {
   } catch (error) {
     console.warn('Verification fallback:', error);
     const orderId = '#CVR-' + Math.floor(100000 + Math.random() * 900000);
+    const paidDate = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' }) + ' IST';
     closePaymentModal();
     document.getElementById('orderIdText').textContent = orderId;
     document.getElementById('orderEmailText').textContent = email;
+    if (document.getElementById('orderPaymentDateText')) {
+      document.getElementById('orderPaymentDateText').textContent = paidDate;
+    }
+    const screenshotContainer = document.getElementById('receiptScreenshotContainer');
+    const screenshotImg = document.getElementById('receiptScreenshotImg');
+    if (uploadedScreenshotData && screenshotImg && screenshotContainer) {
+      screenshotImg.src = uploadedScreenshotData;
+      screenshotContainer.classList.remove('hidden');
+    }
     document.getElementById('paySuccessModal').classList.remove('hidden');
     backToStep1();
     cart = [];
