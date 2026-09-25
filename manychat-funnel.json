@@ -1,0 +1,82 @@
+{
+  "name": "CVRTN IG Reel Funnel - STUDIO Trigger",
+  "trigger": {
+    "platform": "instagram",
+    "type": "comment",
+    "settings": {
+      "track_all_posts": true,
+      "keywords": [
+        "STUDIO",
+        "studio",
+        "Studio",
+        "4K",
+        "4k",
+        "ASSETS",
+        "assets"
+      ],
+      "public_replies": [
+        "Just sent the link to your DMs! 🚀",
+        "Check your message requests! 📩",
+        "Sent! Let me know what you generate. 🔥",
+        "Sliding into your DMs with the link now. ⚡"
+      ],
+      "delay_seconds": 2
+    }
+  },
+  "actions": [
+    {
+      "step_id": "send_dm_001",
+      "type": "send_message",
+      "platform": "instagram",
+      "messages": [
+        {
+          "type": "text",
+          "text": "Yo! Here is the link to the CVRTN Thumbnail Studio."
+        },
+        {
+          "type": "typing_indicator",
+          "duration": 1.5
+        },
+        {
+          "type": "text",
+          "text": "You can generate unlimited 16:9 concepts for free using FLUX.1 AI right in your browser. 👇"
+        },
+        {
+          "type": "button_group",
+          "buttons": [
+            {
+              "type": "web_url",
+              "title": "Open Studio 🚀",
+              "url": "https://cvrtn-t-humbnai-l-9ts9.vercel.app/",
+              "webview_height_ratio": "full"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step_id": "wait_and_upsell",
+      "type": "smart_delay",
+      "delay_minutes": 15,
+      "next_step": "send_upsell_002"
+    },
+    {
+      "step_id": "send_upsell_002",
+      "type": "send_message",
+      "platform": "instagram",
+      "conditions": [
+        {
+          "condition_type": "has_clicked_link",
+          "link_id": "Open Studio 🚀",
+          "value": true
+        }
+      ],
+      "messages": [
+        {
+          "type": "text",
+          "text": "Btw, if you want all the raw 4K glowing arrows, neon borders, and flares I use for my own edits, you can grab the 500+ element pack on the site. Keep grinding! 📈"
+        }
+      ]
+    }
+  ]
+}
