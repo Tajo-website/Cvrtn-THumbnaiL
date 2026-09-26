@@ -1,19 +1,15 @@
 {
   "name": "cvrtns-thumbnail",
   "version": "2.0.0",
-  "description": "CVRTN'S THumbnaiL — Production YouTube Thumbnail Platform & AI Studio",
+  "description": "CVRTN'S THumbnaiL",
   "type": "module",
   "main": "index.html",
   "scripts": {
     "start": "serve ."
   },
-  "keywords": [
-    "youtube",
-    "thumbnail",
-    "ai-generator",
-    "canvas-editor",
-    "graphic-design"
-  ],
+  "dependencies": {
+    "razorpay": "^2.9.4"
+  },
   "author": "Tanish CVRTN",
   "license": "MIT"
 }
