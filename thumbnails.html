@@ -45,5 +45,45 @@
 
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="payment.js"></script>
+
+  <!-- CUSTOM PAYMENT MODAL -->
+  <div class="modal-overlay" id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+    <div class="modal-content" style="background:var(--bg-card, #15161A); border: 2px solid var(--accent, #FF007A); border-radius:12px; padding:30px; width:90%; max-width:400px; text-align:center; position:relative;">
+      <span class="close-btn" onclick="closeModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text, #fff);">&times;</span>
+      
+      <!-- Step 1: Checkout Options -->
+      <div id="modalStep1">
+        <h2 style="color:var(--text, #fff); margin-bottom: 5px;">Complete Purchase</h2>
+        <p style="color:var(--text-muted, #8A8D98); margin-bottom: 15px;">Buying: <span id="modalItemName" style="color:var(--accent, #FF007A); font-weight:bold;">Item</span></p>
+        <h1 id="modalPrice" style="font-size: 2.5rem; margin: 0 0 20px 0; color:var(--text, #fff);">₹0</h1>
+        
+        <div style="background:#fff; padding:10px; border-radius:8px; display:inline-block; margin-bottom:10px;">
+          <img id="upiQrCode" src="" alt="UPI QR Code" style="width:150px; height:150px;">
+        </div>
+        <p style="font-weight:bold; color:var(--text, #fff); margin-bottom: 15px;">Scan QR or Copy UPI ID<br><span style="color:var(--accent, #FF007A); user-select:all;">nayeetanish@oksbi</span></p>
+        
+        <button class="y2k-button" id="verifyBtn" style="width: 100%; margin-bottom: 15px; background: #27ae60; color:#fff; border:none; padding:12px; font-weight:bold; cursor:pointer; border-radius:6px;" onclick="verifyManualUPI()">I've Paid via UPI — Verify</button>
+        
+        <div style="display:flex; align-items:center; margin: 15px 0; color:var(--text-muted, #8A8D98);">
+          <div style="flex:1; height:1px; background:var(--border-color, #2A2B32);"></div>
+          <span style="padding:0 10px;">OR</span>
+          <div style="flex:1; height:1px; background:var(--border-color, #2A2B32);"></div>
+        </div>
+
+        <button class="y2k-button" style="width: 100%; background: var(--accent, #FF007A); color:#fff; border:none; padding:12px; font-weight:bold; cursor:pointer; border-radius:6px;" onclick="payViaNetbanking()">Pay via Net Banking</button>
+      </div>
+
+      <!-- Step 2: Download -->
+      <div id="modalStep2" style="display:none;">
+        <h2 style="color: #27ae60; margin-bottom:15px;">Payment Verified!</h2>
+        <p style="margin-bottom: 20px; color:var(--text, #fff);">Your transaction was successful.</p>
+        
+        <a id="downloadLink" href="#" download style="text-decoration: none;">
+          <button class="y2k-button" style="width: 100%; background: var(--accent, #FF007A); color:#fff; border:none; padding:15px; font-weight:bold; cursor:pointer; border-radius:6px; font-size:1.1rem;">Download File</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
