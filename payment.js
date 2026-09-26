@@ -1,40 +1,65 @@
 let currentItem = { name: "", price: 0, file: "" };
+let customText = "";
 
 function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
   currentItem = { name: thumbnailName, price: priceInINR, file: fileUrl };
   
-  // Set up modal UI
   document.getElementById('modalItemName').innerText = thumbnailName;
   document.getElementById('modalPrice').innerText = '₹' + priceInINR;
   
   const downloadLink = document.getElementById('downloadLink');
   const downloadBtn = downloadLink.querySelector('button');
   
-  if (fileUrl === '#') {
-    downloadLink.removeAttribute('download');
-    const waMessage = `Hi Tanish! I successfully paid ₹${priceInINR} for a ${thumbnailName} via Razorpay.\n\nHere are my requirements, video/photo, and where to send the final design:`;
-    downloadLink.href = `https://wa.me/919725920066?text=${encodeURIComponent(waMessage)}`;
-    downloadLink.target = "_blank";
-    downloadBtn.innerText = "Send Requirements on WhatsApp";
-  } else {
-    downloadLink.href = fileUrl;
-    downloadLink.setAttribute('download', `${thumbnailName.replace(/\s+/g, '_')}_Asset.zip`);
-    downloadLink.removeAttribute('target');
-    downloadBtn.innerText = "Download File";
-  }
+  downloadLink.href = fileUrl;
+  downloadLink.setAttribute('download', `${thumbnailName.replace(/\s+/g, '_')}_Asset.zip`);
+  downloadLink.removeAttribute('target');
+  downloadBtn.innerText = "Download File";
   
-  // Create QR for the manual UPI bypass
   const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=CVRTN&am=${priceInINR}&cu=INR`;
   document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
   
-  // Reset states
+  // Skip intake form for normal items
+  if (document.getElementById('modalStep0')) {
+    document.getElementById('modalStep0').style.display = 'none';
+  }
   document.getElementById('modalStep1').style.display = 'block';
   document.getElementById('modalStep2').style.display = 'none';
   document.getElementById('paymentModal').style.display = 'flex';
 }
 
 function buyCustom(thumbnailName, priceInINR) {
-  buyThumbnail(thumbnailName, priceInINR, '#');
+  currentItem = { name: thumbnailName, price: priceInINR, file: '#' };
+  
+  document.getElementById('modalItemName').innerText = thumbnailName;
+  document.getElementById('modalPrice').innerText = '₹' + priceInINR;
+  
+  const downloadLink = document.getElementById('downloadLink');
+  const downloadBtn = downloadLink.querySelector('button');
+  
+  downloadLink.removeAttribute('download');
+  downloadLink.href = '#';
+  downloadLink.target = "_blank";
+  downloadBtn.innerText = "Send Requirements on WhatsApp";
+  
+  // Show intake form for custom
+  document.getElementById('modalStep0').style.display = 'block';
+  document.getElementById('modalStep1').style.display = 'none';
+  document.getElementById('modalStep2').style.display = 'none';
+  document.getElementById('paymentModal').style.display = 'flex';
+}
+
+function proceedToPayment() {
+  customText = document.getElementById('customDescription').value;
+  if (!customText || customText.trim() === '') {
+    alert("Please enter a description so I know what to design for you!");
+    return;
+  }
+  
+  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=CVRTN&am=${currentItem.price}&cu=INR`;
+  document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+
+  document.getElementById('modalStep0').style.display = 'none';
+  document.getElementById('modalStep1').style.display = 'block';
 }
 
 function closeModal() {
@@ -46,15 +71,15 @@ function verifyManualUPI() {
   let message = '';
   
   if (isCustom) {
-    message = `Hi Tanish! I just paid ₹${currentItem.price} for a ${currentItem.name} via manual UPI.\n\nHere is my payment screenshot.\n\n[Please attach your video/photo and describe what you want here. Also include where you want the final thumbnail sent!]`;
+    message = `Hi Tanish! I just paid ₹${currentItem.price} for a Custom Thumbnail Request via manual UPI.\n\nHere is my payment screenshot.\n\nHere are my requirements:\n${customText}\n\n[I will attach my photo/video here]`;
   } else {
     message = `Hi Tanish! I just paid ₹${currentItem.price} for the ${currentItem.name} pack via manual UPI.\n\nHere is my payment screenshot. Please send me the file!`;
   }
   
-  const waUrl = `https://wa.me/919725920066?text=${encodeURIComponent(message)}`;
+  // Use api.whatsapp.com for best native app support
+  const waUrl = `https://api.whatsapp.com/send?phone=919725920066&text=${encodeURIComponent(message)}`;
   window.open(waUrl, '_blank');
   
-  // Update UI to show they clicked it
   document.getElementById('verifyBtn').innerText = "Redirecting to WhatsApp...";
 }
 
@@ -62,7 +87,6 @@ async function payViaNetbanking() {
   try {
     const amountInPaise = currentItem.price * 100;
     
-    // 1. Create Order
     const orderRes = await fetch('/api/create-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -124,6 +148,11 @@ async function payViaNetbanking() {
           if (verifyData.success) {
             document.getElementById('modalStep1').style.display = 'none';
             document.getElementById('modalStep2').style.display = 'block';
+            
+            if (currentItem.file === '#') {
+                const waMessage = `Hi Tanish! I successfully paid ₹${currentItem.price} for a Custom Thumbnail Request via Razorpay.\n\nHere are my requirements:\n${customText}\n\n[I will attach my photo/video here]`;
+                document.getElementById('downloadLink').href = `https://api.whatsapp.com/send?phone=919725920066&text=${encodeURIComponent(waMessage)}`;
+            }
           } else {
             alert("Payment verification failed! Please contact support.");
           }

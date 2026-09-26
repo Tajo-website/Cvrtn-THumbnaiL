@@ -129,6 +129,17 @@
     <div class="modal-content" style="background:var(--bg-card, #15161A); border: 2px solid var(--accent, #FF007A); border-radius:12px; padding:30px; width:90%; max-width:400px; text-align:center; position:relative;">
       <span class="close-btn" onclick="closeModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text, #fff);">&times;</span>
       
+      
+      <!-- Step 0: Intake Form (Only for Custom Requests) -->
+      <div id="modalStep0" style="display:none; text-align:left; padding: 10px;">
+        <h2 style="color:var(--text, #fff); margin-bottom: 10px; font-size:1.5rem;">Custom Thumbnail Request</h2>
+        <p style="color:var(--text-muted, #8A8D98); font-size:0.9rem; margin-bottom: 15px; line-height:1.4;">
+          <strong>Please read:</strong> I will personally craft a high-converting thumbnail for you. You will need to attach your video/photo on WhatsApp later. Right now, please describe exactly what you are looking for, which elements you want, and drop your social handles so I know where to send it!
+        </p>
+        <textarea id="customDescription" rows="5" style="width:90%; padding:15px; border-radius:6px; background:#1A1B20; color:#fff; border:1px solid var(--accent, #FF007A); font-family:inherit; resize:none;" placeholder="Describe your thumbnail idea and leave your social handles here..."></textarea>
+        <button class="y2k-button" style="width: 100%; margin-top: 20px; background: var(--accent, #FF007A); color:#fff; padding:12px; border-radius:6px; border:none; font-weight:bold; cursor:pointer;" onclick="proceedToPayment()">Proceed to Payment</button>
+      </div>
+
       <!-- Step 1: Checkout Options -->
       <div id="modalStep1">
         <h2 style="color:var(--text, #fff); margin-bottom: 5px;">Complete Purchase</h2>
