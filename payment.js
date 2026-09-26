@@ -8,6 +8,13 @@ function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
     name: "CVRTN Studio",
     description: `Purchase: ${thumbnailName}`,
     theme: { color: "#D97A7A" },
+
+    prefill: {
+      name: "Test User",
+      email: "test@example.com",
+      contact: "9999999999"
+    },
+
     
  // Updated to match the new cream/beige theme accent
     handler: function (response) {
@@ -39,6 +46,13 @@ function buyCustom(thumbnailName, priceInINR) {
     name: "CVRTN Studio",
     description: `Purchase: ${thumbnailName}`,
     theme: { color: "#7A9E9F" },
+
+    prefill: {
+      name: "Test User",
+      email: "test@example.com",
+      contact: "9999999999"
+    },
+
     
 
     handler: function (response) {
