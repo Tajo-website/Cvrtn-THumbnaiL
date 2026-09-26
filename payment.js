@@ -7,7 +7,24 @@ function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
     currency: "INR",
     name: "CVRTN Studio",
     description: `Purchase: ${thumbnailName}`,
-    theme: { color: "#D97A7A" }, // Updated to match the new cream/beige theme accent
+    theme: { color: "#D97A7A" },
+    config: {
+      display: {
+        blocks: {
+          upi: {
+            name: "Pay via UPI",
+            instruments: [
+              { method: "upi" }
+            ]
+          }
+        },
+        sequence: ["block.upi"],
+        preferences: {
+          show_default_blocks: false
+        }
+      }
+    },
+ // Updated to match the new cream/beige theme accent
     handler: function (response) {
       // THIS ONLY RUNS IF PAYMENT IS SUCCESSFUL & VERIFIED
       console.log("Payment Success ID: ", response.razorpay_payment_id);
@@ -37,6 +54,23 @@ function buyCustom(thumbnailName, priceInINR) {
     name: "CVRTN Studio",
     description: `Purchase: ${thumbnailName}`,
     theme: { color: "#7A9E9F" },
+    config: {
+      display: {
+        blocks: {
+          upi: {
+            name: "Pay via UPI",
+            instruments: [
+              { method: "upi" }
+            ]
+          }
+        },
+        sequence: ["block.upi"],
+        preferences: {
+          show_default_blocks: false
+        }
+      }
+    },
+
     handler: function (response) {
       console.log("Payment Success ID: ", response.razorpay_payment_id);
       alert("Payment successful! Tanish will contact you shortly to begin the custom design.");
