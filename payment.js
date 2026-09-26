@@ -30,6 +30,30 @@ async function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
       description: `Purchase: ${thumbnailName}`,
       order_id: orderData.order_id,
       theme: { color: "#D97A7A" },
+
+    config: {
+      display: {
+        blocks: {
+          upi: {
+            name: "UPI (Google Pay, Paytm, PhonePe)",
+            instruments: [
+              { method: "upi" }
+            ]
+          },
+          netbanking: {
+            name: "Net Banking",
+            instruments: [
+              { method: "netbanking" }
+            ]
+          }
+        },
+        sequence: ["block.upi", "block.netbanking"],
+        preferences: {
+          show_default_blocks: false
+        }
+      }
+    },
+
       handler: async function (response) {
         // 3. Verify Payment on Backend
         try {
@@ -103,6 +127,30 @@ async function buyCustom(thumbnailName, priceInINR) {
       description: `Purchase: ${thumbnailName}`,
       order_id: orderData.order_id,
       theme: { color: "#7A9E9F" },
+
+    config: {
+      display: {
+        blocks: {
+          upi: {
+            name: "UPI (Google Pay, Paytm, PhonePe)",
+            instruments: [
+              { method: "upi" }
+            ]
+          },
+          netbanking: {
+            name: "Net Banking",
+            instruments: [
+              { method: "netbanking" }
+            ]
+          }
+        },
+        sequence: ["block.upi", "block.netbanking"],
+        preferences: {
+          show_default_blocks: false
+        }
+      }
+    },
+
       handler: async function (response) {
         try {
           const verifyRes = await fetch('/api/verify-payment', {
