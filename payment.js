@@ -2,7 +2,7 @@
 
 function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
   const options = {
-    key: "rzp_live_YOUR_KEY_HERE", // Use rzp_test_... for testing
+    key: "rzp_test_TgZarEirmWgxQk", // Use rzp_test_... for testing
     amount: priceInINR * 100, // Razorpay takes amounts in paise (₹49 = 4900)
     currency: "INR",
     name: "CVRTN Studio",
@@ -31,7 +31,7 @@ function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
 // Fallback logic for custom requests where they don't immediately download a file
 function buyCustom(thumbnailName, priceInINR) {
   const options = {
-    key: "rzp_live_YOUR_KEY_HERE", 
+    key: "rzp_test_TgZarEirmWgxQk", 
     amount: priceInINR * 100, 
     currency: "INR",
     name: "CVRTN Studio",
