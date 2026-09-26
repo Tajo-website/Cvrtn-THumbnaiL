@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   try {
     const text = `${razorpay_order_id}|${razorpay_payment_id}`;
     const generated_signature = crypto
-      .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+      .createHmac('sha256', "dYeikrpROJG7hTci4ye7QYXM")
       .update(text)
       .digest('hex');
 

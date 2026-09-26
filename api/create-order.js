@@ -13,8 +13,8 @@ export default async function handler(req, res) {
 
   try {
     const rzp = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+      key_id: "rzp_test_Tga7ldfHzH1m8o",
+      key_secret: "dYeikrpROJG7hTci4ye7QYXM",
     });
 
     const order = await rzp.orders.create({
