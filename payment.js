@@ -12,11 +12,14 @@ function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
   
   if (fileUrl === '#') {
     downloadLink.removeAttribute('download');
-    downloadLink.href = '#';
-    downloadBtn.innerText = "Success! We will contact you shortly.";
+    const waMessage = `Hi Tanish! I successfully paid ₹${priceInINR} for a ${thumbnailName} via Razorpay.\n\nHere are my requirements, video/photo, and where to send the final design:`;
+    downloadLink.href = `https://wa.me/919725920066?text=${encodeURIComponent(waMessage)}`;
+    downloadLink.target = "_blank";
+    downloadBtn.innerText = "Send Requirements on WhatsApp";
   } else {
     downloadLink.href = fileUrl;
     downloadLink.setAttribute('download', `${thumbnailName.replace(/\s+/g, '_')}_Asset.zip`);
+    downloadLink.removeAttribute('target');
     downloadBtn.innerText = "Download File";
   }
   
@@ -39,17 +42,20 @@ function closeModal() {
 }
 
 function verifyManualUPI() {
-  const btn = document.getElementById('verifyBtn');
-  const originalText = btn.innerText;
-  btn.innerText = 'Verifying Payment...';
-  btn.disabled = true;
+  const isCustom = currentItem.file === '#';
+  let message = '';
   
-  setTimeout(() => {
-    document.getElementById('modalStep1').style.display = 'none';
-    document.getElementById('modalStep2').style.display = 'block';
-    btn.innerText = originalText;
-    btn.disabled = false;
-  }, 2500);
+  if (isCustom) {
+    message = `Hi Tanish! I just paid ₹${currentItem.price} for a ${currentItem.name} via manual UPI.\n\nHere is my payment screenshot.\n\n[Please attach your video/photo and describe what you want here. Also include where you want the final thumbnail sent!]`;
+  } else {
+    message = `Hi Tanish! I just paid ₹${currentItem.price} for the ${currentItem.name} pack via manual UPI.\n\nHere is my payment screenshot. Please send me the file!`;
+  }
+  
+  const waUrl = `https://wa.me/919725920066?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
+  
+  // Update UI to show they clicked it
+  document.getElementById('verifyBtn').innerText = "Redirecting to WhatsApp...";
 }
 
 async function payViaNetbanking() {
@@ -84,12 +90,16 @@ async function payViaNetbanking() {
       config: {
         display: {
           blocks: {
+            upi: {
+              name: "UPI (Google Pay, Paytm, PhonePe)",
+              instruments: [ { method: "upi" } ]
+            },
             netbanking: {
               name: "Net Banking",
               instruments: [ { method: "netbanking" } ]
             }
           },
-          sequence: ["block.netbanking"],
+          sequence: ["block.upi", "block.netbanking"],
           preferences: { show_default_blocks: false }
         }
       },
