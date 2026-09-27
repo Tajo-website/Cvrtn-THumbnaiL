@@ -125,7 +125,12 @@ Here are my requirements:
 ${customText}
 
 [I will attach my photo/video here]`;
-                document.getElementById('downloadLink').href = `https://api.whatsapp.com/send?phone=919725920066&text=${encodeURIComponent(waMessage)}`;
+                const isMobile = /iPhone|Android|iPad|iPod/i.test(navigator.userAgent);
+                if (isMobile) {
+                    document.getElementById('downloadLink').href = `whatsapp://send?phone=919725920066&text=${encodeURIComponent(waMessage)}`;
+                } else {
+                    document.getElementById('downloadLink').href = `https://web.whatsapp.com/send?phone=919725920066&text=${encodeURIComponent(waMessage)}`;
+                }
             }
           } else {
             alert("Payment verification failed! Please contact support.");
