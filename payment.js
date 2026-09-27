@@ -14,10 +14,22 @@ function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
   downloadLink.setAttribute('download', `${thumbnailName.replace(/\s+/g, '_')}_Asset.zip`);
   downloadLink.removeAttribute('target');
   downloadBtn.innerText = "Download File";
+
+  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=CVRTN&am=${priceInINR}&cu=INR`;
+  if (document.getElementById('upiQrCode')) {
+      document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+  }
+  
   
   // Skip intake form for normal items
   if (document.getElementById('modalStep0')) {
-    document.getElementById('modalStep0').style.display = 'none';
+    
+  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=CVRTN&am=${currentItem.price}&cu=INR`;
+  if (document.getElementById('upiQrCode')) {
+      document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+  }
+  
+  document.getElementById('modalStep0').style.display = 'none';
   }
   document.getElementById('modalStep1').style.display = 'block';
   document.getElementById('modalStep2').style.display = 'none';
@@ -52,12 +64,43 @@ function proceedToPayment() {
     return;
   }
   
+  
+  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=CVRTN&am=${currentItem.price}&cu=INR`;
+  if (document.getElementById('upiQrCode')) {
+      document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+  }
+  
   document.getElementById('modalStep0').style.display = 'none';
   document.getElementById('modalStep1').style.display = 'block';
 }
 
 function closeModal() {
   document.getElementById('paymentModal').style.display = 'none';
+}
+
+function verifyManualUPI() {
+  const isCustom = currentItem.file === '#';
+  let message = '';
+  
+  if (isCustom) {
+    message = `Hi Tanish! I just paid ₹${currentItem.price} for a Custom Thumbnail Request via manual UPI.
+
+Here is my payment screenshot.
+
+Here are my requirements:
+${customText}
+
+[I will attach my photo/video here]`;
+  } else {
+    message = `Hi Tanish! I just paid ₹${currentItem.price} for the ${currentItem.name} pack via manual UPI.
+
+Here is my payment screenshot. Please send me the file!`;
+  }
+  
+  const waUrl = `https://api.whatsapp.com/send?phone=919725920066&text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
+  
+  document.getElementById('verifyBtn').innerText = "Redirecting to WhatsApp...";
 }
 
 async function payViaNetbanking() {
