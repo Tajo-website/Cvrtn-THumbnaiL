@@ -1,27 +1,27 @@
-import crypto from 'crypto';
-
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  const { order_id } = req.body;
+  if (!order_id) return res.status(400).json({ error: 'Missing order_id' });
 
-  if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      'x-api-version': '2023-08-01',
+      'x-client-id': process.env.CASHFREE_APP_ID,
+      'x-client-secret': process.env.CASHFREE_SECRET_KEY
+    }
+  };
 
   try {
-    const text = `${razorpay_order_id}|${razorpay_payment_id}`;
-    const generated_signature = crypto
-      .createHmac('sha256', "dYeikrpROJG7hTci4ye7QYXM")
-      .update(text)
-      .digest('hex');
+    const response = await fetch(`https://sandbox.cashfree.com/pg/orders/${order_id}`, options);
+    const data = await response.json();
 
-    if (generated_signature === razorpay_signature) {
-      res.status(200).json({ success: true, message: 'Payment verified successfully' });
+    if (data.order_status === 'PAID') {
+      res.status(200).json({ success: true, message: 'Payment verified' });
     } else {
-      res.status(400).json({ success: false, error: 'Signature mismatch' });
+      res.status(400).json({ success: false, error: 'Payment not successful yet' });
     }
   } catch (error) {
     console.error('Verification Error:', error);

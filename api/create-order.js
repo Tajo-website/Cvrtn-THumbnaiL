@@ -1,38 +1,48 @@
-import Razorpay from 'razorpay';
-
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { amount, currency, receipt } = req.body;
-  
-  if (!amount || amount < 100) {
-    return res.status(400).json({ error: 'Amount must be at least 100 paise' });
-  }
+  const { amount, currency } = req.body;
+  if (!amount || amount < 100) return res.status(400).json({ error: 'Invalid amount' });
+
+  const orderAmount = (amount / 100).toFixed(2);
+  const orderId = `order_${Date.now()}`;
+
+  const options = {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      'x-api-version': '2023-08-01',
+      'x-client-id': process.env.CASHFREE_APP_ID,
+      'x-client-secret': process.env.CASHFREE_SECRET_KEY
+    },
+    body: JSON.stringify({
+      order_amount: parseFloat(orderAmount),
+      order_currency: currency || 'INR',
+      order_id: orderId,
+      customer_details: {
+        customer_id: "cust_" + Date.now(),
+        customer_phone: "9999999999",
+        customer_email: "test@example.com"
+      }
+    })
+  };
 
   try {
-    const rzp = new Razorpay({
-      key_id: "rzp_test_Tga7ldfHzH1m8o",
-      key_secret: "dYeikrpROJG7hTci4ye7QYXM",
-    });
-
-    const order = await rzp.orders.create({
-      amount: parseInt(amount),
-      currency: currency || 'INR',
-      receipt: receipt || `rcpt_${Date.now()}`
-    });
-
-    res.status(200).json({
-      order_id: order.id,
-      amount: order.amount,
-      currency: order.currency
-    });
-  } catch (error) {
-    console.error('Razorpay Order Creation Error:', error);
-    if (error.statusCode === 401) {
-       return res.status(401).json({ error: 'Authentication failed with Razorpay' });
+    const response = await fetch('https://sandbox.cashfree.com/pg/orders', options);
+    const data = await response.json();
+    
+    if (data.payment_session_id) {
+      res.status(200).json({
+        order_id: data.order_id,
+        payment_session_id: data.payment_session_id
+      });
+    } else {
+      console.error("Cashfree order error:", data);
+      res.status(500).json({ error: 'Failed to create Cashfree order' });
     }
-    res.status(500).json({ error: 'Failed to create order' });
+  } catch (error) {
+    console.error('Cashfree API Error:', error);
+    res.status(500).json({ error: 'Failed to connect to Cashfree' });
   }
 }
