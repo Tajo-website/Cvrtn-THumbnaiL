@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       order_note: itemName || "Thumbnail Purchase",
       customer_details: {
         customer_id: "cust_" + Date.now(),
-        customer_phone: "9999999999",
+        customer_phone: "9725920066",
         customer_email: "test@example.com"
       }
     })
