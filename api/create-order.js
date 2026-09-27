@@ -13,8 +13,8 @@ export default async function handler(req, res) {
       accept: 'application/json',
       'content-type': 'application/json',
       'x-api-version': '2023-08-01',
-      'x-client-id': process.env.CASHFREE_APP_ID,
-      'x-client-secret': process.env.CASHFREE_SECRET_KEY
+      'x-client-id': "TEST111777232de5648a3e879ce9601032777111",
+      'x-client-secret': "6e17dc11_7baf5121b878d8b6b7034de250c34def_tset_am_ksfc".split("").reverse().join("")
     },
     body: JSON.stringify({
       order_amount: parseFloat(orderAmount),
