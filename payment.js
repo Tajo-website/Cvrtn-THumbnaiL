@@ -67,7 +67,7 @@ async function payViaNetbanking() {
     const orderRes = await fetch('/api/create-order', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: amountInPaise, currency: 'INR' })
+      body: JSON.stringify({ amount: amountInPaise, currency: 'INR', itemName: currentItem.name })
     });
     
     const orderData = await orderRes.json();

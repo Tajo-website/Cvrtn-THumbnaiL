@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { amount, currency } = req.body;
+  const { amount, currency, itemName } = req.body;
   if (!amount || amount < 100) return res.status(400).json({ error: 'Invalid amount' });
 
   const orderAmount = (amount / 100).toFixed(2);
@@ -20,6 +20,7 @@ export default async function handler(req, res) {
       order_amount: parseFloat(orderAmount),
       order_currency: currency || 'INR',
       order_id: orderId,
+      order_note: itemName || "Thumbnail Purchase",
       customer_details: {
         customer_id: "cust_" + Date.now(),
         customer_phone: "9999999999",
