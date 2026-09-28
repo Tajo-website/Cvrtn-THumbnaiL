@@ -15,21 +15,14 @@ function buyThumbnail(thumbnailName, priceInINR, fileUrl) {
   downloadLink.removeAttribute('target');
   downloadBtn.innerText = "Download File";
 
-  &cu=INR`;
+  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=Tanish&am=${priceInINR}&cu=INR`;
   if (document.getElementById('upiQrCode')) {
       document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
   }
-  
   
   // Skip intake form for normal items
   if (document.getElementById('modalStep0')) {
-    
-  &cu=INR`;
-  if (document.getElementById('upiQrCode')) {
-      document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
-  }
-  
-  document.getElementById('modalStep0').style.display = 'none';
+    document.getElementById('modalStep0').style.display = 'none';
   }
   document.getElementById('modalStep1').style.display = 'block';
   document.getElementById('modalStep2').style.display = 'none';
@@ -50,6 +43,11 @@ function buyCustom(thumbnailName, priceInINR) {
   downloadLink.target = "_blank";
   downloadBtn.innerText = "Send Requirements on WhatsApp";
   
+  const upiUrl = `upi://pay?pa=nayeetanish@oksbi&pn=Tanish&am=${priceInINR}&cu=INR`;
+  if (document.getElementById('upiQrCode')) {
+      document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
+  }
+  
   // Show intake form for custom
   document.getElementById('modalStep0').style.display = 'block';
   document.getElementById('modalStep1').style.display = 'none';
@@ -62,12 +60,6 @@ function proceedToPayment() {
   if (!customText || customText.trim() === '') {
     alert("Please enter a description so I know what to design for you!");
     return;
-  }
-  
-  
-  &cu=INR`;
-  if (document.getElementById('upiQrCode')) {
-      document.getElementById('upiQrCode').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upiUrl)}`;
   }
   
   document.getElementById('modalStep0').style.display = 'none';
@@ -119,12 +111,7 @@ async function payViaNetbanking() {
             document.getElementById('modalStep2').style.display = 'block';
             
             if (currentItem.file === '#') {
-                const waMessage = `Hi Tanish! I successfully paid ₹${currentItem.price} for a Custom Thumbnail Request via Cashfree.
-
-Here are my requirements:
-${customText}
-
-[I will attach my photo/video here]`;
+                const waMessage = `Hi Tanish! I successfully paid ₹${currentItem.price} for a Custom Thumbnail Request via Cashfree.\n\nHere are my requirements:\n${customText}\n\n[I will attach my photo/video here]`;
                 const isMobile = /iPhone|Android|iPad|iPod/i.test(navigator.userAgent);
                 if (isMobile) {
                     document.getElementById('downloadLink').href = `whatsapp://send?phone=919725920066&text=${encodeURIComponent(waMessage)}`;
