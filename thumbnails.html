@@ -19,16 +19,16 @@
       <h2>Premade Thumbnails</h2>
       <div class="portfolio-grid">
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-1.jpg');">
-          <button class="y2k-button" onclick="buyThumbnail('Valorant Montage', 150, '/Valorant_Montage.zip')">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('Valorant Montage', 150, '/Valorant_Montage.zip')" ontouchend="buyThumbnail('Valorant Montage', 150, '/Valorant_Montage.zip')">Buy ₹150</button>
         </div>
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-2.webp');">
-          <button class="y2k-button" onclick="buyThumbnail('Neon Cyber Style', 150, '/Neon_Cyber_Style.zip')">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('Neon Cyber Style', 150, '/Neon_Cyber_Style.zip')" ontouchend="buyThumbnail('Neon Cyber Style', 150, '/Neon_Cyber_Style.zip')">Buy ₹150</button>
         </div>
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-3.webp');">
-          <button class="y2k-button" onclick="buyThumbnail('3D Glass Art', 150, '/3D_Glass_Art.zip')">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('3D Glass Art', 150, '/3D_Glass_Art.zip')" ontouchend="buyThumbnail('3D Glass Art', 150, '/3D_Glass_Art.zip')">Buy ₹150</button>
         </div>
         <div class="portfolio-item" style="background-image: url('assets/portfolio/portfolio-4.webp');">
-          <button class="y2k-button" onclick="buyThumbnail('Esports Championship', 150, '/Esports_Championship.zip')">Buy ₹150</button>
+          <button class="y2k-button" onclick="buyThumbnail('Esports Championship', 150, '/Esports_Championship.zip')" ontouchend="buyThumbnail('Esports Championship', 150, '/Esports_Championship.zip')">Buy ₹150</button>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
       <h2 style="color: var(--accent-blue);">Custom Thumbnail Request</h2>
       <p style="margin-top: 5px;">Price: ₹250</p>
       <p style="font-weight: normal; font-size: 0.9rem; margin-top: 5px;">Need something completely custom? Pay the fee and Tanish will contact you to build your vision!</p>
-      <button class="y2k-button" style="width: 100%; margin-top: 15px; background: var(--accent-blue);" onclick="buyCustom('Custom Thumbnail Request', 250)">Submit Request & Pay ₹250</button>
+      <button class="y2k-button" style="width: 100%; margin-top: 15px; background: var(--accent-blue);" onclick="buyCustom('Custom Thumbnail Request', 250)" ontouchend="buyCustom('Custom Thumbnail Request', 250)">Submit Request & Pay ₹250</button>
     </div>
   </div>
 
@@ -55,7 +55,7 @@
   <!-- CUSTOM PAYMENT MODAL -->
   <div class="modal-overlay" id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
     <div class="modal-content" style="background:var(--bg-card, #15161A); border: 2px solid var(--accent, #FF007A); border-radius:12px; padding:30px; width:90%; max-width:400px; text-align:center; position:relative;">
-      <span class="close-btn" onclick="closeModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text, #fff);">&times;</span>
+      <span class="close-btn" onclick="closeModal()" ontouchend="closeModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text, #fff);">&times;</span>
       
       <!-- Step 0: Intake Form (Only for Custom Requests) -->
       <div id="modalStep0" style="display:none; text-align:left; padding: 10px;">
@@ -64,7 +64,7 @@
           <strong>Please read:</strong> I will personally craft a high-converting thumbnail for you. You will need to attach your video/photo on WhatsApp later. Right now, please describe exactly what you are looking for, which elements you want, and drop your social handles so I know where to send it!
         </p>
         <textarea id="customDescription" rows="5" style="width:90%; padding:15px; border-radius:6px; background:#1A1B20; color:#fff; border:1px solid var(--accent, #FF007A); font-family:inherit; resize:none;" placeholder="Describe your thumbnail idea and leave your social handles here..."></textarea>
-        <button class="y2k-button" style="width: 100%; margin-top: 20px; background: var(--accent, #FF007A); color:#fff; padding:12px; border-radius:6px; border:none; font-weight:bold; cursor:pointer;" onclick="proceedToPayment()">Proceed to Payment</button>
+        <button class="y2k-button" style="width: 100%; margin-top: 20px; background: var(--accent, #FF007A); color:#fff; padding:12px; border-radius:6px; border:none; font-weight:bold; cursor:pointer;" onclick="proceedToPayment()" ontouchend="proceedToPayment()">Proceed to Payment</button>
       </div>
 
       <!-- Step 1: Checkout Options -->
@@ -75,7 +75,7 @@
         
         <p style="color:#27ae60; font-weight:bold; margin-bottom:15px;">✓ Fully Secure Payment</p>
         
-        <button class="y2k-button" style="width: 100%; background: var(--accent, #FF007A); color:#fff; border:none; padding:15px; font-weight:bold; cursor:pointer; border-radius:6px; font-size:1.1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="payViaNetbanking()">Pay with Cashfree</button>
+        <button class="y2k-button" style="width: 100%; background: var(--accent, #FF007A); color:#fff; border:none; padding:15px; font-weight:bold; cursor:pointer; border-radius:6px; font-size:1.1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="payViaNetbanking()" ontouchend="payViaNetbanking()">Pay with Cashfree</button>
       </div>
 
       <!-- Step 2: Download -->

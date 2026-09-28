@@ -75,7 +75,7 @@
         </div>
         <div style="text-align: right; min-width: 120px; margin-top: 10px;">
           <div class="price-tag" style="color: var(--accent-blue);">₹100</div>
-          <button class="y2k-button" style="background: var(--accent-blue);" onclick="buyThumbnail('Y2K 3D Render Pack', 100, '/Y2K_3D_Render_Pack.zip')">Buy Now</button>
+          <button class="y2k-button" style="background: var(--accent-blue);" onclick="buyThumbnail('Y2K 3D Render Pack', 100, '/Y2K_3D_Render_Pack.zip')" ontouchend="buyThumbnail('Y2K 3D Render Pack', 100, '/Y2K_3D_Render_Pack.zip')">Buy Now</button>
         </div>
       </div>
 
@@ -94,7 +94,7 @@
         </div>
         <div style="text-align: right; min-width: 120px; margin-top: 10px;">
           <div class="price-tag" style="color: var(--accent-blue);">₹50</div>
-          <button class="y2k-button" style="background: var(--accent-blue);" onclick="buyThumbnail('Starter Pack', 50, '/Starter_Pack.zip')">Buy Now</button>
+          <button class="y2k-button" style="background: var(--accent-blue);" onclick="buyThumbnail('Starter Pack', 50, '/Starter_Pack.zip')" ontouchend="buyThumbnail('Starter Pack', 50, '/Starter_Pack.zip')">Buy Now</button>
         </div>
       </div>
 
@@ -113,7 +113,7 @@
         </div>
         <div style="text-align: right; min-width: 120px; margin-top: 10px;">
           <div class="price-tag" style="color: var(--accent-green);">₹200</div>
-          <button class="y2k-button" style="background: var(--accent-green);" onclick="buyThumbnail('500+ Viral Elements Pack', 200, '/CVRTNS_THumbnaiL.zip')">Buy Now</button>
+          <button class="y2k-button" style="background: var(--accent-green);" onclick="buyThumbnail('500+ Viral Elements Pack', 200, '/CVRTNS_THumbnaiL.zip')" ontouchend="buyThumbnail('500+ Viral Elements Pack', 200, '/CVRTNS_THumbnaiL.zip')">Buy Now</button>
         </div>
       </div>
     </div>
@@ -133,7 +133,7 @@
   <!-- CUSTOM PAYMENT MODAL -->
   <div class="modal-overlay" id="paymentModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
     <div class="modal-content" style="background:var(--bg-card, #15161A); border: 2px solid var(--accent, #FF007A); border-radius:12px; padding:30px; width:90%; max-width:400px; text-align:center; position:relative;">
-      <span class="close-btn" onclick="closeModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text, #fff);">&times;</span>
+      <span class="close-btn" onclick="closeModal()" ontouchend="closeModal()" style="position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:var(--text, #fff);">&times;</span>
       
       <!-- Step 0: Intake Form (Only for Custom Requests) -->
       <div id="modalStep0" style="display:none; text-align:left; padding: 10px;">
@@ -142,7 +142,7 @@
           <strong>Please read:</strong> I will personally craft a high-converting thumbnail for you. You will need to attach your video/photo on WhatsApp later. Right now, please describe exactly what you are looking for, which elements you want, and drop your social handles so I know where to send it!
         </p>
         <textarea id="customDescription" rows="5" style="width:90%; padding:15px; border-radius:6px; background:#1A1B20; color:#fff; border:1px solid var(--accent, #FF007A); font-family:inherit; resize:none;" placeholder="Describe your thumbnail idea and leave your social handles here..."></textarea>
-        <button class="y2k-button" style="width: 100%; margin-top: 20px; background: var(--accent, #FF007A); color:#fff; padding:12px; border-radius:6px; border:none; font-weight:bold; cursor:pointer;" onclick="proceedToPayment()">Proceed to Payment</button>
+        <button class="y2k-button" style="width: 100%; margin-top: 20px; background: var(--accent, #FF007A); color:#fff; padding:12px; border-radius:6px; border:none; font-weight:bold; cursor:pointer;" onclick="proceedToPayment()" ontouchend="proceedToPayment()">Proceed to Payment</button>
       </div>
 
       <!-- Step 1: Checkout Options -->
@@ -153,7 +153,7 @@
         
         <p style="color:#27ae60; font-weight:bold; margin-bottom:15px;">✓ Fully Secure Payment</p>
         
-        <button class="y2k-button" style="width: 100%; background: var(--accent, #FF007A); color:#fff; border:none; padding:15px; font-weight:bold; cursor:pointer; border-radius:6px; font-size:1.1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="payViaNetbanking()">Pay with Cashfree</button>
+        <button class="y2k-button" style="width: 100%; background: var(--accent, #FF007A); color:#fff; border:none; padding:15px; font-weight:bold; cursor:pointer; border-radius:6px; font-size:1.1rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" onclick="payViaNetbanking()" ontouchend="payViaNetbanking()">Pay with Cashfree</button>
       </div>
 
       <!-- Step 2: Download -->
